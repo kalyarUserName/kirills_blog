@@ -1,0 +1,32 @@
+.userBar-container {
+  width: 80%;
+  height: 70px;
+  display: -webkit-box;
+
+  .image-container {
+    display: block;
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
+  }
+  .user {
+    margin-left: 20px;
+    margin-top: 3px;
+
+    .name {
+      display: inline-block;
+      height: 10px;
+      font-size: 14pt;
+      margin-top: 0;
+    }
+
+    .date {
+      margin-top: 0;
+      display: inline-block;
+      height: 10px;
+      font-size: 13pt;
+    }
+  }
+}

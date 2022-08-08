@@ -1,0 +1,15 @@
+.searchBox {
+  width: 400px;
+  justify-self: center;
+  margin-right: 40px;
+}
+.searchBox input {
+  width: 100%;
+  height: 35px;
+  border: 1pt black groove;
+  border-radius: 30px;
+  padding: 5px 5px 5px 10px;
+  margin-top: 5px;
+}
+
+/*# sourceMappingURL=search.styles.css.map */

@@ -1,0 +1,31 @@
+.userBar-container {
+  width: 80%;
+  height: 70px;
+  display: -webkit-box;
+}
+.userBar-container .image-container {
+  display: block;
+}
+.userBar-container .image-container img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+.userBar-container .user {
+  margin-left: 20px;
+  margin-top: 3px;
+}
+.userBar-container .user .name {
+  display: inline-block;
+  height: 10px;
+  font-size: 14pt;
+  margin-top: 0;
+}
+.userBar-container .user .date {
+  margin-top: 0;
+  display: inline-block;
+  height: 10px;
+  font-size: 13pt;
+}
+
+/*# sourceMappingURL=userBar.styles.css.map */

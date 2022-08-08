@@ -1,0 +1,26 @@
+.input-container {
+  margin: 30px 0 10px 0;
+  position: relative;
+}
+.input-container label {
+  font-size: 14px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: -20px;
+  transition: 300ms ease all;
+  color: darkblue;
+  font-family: "Cormorant Garamond", serif;
+}
+.input-container input[type=password] {
+  letter-spacing: 0.3em;
+}
+.input-container input {
+  width: 300px;
+  height: 20px;
+  border-radius: 15px;
+  border: orangered;
+}
+
+/*# sourceMappingURL=formInput.styles.css.map */
