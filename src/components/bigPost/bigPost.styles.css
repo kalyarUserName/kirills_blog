@@ -1,0 +1,39 @@
+.newestPost-container {
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  column-gap: 50px;
+  grid-template-areas: "A A A A   B B B B" "A A A A   B B B B" "A A A A   B B B B";
+}
+.newestPost-container .image {
+  grid-area: A;
+  width: 500px;
+}
+.newestPost-container .image img {
+  width: 500px;
+  height: auto;
+  cursor: pointer;
+}
+.newestPost-container .image img:hover {
+  filter: brightness(80%);
+}
+.newestPost-container .post-container {
+  grid-area: B;
+  width: 85%;
+  margin-bottom: auto;
+}
+.newestPost-container .post-container h2 {
+  font-size: 30pt;
+  font-weight: 700;
+  font-style: italic;
+}
+.newestPost-container .post-container h2:hover {
+  cursor: pointer;
+  text-decoration-line: underline;
+}
+.newestPost-container .post-container p {
+  font-size: 18pt;
+  font-family: "Arial", sans-serif;
+}
+
+/*# sourceMappingURL=bigPost.styles.css.map */

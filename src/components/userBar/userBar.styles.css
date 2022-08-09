@@ -1,31 +1,39 @@
 .userBar-container {
-  width: 80%;
-  height: 70px;
-  display: -webkit-box;
+  width: 50%;
+  height: 100px;
+  display: grid;
+  margin: 15px 10px;
+  grid-template-areas: "A  B";
+  gap: 20px;
 }
 .userBar-container .image-container {
+  grid-area: A;
   display: block;
+  margin-top: 15px;
+  width: 100px;
 }
 .userBar-container .image-container img {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
 }
 .userBar-container .user {
-  margin-left: 20px;
-  margin-top: 3px;
+  grid-area: B;
+  width: auto;
+  margin-left: 0;
 }
 .userBar-container .user .name {
-  display: inline-block;
-  height: 10px;
-  font-size: 14pt;
-  margin-top: 0;
+  font-size: 19pt;
+  margin: 0;
+}
+.userBar-container .user .text {
+  font-size: 18pt;
+  margin: 0;
 }
 .userBar-container .user .date {
-  margin-top: 0;
-  display: inline-block;
-  height: 10px;
-  font-size: 13pt;
+  margin: 0;
+  font-size: 15pt;
+  color: grey;
 }
 
 /*# sourceMappingURL=userBar.styles.css.map */

@@ -1,0 +1,19 @@
+.posts-container {
+  width: 70vw;
+  display: grid;
+  margin-left: auto;
+  margin-right: auto;
+  grid-template-areas: "A" "B";
+  row-gap: 20px;
+}
+.posts-container .newest-post {
+  grid-area: A;
+}
+.posts-container .post-list {
+  grid-area: B;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+}
+
+/*# sourceMappingURL=home.styles.css.map */

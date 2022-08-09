@@ -1,10 +1,12 @@
 import { useEffect, Fragment, useState, ChangeEvent } from "react";
 import { Link, Outlet } from "react-router-dom";
-import "./header.scss";
+
 import SearchBar from "../../components/searchBox/search.component";
 
+import "./header.scss";
+
 const Header = () => {
-  const [currentUser, setCurrentUser] = useState(true);
+  const [currentUser, setCurrentUser] = useState(false);
   const [searchField, setSearchField] = useState("");
 
   const signOut = () => {
@@ -38,9 +40,9 @@ const Header = () => {
             NEW POST
           </Link>
           {currentUser ? (
-            <span className={"navLink"} onClick={signOut}>
+            <a className={"navLink"} onClick={signOut}>
               SIGN OUT
-            </span>
+            </a>
           ) : (
             <Link className={"navLink"} to={"/sign"}>
               SIGN IN

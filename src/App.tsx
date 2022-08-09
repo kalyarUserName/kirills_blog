@@ -9,14 +9,18 @@ import Blog from "./pages/blog/blog.component";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Header />}>
-        <Route index element={<Home />} />
-        <Route path="sign" element={<Authentication />} />
-        <Route path="new-post" element={<NewPost />} />
-        <Route path="blog" element={<Blog />} />
-      </Route>
-    </Routes>
+    <div className={"App"}>
+      <Routes>
+        <Route path="/" element={<Header />}>
+          <Route index element={<Home />} />
+          <Route path="sign" element={<Authentication />} />
+          <Route path="new-post" element={<NewPost />} />
+          <Route path="blog" element={<Blog />}>
+            <Route path=":blogId"></Route>
+          </Route>
+        </Route>
+      </Routes>
+    </div>
   );
 }
 
