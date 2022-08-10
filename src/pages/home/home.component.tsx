@@ -7,6 +7,7 @@ import PostCard from "../../components/post/postCard.component";
 import "./home.styles.scss";
 
 import { Users } from "../../utils/types";
+import { dateToString } from "../../utils/general";
 export const dataPosts = [
   {
     id: 1,
@@ -78,7 +79,7 @@ const Home = () => {
           id={dataPosts[0].id}
           image={dataPosts[0].image}
           headline={dataPosts[0].headline}
-          date={dataPosts[0].date}
+          date={dateToString(dataPosts[0].date)}
           textPreview={dataPosts[0].textPreview}
           user={dataPosts[0].user}
           toNavigate={redirectToBlog}
@@ -97,7 +98,7 @@ const Home = () => {
                 user={post.user}
                 headline={post.headline}
                 textPreview={post.textPreview}
-                date={post.date}
+                date={dateToString(post.date)}
                 image={post.image}
                 toNavigate={redirectToBlog}
               />

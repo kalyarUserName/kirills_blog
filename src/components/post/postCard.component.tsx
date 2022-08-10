@@ -9,7 +9,7 @@ type PostCardProps = {
   headline: string;
   textPreview: string;
   user: User;
-  date: Date;
+  date: string;
   toNavigate: (id: number) => void;
 };
 
@@ -23,7 +23,7 @@ const PostCard: FC<PostCardProps> = ({
   textPreview,
 }) => {
   return (
-    <div className={"postCard-container"} onClick={(e) => toNavigate(id)}>
+    <div className={"postCard-container"} onClick={() => toNavigate(id)}>
       <div className={"image-container"}>
         <img src={image} alt={headline} />
       </div>

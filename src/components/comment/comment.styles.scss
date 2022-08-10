@@ -1,0 +1,15 @@
+$second-color: #7ca47c;
+.box {
+  padding: 15px 20px;
+  background-color: #ecebeb;
+  border-radius: 50px;
+  width: fit-content;
+  height: fit-content;
+  border-end-start-radius: 55%;
+  margin: 20px 0;
+
+  &:hover {
+    border-style: solid;
+    border-color: $second-color;
+  }
+}

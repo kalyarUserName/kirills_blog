@@ -7,6 +7,7 @@ import BigPost from "../../components/bigPost/bigPost.component";
 
 import { dataPosts } from "../home/home.component";
 import Comments from "../../components/comments/comments.component";
+import { dateToString } from "../../utils/general";
 
 const Blog = () => {
   const params = useParams();
@@ -23,10 +24,9 @@ const Blog = () => {
         headline={post.headline}
         textPreview={post.textPreview}
         user={post.user}
-        date={post.date}
+        date={dateToString(post.date)}
       />
       <hr />
-      <h2>Comments:</h2>
       <Comments />
     </div>
   );

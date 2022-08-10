@@ -17,6 +17,8 @@ const UserBar: FC<UserBarProps> = ({ image, name, date, text }) => {
       <div className={"user"}>
         <h3 className={"name"}>{name}</h3>
         <h4 className={"text"}>{text}</h4>
+        <hr />
+
         <h4 className={"date"}>{date}</h4>
       </div>
     </div>

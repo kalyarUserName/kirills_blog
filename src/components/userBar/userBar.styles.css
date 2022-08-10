@@ -1,39 +1,39 @@
 .userBar-container {
-  width: 50%;
-  height: 100px;
-  display: grid;
-  margin: 15px 10px;
-  grid-template-areas: "A  B";
-  gap: 20px;
+  max-width: 500px;
+  width: 90%;
+  display: -webkit-box;
 }
 .userBar-container .image-container {
-  grid-area: A;
-  display: block;
-  margin-top: 15px;
-  width: 100px;
+  display: flex;
 }
 .userBar-container .image-container img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  border-radius: 40%;
 }
 .userBar-container .user {
-  grid-area: B;
-  width: auto;
-  margin-left: 0;
+  display: block;
+  margin-left: 20px;
+  margin-top: 3px;
 }
 .userBar-container .user .name {
-  font-size: 19pt;
-  margin: 0;
+  height: 10px;
+  font-size: 16pt;
+  margin: 5px 0;
+  color: blue;
 }
 .userBar-container .user .text {
-  font-size: 18pt;
-  margin: 0;
+  font-size: 13pt;
+  margin: 20px 0;
+  font-family: "Times New Roman", sans-serif;
+  font-weight: normal;
 }
 .userBar-container .user .date {
-  margin: 0;
   font-size: 15pt;
-  color: grey;
+  color: #645f5f;
+  text-align: right;
+  padding-right: 10px;
+  margin-top: 0;
 }
 
 /*# sourceMappingURL=userBar.styles.css.map */

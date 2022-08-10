@@ -29,11 +29,16 @@
 }
 .newestPost-container .post-container h2:hover {
   cursor: pointer;
-  text-decoration-line: underline;
+  text-decoration: #7ca47c underline;
 }
 .newestPost-container .post-container p {
   font-size: 18pt;
   font-family: "Arial", sans-serif;
+}
+.newestPost-container .edit-button {
+  margin: 0;
+  height: 30px;
+  width: 30px;
 }
 
 /*# sourceMappingURL=bigPost.styles.css.map */
