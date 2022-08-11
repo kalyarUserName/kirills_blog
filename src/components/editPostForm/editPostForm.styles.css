@@ -1,0 +1,51 @@
+.edit-post-container {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+  display: grid;
+  column-gap: 10px;
+  grid-template-areas: "A B B B   B B B B";
+}
+.edit-post-container .image-container {
+  grid-area: A;
+}
+.edit-post-container .image-container img {
+  margin-top: 20px;
+  width: 30vw;
+  height: auto;
+}
+.edit-post-container .image-container .image {
+  margin-left: 15%;
+}
+.edit-post-container .post-container {
+  grid-area: B;
+  margin: 0 30px;
+  width: 60vw;
+}
+.edit-post-container .post-container textarea {
+  padding: 10px 10px;
+  width: 700px;
+  overflow-y: scroll;
+  border-radius: 15px;
+}
+.edit-post-container .post-container textarea::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+.edit-post-container .post-container .headline {
+  margin: 15px 0;
+}
+.edit-post-container .post-container .headline textarea {
+  font-size: 25pt;
+  font-style: italic;
+  height: 75px;
+}
+.edit-post-container .post-container .text {
+  margin: 10px 0;
+}
+.edit-post-container .post-container .text textarea {
+  font-size: 11pt;
+  height: 100px;
+}
+
+/*# sourceMappingURL=editPostForm.styles.css.map */

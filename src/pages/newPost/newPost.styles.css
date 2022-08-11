@@ -1,0 +1,10 @@
+.create-post-container {
+  width: 90vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+.create-post-container h1 {
+  width: fit-content;
+}
+
+/*# sourceMappingURL=newPost.styles.css.map */

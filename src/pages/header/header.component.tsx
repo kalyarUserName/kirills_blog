@@ -53,9 +53,6 @@ const Header = () => {
             onChangeHandler={onSearchChange}
           />
         </div>
-        {/*<button type="submit" onClick={signIn}>*/}
-        {/*  SIGN IN*/}
-        {/*</button>*/}
       </div>
       <Outlet />
     </Fragment>

@@ -1,15 +1,12 @@
 $second-color: #7ca47c;
 
 .newestPost-container {
-  margin-left: auto;
   margin-right: auto;
-
+  width: 90vw;
+  margin-left: 0;
   display: grid;
-  column-gap: 50px;
-  grid-template-areas:
-    "A A A A   B B B B"
-    "A A A A   B B B B"
-    "A A A A   B B B B";
+  column-gap: 0;
+  grid-template-areas: "A A A A   B B B B";
 
   .image {
     grid-area: A;
@@ -27,6 +24,7 @@ $second-color: #7ca47c;
   .post-container {
     grid-area: B;
     width: 85%;
+    margin-left: 50px;
     margin-bottom: auto;
     h2 {
       font-size: 30pt;
@@ -39,15 +37,29 @@ $second-color: #7ca47c;
       }
     }
     p {
+      display: flex;
       font-size: 18pt;
       font-family: "Arial", sans-serif;
     }
     .userbar {
     }
   }
-  .edit-button {
-    margin: 0;
-    height: 30px;
-    width: 30px;
+}
+.edit-button {
+  margin: 0;
+  width: 100px;
+  height: 40px;
+  .hovering-text {
+    margin-left: 50px;
+    margin-top: -52px;
+    padding-bottom: 10px;
+    font-size: 15pt;
+    width: 150px;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 }

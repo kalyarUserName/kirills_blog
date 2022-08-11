@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import NewestPost from "../../components/bigPost/bigPost.component";
-import PostCard from "../../components/post/postCard.component";
+import PostCard from "../../components/postCard/postCard.component";
 
 import "./home.styles.scss";
 

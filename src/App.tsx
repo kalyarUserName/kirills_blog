@@ -4,7 +4,7 @@ import "./App.css";
 import Header from "./pages/header/header.component";
 import Home from "./pages/home/home.component";
 import Authentication from "./pages/authentication/authentication.component";
-import NewPost from "./pages/newPost/newPost";
+import NewPost from "./pages/newPost/newPost.component";
 import Blog from "./pages/blog/blog.component";
 
 function App() {
