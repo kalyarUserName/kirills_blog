@@ -1,0 +1,43 @@
+.postCard-container {
+  width: 40vw;
+  cursor: pointer;
+  padding: 0 10px;
+  margin: 0 20px;
+  display: grid;
+  grid-template-areas: "A" "B";
+}
+.postCard-container:hover {
+  filter: brightness(90%);
+  background: rgba(0, 0, 0, 0.05);
+}
+.postCard-container .image-container {
+  grid-area: A;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  position: relative;
+}
+.postCard-container .image-container img {
+  position: relative;
+  width: 30vw;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.postCard-container .post-container {
+  width: 95%;
+  grid-area: B;
+  margin-left: auto;
+  margin-right: auto;
+}
+.postCard-container .post-container h2 {
+  font-size: 30pt;
+  font-style: italic;
+}
+.postCard-container .post-container p {
+  font-size: 16pt;
+  font-family: "Arial", sans-serif;
+}
+
+/*# sourceMappingURL=postCard.styles.css.map */

@@ -1,0 +1,22 @@
+.posts-container {
+  width: 90vw;
+  display: grid;
+  margin-left: auto;
+  margin-right: auto;
+  grid-template-areas:
+    "A"
+    "B";
+  row-gap: 20px;
+
+  .newest-post {
+    grid-area: A;
+    width: 90vw;
+  }
+  .post-list {
+    grid-area: B;
+    width: 90vw;
+    display: grid;
+    grid-template-columns: 40vw 40vw;
+    grid-gap: 10px;
+  }
+}

@@ -1,0 +1,59 @@
+.newestPost-container {
+  margin-right: auto;
+  width: 90vw;
+  margin-left: 0;
+  display: grid;
+  column-gap: 0;
+  grid-template-areas: "A A A A   B B B B";
+}
+.newestPost-container .image {
+  grid-area: A;
+  width: 500px;
+}
+.newestPost-container .image img {
+  width: 500px;
+  height: auto;
+  cursor: pointer;
+}
+.newestPost-container .image img:hover {
+  filter: brightness(80%);
+}
+.newestPost-container .post-container {
+  grid-area: B;
+  width: 85%;
+  margin-left: 50px;
+  margin-bottom: auto;
+}
+.newestPost-container .post-container h2 {
+  font-size: 30pt;
+  font-weight: 700;
+  font-style: italic;
+}
+.newestPost-container .post-container h2:hover {
+  cursor: pointer;
+  text-decoration: #7ca47c underline;
+}
+.newestPost-container .post-container p {
+  display: flex;
+  font-size: 18pt;
+  font-family: "Arial", sans-serif;
+}
+.edit-button {
+  margin: 0;
+  width: 100px;
+  height: 40px;
+}
+.edit-button .hovering-text {
+  margin-left: 50px;
+  margin-top: -52px;
+  padding-bottom: 10px;
+  font-size: 15pt;
+  width: 150px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/*# sourceMappingURL=bigPost.styles.css.map */

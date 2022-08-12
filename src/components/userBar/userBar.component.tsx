@@ -5,9 +5,10 @@ import "./userBar.styles.scss";
 type UserBarProps = {
   image: string;
   name: string;
-  date: Date;
+  date: string;
+  text?: string;
 };
-const UserBar: FC<UserBarProps> = ({ image, name, date }) => {
+const UserBar: FC<UserBarProps> = ({ image, name, date, text }) => {
   return (
     <div className={"userBar-container"}>
       <div className={"image-container"}>
@@ -15,10 +16,10 @@ const UserBar: FC<UserBarProps> = ({ image, name, date }) => {
       </div>
       <div className={"user"}>
         <h3 className={"name"}>{name}</h3>
-        <br />
-        <h4 className={"date"}>
-          {date.getUTCMonth()}/{date.getDay()}/{date.getFullYear()}
-        </h4>
+        <h4 className={"text"}>{text}</h4>
+        <hr />
+
+        <h4 className={"date"}>{date}</h4>
       </div>
     </div>
   );

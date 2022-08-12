@@ -3,7 +3,7 @@
   position: relative;
 
   label {
-    font-size: 14px;
+    font-size: 15pt;
     font-weight: normal;
     position: absolute;
     pointer-events: none;
@@ -17,9 +17,12 @@
     letter-spacing: 0.3em;
   }
   input {
-    width: 300px;
+    margin-top: 10px;
+    width: 80%;
     height: 20px;
+    padding: 10px;
+    font-size: 13pt;
     border-radius: 15px;
-    border: orangered;
+    border-style: hidden;
   }
 }

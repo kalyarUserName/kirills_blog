@@ -1,14 +1,26 @@
+$shadow-color: #dcd8d8;
+$form-bg-color: #f6f2f2;
+
 .sign-in-container {
   display: flex;
-  width: 500px;
+  width: 40vw;
   flex-direction: column;
-  background-color: rgb(255, 214, 255);
+  background-color: $form-bg-color;
   border-radius: 50px;
-  padding: 20px 40px;
-  margin: 0 20px auto 20px;
+  padding: 30px 40px;
+  margin: 50px auto;
+  box-shadow: 15px 10px 15px $shadow-color;
 
   h2 {
-    margin: 10px 0;
+    margin: 10px auto;
+  }
+  h3 {
+    margin: 0 0 5px 5px;
+    font-weight: normal;
+  }
+  .link {
+    margin: 10px auto;
+    width: fit-content;
   }
 }
 .button-container {

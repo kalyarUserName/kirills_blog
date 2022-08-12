@@ -1,0 +1,23 @@
+.messageBox-container {
+  display: grid;
+  grid-template-columns: 500px 1fr;
+  grid-gap: 20px;
+}
+.messageBox-container textarea {
+  padding: 10px 10px;
+  width: 500px;
+  font-size: 12pt;
+  height: fit-content;
+  overflow-y: scroll;
+}
+.messageBox-container textarea::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+.messageBox-container button {
+  margin: 0;
+  height: 100%;
+  width: 50px;
+}
+
+/*# sourceMappingURL=messageSendBox.styles.css.map */
