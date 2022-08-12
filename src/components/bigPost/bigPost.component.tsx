@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 
 import "./bigPost.styles.scss";
 
@@ -98,11 +98,9 @@ const BigPost: FC<NewestPostProps> = ({
             setNewImage(imageT);
           }}
           onChangeHeadline={(headlineT) => {
-            console.log("headlineT => ", headlineT);
             setNewHeadline(headlineT);
           }}
           onChangeText={(textT) => {
-            console.log("textT => ", textT);
             setNewText(textT);
           }}
         />
