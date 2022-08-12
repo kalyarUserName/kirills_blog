@@ -26,7 +26,9 @@ const Header = () => {
     <Fragment>
       <div className={"headerContainer"}>
         <div className={"logoContainer"}>
-          <Link to={"/"}>LOGO</Link>
+          <Link to={"/"}>
+            <img src="./logo2.png" alt={"logo"} />
+          </Link>
         </div>
 
         <div className={"navLinks"}>
@@ -44,18 +46,20 @@ const Header = () => {
               SIGN OUT
             </a>
           ) : (
-            <Link className={"navLink"} to={"/sign"}>
-              SIGN IN
-            </Link>
+            <Fragment>
+              <Link className={"navLink"} to={"/sign-in"}>
+                SIGN IN
+              </Link>
+              <Link className={"navLink"} to={"/sign-up"}>
+                SIGN UP
+              </Link>
+            </Fragment>
           )}
           <SearchBar
             placeholder={"Search post"}
             onChangeHandler={onSearchChange}
           />
         </div>
-        {/*<button type="submit" onClick={signIn}>*/}
-        {/*  SIGN IN*/}
-        {/*</button>*/}
       </div>
       <Outlet />
     </Fragment>

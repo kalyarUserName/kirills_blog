@@ -1,0 +1,18 @@
+.create-post-container {
+  width: 90vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+.create-post-container .headAndButton {
+  display: inline-flex;
+}
+.create-post-container .headAndButton h1 {
+  width: fit-content;
+}
+.create-post-container .headAndButton button {
+  margin-left: 18vw;
+  height: 60px;
+  width: 150px;
+}
+
+/*# sourceMappingURL=newPost.styles.css.map */

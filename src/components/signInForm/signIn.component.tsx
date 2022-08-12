@@ -2,6 +2,8 @@ import { useState, FormEvent, ChangeEvent } from "react";
 
 import "./signIn.styles.scss";
 import FormInput from "../formInput/formInput.component";
+import Button from "../button/button.component";
+import { Link } from "react-router-dom";
 
 const defaultFormFields = {
   email: "",
@@ -27,13 +29,14 @@ const SignIn = () => {
   };
   return (
     <div className={"sign-in-container"}>
-      <h2>Already have an account</h2>
-      <span>Sign in with your email and password</span>
+      <h2>Sign in</h2>
+      <h3>Sign in with your email and password</h3>
       <form onSubmit={handleSubmit}>
         <FormInput
           label="Email"
           type="email"
           name="email"
+          placeholder="Enter your email"
           value={email}
           required
           onChange={handleChange}
@@ -42,12 +45,17 @@ const SignIn = () => {
           label="Password"
           type="password"
           name="password"
+          placeholder="Enter your password"
           value={password}
           required
           onChange={handleChange}
         />
         <div className={"button-container"}>
-          <button type="submit">SIGN IN</button>
+          <Button type="submit" text="SIGN IN"></Button>
+        </div>
+        <br />
+        <div className="link">
+          <Link to={"/sign-up"}>Don't have an account? Sign up!</Link>
         </div>
       </form>
     </div>

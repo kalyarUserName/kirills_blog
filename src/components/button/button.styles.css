@@ -1,0 +1,14 @@
+.custom-button {
+  font-size: 13pt;
+  font-family: "Poppins", serif;
+  border-radius: 2rem 15px;
+  background-color: #cbe5cb;
+  border-style: hidden;
+  box-shadow: 15px 20px 15px #dcd8d8;
+}
+.custom-button:hover {
+  border-style: solid;
+  border-color: #7ca47c;
+}
+
+/*# sourceMappingURL=button.styles.css.map */
