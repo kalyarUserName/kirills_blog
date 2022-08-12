@@ -1,8 +1,23 @@
+$second-color: #7ca47c;
+$shadow-color: #dcd8d8;
+
 .create-post-container {
   width: 90vw;
   margin-left: auto;
   margin-right: auto;
-  h1 {
-    width: fit-content;
+
+  input {
+  }
+  .headAndButton {
+    display: inline-flex;
+
+    h1 {
+      width: fit-content;
+    }
+    button {
+      margin-left: 18vw;
+      height: 60px;
+      width: 150px;
+    }
   }
 }

@@ -1,11 +1,12 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import "./editPostForm.styles.scss";
 
 type EditPostFormProps = {
   text: string;
   headline: string;
-  onChangeImage: (image: string) => void;
+  image?: string;
+  onChangeImage: (imageSrc: string) => void;
   onChangeHeadline: (headline: string) => void;
   onChangeText: (text: string) => void;
 };
@@ -13,12 +14,13 @@ type EditPostFormProps = {
 const EditPostForm: FC<EditPostFormProps> = ({
   text,
   headline,
+  image,
   onChangeImage,
   onChangeHeadline,
   onChangeText,
 }) => {
-  let isAttachImage = false;
-  const [image, setImage] = useState("");
+  const [newImage, setNewImage] = useState(image);
+  useEffect(() => {}, [image]);
 
   return (
     <div className="edit-post-container">
@@ -31,13 +33,13 @@ const EditPostForm: FC<EditPostFormProps> = ({
           onChange={(event) => {
             if (event.target.files && event.target.files[0]) {
               const imageT = URL.createObjectURL(event.target.files[0]);
-              setImage(imageT);
               onChangeImage(imageT);
+              setNewImage(imageT);
             }
           }}
         />
         <img
-          src={image === "" ? "/images/blank/blankPhoto1.png" : image}
+          src={newImage === "" ? "/images/blank/blankPhoto1.png" : newImage}
           alt="Image for post"
         />
       </div>

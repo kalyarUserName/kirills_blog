@@ -7,10 +7,14 @@
 }
 .headerContainer .logoContainer {
   width: 65px;
-  padding: 25px;
+}
+.headerContainer .logoContainer img {
+  height: 70px;
+  width: auto;
+  margin-left: 3.5vw;
 }
 .headerContainer .navLinks {
-  width: 70%;
+  width: 80vw;
   height: 100%;
   display: flex;
   align-items: center;

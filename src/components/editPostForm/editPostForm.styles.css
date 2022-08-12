@@ -27,6 +27,7 @@
   width: 700px;
   overflow-y: scroll;
   border-radius: 15px;
+  box-shadow: 15px 10px 15px #dcd8d8;
 }
 .edit-post-container .post-container textarea::-webkit-scrollbar {
   width: 0;
