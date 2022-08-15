@@ -35,7 +35,7 @@ const composeEnhancer =
 const persistConfig: ExtendedPersistConfig = {
   key: "root",
   storage,
-  whitelist: [],
+  whitelist: ["user"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -18,9 +18,6 @@ const Header = () => {
   };
 
   useEffect(() => {}, [searchField]);
-  // const signIn = () => {
-  //   setCurrentUser(true);
-  // };
 
   const onSearchChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const searchFieldString = event.target.value.toLowerCase();
