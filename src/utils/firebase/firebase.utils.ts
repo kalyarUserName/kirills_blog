@@ -1,9 +1,6 @@
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
-  signInWithRedirect,
-  signInWithPopup,
-  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
@@ -36,20 +33,15 @@ export type UserData = {
 };
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCH--mquwcWipYn_1FGfz-Gb5xsgdp6D1A",
-  authDomain: "crwn-clothing-db-1e362.firebaseapp.com",
-  projectId: "crwn-clothing-db-1e362",
-  storageBucket: "crwn-clothing-db-1e362.appspot.com",
-  messagingSenderId: "199031329058",
-  appId: "1:199031329058:web:7fcdfca1c82a701835557b",
+  apiKey: process.env["REACT_APP_FIREBASE_API_KEY"],
+  authDomain: process.env["REACT_APP_FIREBASE_AUTH_DOMAIN"],
+  projectId: process.env["REACT_APP_FIREBASE_PROJECT_ID"],
+  storageBucket: process.env["REACT_APP_FIREBASE_STORAGE_BUCKET"],
+  messagingSenderId: process.env["REACT_APP_FIREBASE_MESSAGING_SENDER_ID"],
+  appId: process.env["REACT_APP_FIREBASE_APP_ID"],
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
-
-const googleProvider = new GoogleAuthProvider();
-googleProvider.setCustomParameters({
-  prompt: "select_account",
-});
 
 export const auth = getAuth();
 export const db = getFirestore();
@@ -57,12 +49,6 @@ export const db = getFirestore();
 export type ObjectToAdd = {
   title: string;
 };
-
-export const signInWithGooglePopup = () =>
-  signInWithPopup(auth, googleProvider);
-
-export const signInWithGoogleRedirect = () =>
-  signInWithRedirect(auth, googleProvider);
 
 export const addCollectionAndDocuments = async <T extends ObjectToAdd>(
   collectionKey: string,

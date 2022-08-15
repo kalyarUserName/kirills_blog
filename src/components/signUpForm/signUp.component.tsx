@@ -1,9 +1,13 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import {useDispatch} from "react-redux";
+import { Link } from "react-router-dom";
+
 import FormInput from "../formInput/formInput.component";
 
 import "./signUp.styles.scss";
 import Button from "../button/button.component";
-import { Link } from "react-router-dom";
+import {signUpStart} from "../../store/user/user.actions";
+import { AuthError, AuthErrorCodes } from "firebase/auth";
 
 const defaultFormFields = {
   displayName: "",
@@ -13,6 +17,7 @@ const defaultFormFields = {
 };
 
 const SignUp = () => {
+  const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
@@ -33,8 +38,17 @@ const SignUp = () => {
       return;
     }
 
-    console.log("try to sign up");
-    resetFormFields();
+    try {
+      dispatch(signUpStart(email, password, displayName));
+
+      resetFormFields();
+    } catch (error) {
+      if ((error as AuthError).code === AuthErrorCodes.EMAIL_EXISTS)
+        alert("Cannot create user, email already in use");
+      else {
+        console.log("user created encountered an error", error);
+      }
+    }
   };
 
   return (
