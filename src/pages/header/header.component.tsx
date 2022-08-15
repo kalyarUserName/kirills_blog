@@ -4,14 +4,19 @@ import { Link, Outlet } from "react-router-dom";
 import SearchBar from "../../components/searchBox/search.component";
 
 import "./header.scss";
+import { selectCurrentUser } from "../../store/user/user.selector";
+import { signOutStart } from "../../store/user/user.actions";
+import { useSelector, useDispatch } from "react-redux";
 
 const Header = () => {
-  const [currentUser, setCurrentUser] = useState(false);
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
   const [searchField, setSearchField] = useState("");
 
-  const signOut = () => {
-    setCurrentUser(false);
+  const signOutUser = () => {
+    dispatch(signOutStart());
   };
+
   useEffect(() => {}, [searchField]);
   // const signIn = () => {
   //   setCurrentUser(true);
@@ -42,7 +47,7 @@ const Header = () => {
             NEW POST
           </Link>
           {currentUser ? (
-            <a className={"navLink"} onClick={signOut}>
+            <a className={"navLink"} onClick={signOutUser}>
               SIGN OUT
             </a>
           ) : (

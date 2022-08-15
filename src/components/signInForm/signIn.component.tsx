@@ -1,9 +1,12 @@
 import { useState, FormEvent, ChangeEvent } from "react";
+import { useDispatch } from "react-redux";
 
 import "./signIn.styles.scss";
 import FormInput from "../formInput/formInput.component";
 import Button from "../button/button.component";
 import { Link } from "react-router-dom";
+
+import { emailSignInStart } from "../../store/user/user.actions";
 
 const defaultFormFields = {
   email: "",
@@ -11,16 +14,22 @@ const defaultFormFields = {
 };
 
 const SignIn = () => {
+  const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("try to sign in");
-    resetFormFields();
+    try {
+      dispatch(emailSignInStart(email, password));
+      resetFormFields();
+    } catch (error) {
+      console.log("user sign in failed", error);
+    }
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
