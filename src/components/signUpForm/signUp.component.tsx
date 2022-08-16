@@ -1,12 +1,12 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 import FormInput from "../formInput/formInput.component";
 
 import "./signUp.styles.scss";
 import Button from "../button/button.component";
-import {signUpStart} from "../../store/user/user.actions";
+import { signUpStart } from "../../store/user/user.actions";
 import { AuthError, AuthErrorCodes } from "firebase/auth";
 
 const defaultFormFields = {
@@ -14,12 +14,14 @@ const defaultFormFields = {
   email: "",
   password: "",
   confirmPassword: "",
+  imageUrl: "",
 };
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const { displayName, email, password, confirmPassword } = formFields;
+  const { displayName, email, password, confirmPassword, imageUrl } =
+    formFields;
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -38,9 +40,11 @@ const SignUp = () => {
       return;
     }
 
-    try {
-      dispatch(signUpStart(email, password, displayName));
+    const avatarImageUrl =
+      imageUrl === "" ? "/images/avatar/default_avatar.png" : imageUrl;
 
+    try {
+      dispatch(signUpStart(email, password, displayName, avatarImageUrl));
       resetFormFields();
     } catch (error) {
       if ((error as AuthError).code === AuthErrorCodes.EMAIL_EXISTS)
@@ -90,6 +94,14 @@ const SignUp = () => {
           placeholder="Enter confirm password"
           value={confirmPassword}
           required
+          onChange={handleChange}
+        />
+        <FormInput
+          label={"Avatar link"}
+          type="text"
+          name="imageUrl"
+          placeholder="Enter link to avatar"
+          value={imageUrl}
           onChange={handleChange}
         />
         <div className="button-container">

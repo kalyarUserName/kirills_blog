@@ -1,24 +1,22 @@
 import React, { FC } from "react";
 
 import "./postCard.styles.scss";
-import { User } from "../../utils/types";
+import { UserForDisplay } from "../../utils/firebase/firebase.utils";
 
 type PostCardProps = {
-  id: number;
+  id: string;
   image: string;
   headline: string;
   textPreview: string;
-  user: User;
-  date: string;
-  toNavigate: (id: number) => void;
+  user?: UserForDisplay;
+  date?: string;
+  toNavigate: (id: string) => void;
 };
 
 const PostCard: FC<PostCardProps> = ({
   toNavigate,
   id,
   image,
-  date,
-  user,
   headline,
   textPreview,
 }) => {

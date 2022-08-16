@@ -4,17 +4,19 @@ import "./bigPost.styles.scss";
 
 import UserBar from "../userBar/userBar.component";
 import EditButton from "../editButton/editButton.component";
-import { User, Users } from "../../utils/types";
 import EditPostForm from "../editPostForm/editPostForm.component";
+import { UserForDisplay } from "../../utils/firebase/firebase.utils";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../store/user/user.selector";
 
 type NewestPostProps = {
-  id: number;
+  id: string;
   image: string;
   headline: string;
   textPreview: string;
-  user: User;
+  user: UserForDisplay;
   date: string;
-  toNavigate?: (id: number) => void;
+  toNavigate?: (id: string) => void;
 };
 
 let hover = false;
@@ -28,7 +30,7 @@ const BigPost: FC<NewestPostProps> = ({
   textPreview,
   user,
 }) => {
-  const currentUser = Users[0];
+  const currentUser = useSelector(selectCurrentUser);
 
   const [isEdit, setIsEdit] = useState(false);
   const [newImage, setNewImage] = useState(image);
@@ -37,14 +39,13 @@ const BigPost: FC<NewestPostProps> = ({
 
   const edition = () => {
     setIsEdit(!isEdit);
-    // if (isEdit) setEditionElemSize();
   };
 
   const [hovering, setHovering] = useState(false);
 
   return (
     <div>
-      {JSON.stringify(currentUser) === JSON.stringify(user) && (
+      {currentUser && currentUser.email === user.email && (
         <div
           className="edit-button"
           onClick={() => edition()}
@@ -86,7 +87,11 @@ const BigPost: FC<NewestPostProps> = ({
             </h2>
             <p id="text">{newText}</p>
             <div className="userbar">
-              <UserBar image={user.image} name={user.name} date={date} />
+              <UserBar
+                image={user.imageUrl}
+                name={user.displayName}
+                date={date}
+              />
             </div>
           </div>
         </div>

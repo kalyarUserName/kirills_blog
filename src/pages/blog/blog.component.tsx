@@ -5,26 +5,48 @@ import "./blog.styles.scss";
 
 import BigPost from "../../components/bigPost/bigPost.component";
 
-import { dataPosts } from "../home/home.component";
 import Comments from "../../components/comments/comments.component";
-import { dateToString } from "../../utils/general";
 
-const Blog = () => {
+import { BlogItem } from "../../store/blogs/blogs.types";
+import { useSelector } from "react-redux";
+import { selectBlogsMap } from "../../store/blogs/blogs.selector";
+import { UserForDisplay } from "../../utils/firebase/firebase.utils";
+
+const BlogPage = () => {
   const params = useParams();
   const id = params.blogId;
-  let post = dataPosts.find((post) => post.id.toString() === id);
 
-  if (!post) post = dataPosts[0];
+  const defaultPost: BlogItem = {
+    id: "",
+    imageUrl: "",
+    headline: "",
+    textPreview: "",
+    text: "",
+    user: {} as UserForDisplay,
+    date: "",
+  };
+
+  const blogsMap = useSelector(selectBlogsMap);
+  let post: BlogItem = defaultPost;
+  Object.keys(blogsMap).map((email) => {
+    const blogs = blogsMap[email];
+    const res = blogs.find((blog) => blog.id === id);
+    if (res) {
+      post = res;
+    }
+  });
+
+  // let post = dataPosts.find((post) => post.id.toString() === id);
 
   return (
     <div className={"blog-container"}>
       <BigPost
         id={post.id}
-        image={post.image}
+        image={post.imageUrl}
         headline={post.headline}
         textPreview={post.textPreview}
         user={post.user}
-        date={dateToString(post.date)}
+        date={post.date.slice(0, 10)}
       />
       <hr />
       <Comments />
@@ -32,4 +54,4 @@ const Blog = () => {
   );
 };
 
-export default Blog;
+export default BlogPage;

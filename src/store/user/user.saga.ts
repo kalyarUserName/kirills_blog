@@ -74,7 +74,7 @@ export function* isUserAuthenticated() {
 }
 
 export function* signUp({
-  payload: { email, password, displayName },
+  payload: { email, password, displayName, imageUrl },
 }: SignUpStart) {
   try {
     const userCredential = yield* call(
@@ -85,7 +85,7 @@ export function* signUp({
 
     if (userCredential) {
       const { user } = userCredential;
-      yield* put(signUpSuccess(user, { displayName }));
+      yield* put(signUpSuccess(user, { displayName, imageUrl }));
     }
   } catch (error) {
     yield* put(signUpFailed(error as Error));

@@ -1,21 +1,26 @@
 import { FC } from "react";
-import { User } from "../../utils/types";
 
 import "./comment.styles.scss";
 
 import UserBar from "../userBar/userBar.component";
+import { UserForDisplay } from "../../utils/firebase/firebase.utils";
 
 type CommentProps = {
   text: string;
   date: string;
-  user: User;
+  user: UserForDisplay;
   className: string;
 };
 
 const Comment: FC<CommentProps> = ({ text, user, date, className }) => {
   return (
     <div className={`${className}`}>
-      <UserBar name={user.name} image={user.image} text={text} date={date} />
+      <UserBar
+        name={user.displayName}
+        image={user.imageUrl}
+        text={text}
+        date={date}
+      />
     </div>
   );
 };
