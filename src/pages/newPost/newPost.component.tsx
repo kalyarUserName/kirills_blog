@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from "react";
 import EditPostForm from "../../components/editPostForm/editPostForm.component";
-import { User, Users } from "../../utils/types";
+import { guest } from "../../utils/types";
 
 import "./newPost.styles.scss";
 import Button from "../../components/button/button.component";
+import { UserForDisplay } from "../../utils/firebase/firebase.utils";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../store/user/user.selector";
 
 const defaultNewPost = {
   headline: "",
   image: "",
   text: "",
-  user: {} as User,
+  user: guest as UserForDisplay,
 };
 
 const NewPost = () => {
   const [post, setPost] = useState(defaultNewPost);
+  const currentUser = useSelector(selectCurrentUser);
   useEffect(() => {
-    const currentUser = Users[0];
-    setPost({ ...post, user: currentUser });
-  }, []);
+    if (currentUser) setPost({ ...post, user: currentUser });
+  }, [currentUser]);
 
   const addNewPost = () => {
     //dispatch newPost

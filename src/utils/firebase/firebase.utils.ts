@@ -23,12 +23,20 @@ import { Blog } from "../../store/blogs/blogs.types";
 
 export type AdditionalInformation = {
   displayName?: string;
+  imageUrl?: string;
 };
 
 export type UserData = {
   createdAt: Date;
   displayName: string;
   email: string;
+  imageUrl: string;
+};
+
+export type UserForDisplay = {
+  email: string;
+  imageUrl: string;
+  displayName: string;
 };
 
 const firebaseConfig = {
@@ -46,7 +54,7 @@ export const auth = getAuth();
 export const db = getFirestore();
 
 export type ObjectToAdd = {
-  title: string;
+  email: string;
 };
 
 export const addCollectionAndDocuments = async <T extends ObjectToAdd>(
@@ -57,11 +65,11 @@ export const addCollectionAndDocuments = async <T extends ObjectToAdd>(
   const batch = writeBatch(db);
 
   objectsToAdd.forEach((object) => {
-    const docRef = doc(collectionRef, object.title.toLowerCase());
+    const docRef = doc(collectionRef, object.email.toLowerCase());
     batch.set(docRef, object);
   });
+
   await batch.commit();
-  console.log("done");
 };
 
 export const getBlogsAndDocuments = async (): Promise<Blog[]> => {

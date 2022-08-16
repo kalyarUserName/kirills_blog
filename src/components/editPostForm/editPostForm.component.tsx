@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 
 import "./editPostForm.styles.scss";
 
@@ -20,7 +20,6 @@ const EditPostForm: FC<EditPostFormProps> = ({
   onChangeText,
 }) => {
   const [newImage, setNewImage] = useState(image);
-  useEffect(() => {}, [image]);
 
   return (
     <div className="edit-post-container">

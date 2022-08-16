@@ -1,6 +1,6 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./App.css";
 
@@ -12,9 +12,15 @@ import SignIn from "./components/signInForm/signIn.component";
 import SignUp from "./components/signUpForm/signUp.component";
 
 import { selectCurrentUser } from "./store/user/user.selector";
+import { fetchBlogsStart } from "./store/blogs/blogs.actions";
 
 function App() {
   const currentUser = useSelector(selectCurrentUser);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchBlogsStart());
+  }, [dispatch]);
+
   return (
     <div className={"App"}>
       <Routes>
@@ -22,10 +28,8 @@ function App() {
           <Route index element={<Home />} />
           {currentUser ? (
             <Fragment>
-              <Route
-                path={"sign-in" || "sign-up"}
-                element={<Navigate replace to={"/"} />}
-              />
+              <Route path={"sign-in"} element={<Navigate replace to={"/"} />} />
+              <Route path={"sign-up"} element={<Navigate replace to={"/"} />} />
             </Fragment>
           ) : (
             <Fragment>
@@ -33,8 +37,6 @@ function App() {
               <Route path="sign-in" element={<SignIn />} />
             </Fragment>
           )}
-          {/*<Route path="sign-in" element={<SignIn />} />*/}
-          {/*<Route path="sign-up" element={<SignUp />} />*/}
           <Route path="new-post" element={<NewPost />} />
           <Route path="blog" element={<Blog />}>
             <Route path=":blogId"></Route>
