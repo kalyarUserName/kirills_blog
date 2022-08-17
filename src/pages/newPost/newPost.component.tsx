@@ -4,7 +4,10 @@ import { guest } from "../../utils/types";
 
 import "./newPost.styles.scss";
 import Button from "../../components/button/button.component";
-import { UserForDisplay } from "../../utils/firebase/firebase.utils";
+import {
+  getBlogsId,
+  UserForDisplay,
+} from "../../utils/firebase/firebase.utils";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { addNewPost } from "../../store/blogs/blogs.actions";
@@ -29,14 +32,20 @@ const NewPost = () => {
     if (currentUser) setPost({ ...post, user: currentUser });
   }, [currentUser]);
 
-  const addPost = () => {
-    setPost({
-      ...post,
-      textPreview: post.text.slice(0, post.text.indexOf(".")) + "...",
-      date: new Date().toISOString(),
-      id: "200",
-    });
-    dispatch(addNewPost(post));
+  const addPost = async () => {
+    const newID = await getBlogsId().then((value) => value);
+    const newDate = new Date().toISOString();
+    const newTextPreview = post.text.slice(0, post.text.indexOf(".")) + "...";
+    const newPost: BlogItem = {
+      id: newID.toString(),
+      imageUrl: post.imageUrl,
+      date: newDate,
+      text: post.text,
+      textPreview: newTextPreview,
+      headline: post.headline,
+      user: post.user,
+    };
+    dispatch(addNewPost(newPost));
     setPost(defaultNewPost);
   };
   const onChangeHeadline = (headline: string) => {

@@ -17,6 +17,7 @@ import {
   writeBatch,
   query,
   getDocs,
+  runTransaction,
   QueryDocumentSnapshot,
 } from "firebase/firestore";
 import { Blog } from "../../store/blogs/blogs.types";
@@ -134,4 +135,25 @@ export const getCurrentUser = (): Promise<User | null> => {
       reject
     );
   });
+};
+
+export const getBlogsId = async (): Promise<number> => {
+  const sfDocRef = doc(db, "blogs", "id");
+  let newID = -1;
+  try {
+    await runTransaction(db, async (transaction) => {
+      const sfDoc = await transaction.get(sfDocRef);
+      if (!sfDoc.exists()) {
+        throw "Document does not exist!";
+      }
+
+      newID = sfDoc.data().currentID + 1;
+      transaction.update(sfDocRef, { currentID: newID });
+    });
+    console.log("Transaction successfully committed!");
+    return newID;
+  } catch (e) {
+    console.log("Transaction failed: ", e);
+    return newID;
+  }
 };
