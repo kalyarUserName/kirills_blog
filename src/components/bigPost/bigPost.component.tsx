@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import "./bigPost.styles.scss";
 
@@ -6,17 +6,17 @@ import UserBar from "../userBar/userBar.component";
 import EditButton from "../editButton/editButton.component";
 import EditPostForm from "../editPostForm/editPostForm.component";
 import { UserForDisplay } from "../../utils/firebase/firebase.utils";
-import { useSelector } from "react-redux";
-import { selectCurrentUser } from "../../store/user/user.selector";
 
 type NewestPostProps = {
   id: string;
   image: string;
   headline: string;
-  textPreview: string;
+  text: string;
   user: UserForDisplay;
   date: string;
   toNavigate?: (id: string) => void;
+  currentUser: UserForDisplay | null;
+  onSavePost: (imageUrl: string, headline: string, text: string) => void;
 };
 
 let hover = false;
@@ -27,17 +27,26 @@ const BigPost: FC<NewestPostProps> = ({
   date,
   image,
   headline,
-  textPreview,
+  text,
   user,
+  currentUser,
+  onSavePost,
 }) => {
-  const currentUser = useSelector(selectCurrentUser);
-
   const [isEdit, setIsEdit] = useState(false);
   const [newImage, setNewImage] = useState(image);
   const [newHeadline, setNewHeadline] = useState(headline);
-  const [newText, setNewText] = useState(textPreview);
+  const [newText, setNewText] = useState(text);
+
+  useEffect(() => {
+    setNewImage(image);
+    setNewHeadline(headline);
+    setNewText(text);
+  }, [image]);
 
   const edition = () => {
+    if (isEdit) {
+      onSavePost(newImage, newHeadline, newText);
+    }
     setIsEdit(!isEdit);
   };
 

@@ -6,21 +6,34 @@ import PostCard from "../../components/postCard/postCard.component";
 
 import "./home.styles.scss";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   selectBlogsIsLoading,
   selectBlogsMap,
 } from "../../store/blogs/blogs.selector";
 
 import Spinner from "../../components/spinner/spinner.component";
+import { selectCurrentUser } from "../../store/user/user.selector";
 
 const Home = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const blogsMap = useSelector(selectBlogsMap);
+  const isLoading = useSelector(selectBlogsIsLoading);
+  const currentUser = useSelector(selectCurrentUser);
+
   const redirectToBlog = (id: string) => {
     navigate("/blog/" + id);
   };
-  const blogsMap = useSelector(selectBlogsMap);
-  const isLoading = useSelector(selectBlogsIsLoading);
+
+  const onSaveChangesPost = (
+    imageUrl: string,
+    headline: string,
+    text: string
+  ) => {
+    //
+  };
 
   return (
     <Fragment>
@@ -39,9 +52,11 @@ const Home = () => {
                   image={blogs[0].imageUrl}
                   headline={blogs[0].headline}
                   date={blogs[0].date.slice(0, 10)}
-                  textPreview={blogs[0].textPreview}
+                  text={blogs[0].textPreview}
                   user={blogs[0].user}
                   toNavigate={redirectToBlog}
+                  currentUser={currentUser}
+                  onSavePost={onSaveChangesPost}
                 />
                 <hr />
               </div>

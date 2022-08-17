@@ -29,7 +29,7 @@ const Header = () => {
       <div className={"headerContainer"}>
         <div className={"logoContainer"}>
           <Link to={"/"}>
-            <img src="./logo2.png" alt={"logo"} />
+            <img src="/logo2.png" alt={"logo"} />
           </Link>
         </div>
 
@@ -40,13 +40,15 @@ const Header = () => {
           <Link className={"navLink"} to={"/blog"}>
             BLOG
           </Link>
-          <Link className={"navLink"} to={"/new-post"}>
-            NEW POST
-          </Link>
           {currentUser ? (
-            <a className={"navLink"} onClick={signOutUser}>
-              SIGN OUT
-            </a>
+            <Fragment>
+              <Link className={"navLink"} to={"/new-post"}>
+                NEW POST
+              </Link>
+              <a className={"navLink"} onClick={signOutUser}>
+                SIGN OUT
+              </a>
+            </Fragment>
           ) : (
             <Fragment>
               <Link className={"navLink"} to={"/sign-in"}>
