@@ -17,10 +17,12 @@ export const selectBlogsIsLoading = createSelector(
 
 export const selectBlogsMap = createSelector(
   [selectBlogs],
-  (categories): BlogMap =>
-    categories.reduce((acc, category) => {
-      const { email, items } = category;
-      acc[email.toLowerCase()] = items;
+  (blogs): BlogMap =>
+    blogs.reduce((acc, blog) => {
+      if (blog.email && blog.items) {
+        const { email, items } = blog;
+        acc[email.toLowerCase()] = items;
+      }
       return acc;
     }, {} as BlogMap)
 );
