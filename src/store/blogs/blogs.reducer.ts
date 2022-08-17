@@ -1,6 +1,6 @@
 import { AnyAction } from "redux";
 
-import { Blog, BlogItem } from "./blogs.types";
+import { Blog } from "./blogs.types";
 import {
   fetchBlogsFailed,
   fetchBlogsStart,
@@ -8,6 +8,7 @@ import {
   addNewPost,
   updatePost,
 } from "./blogs.actions";
+import { setBlogs } from "../../utils/firebase/firebase.utils";
 
 export type BlogsState = {
   readonly blogs: Blog[];
@@ -45,9 +46,10 @@ export const blogsReducer = (
         (post) => post.id === action.payload.id
       );
 
-    if (postIndex >= 0)
+    if (postIndex >= 0) {
       state.blogs[blogIndex].items[postIndex] = action.payload;
-
+      setBlogs(action.payload.user.email, state.blogs[blogIndex].items);
+    }
     return state;
   }
 
@@ -55,7 +57,10 @@ export const blogsReducer = (
     let blogIndex = state.blogs.findIndex(
       (blog) => blog.email === action.payload.user.email
     );
-    if (blogIndex >= 0) state.blogs[blogIndex].items.unshift(action.payload);
+    if (blogIndex >= 0) {
+      state.blogs[blogIndex].items.unshift(action.payload);
+      setBlogs(action.payload.user.email, state.blogs[blogIndex].items);
+    }
     return state;
   }
 
