@@ -13,10 +13,12 @@ import SignUp from "./components/signUpForm/signUp.component";
 
 import { selectCurrentUser } from "./store/user/user.selector";
 import { fetchBlogsStart } from "./store/blogs/blogs.actions";
+import { selectBlogs } from "./store/blogs/blogs.selector";
 
 function App() {
   const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchBlogsStart());
   }, [dispatch]);
@@ -28,16 +30,17 @@ function App() {
           <Route index element={<Home />} />
           {currentUser ? (
             <Fragment>
-              <Route path={"sign-in"} element={<Navigate replace to={"/"} />} />
-              <Route path={"sign-up"} element={<Navigate replace to={"/"} />} />
+              <Route path="sign-in" element={<Navigate replace to={"/"} />} />
+              <Route path="sign-up" element={<Navigate replace to={"/"} />} />
+              <Route path="new-post" element={<NewPost />} />
             </Fragment>
           ) : (
             <Fragment>
               <Route path="sign-up" element={<SignUp />} />
               <Route path="sign-in" element={<SignIn />} />
+              <Route path="new-post" element={<Navigate replace to={"/"} />} />
             </Fragment>
           )}
-          <Route path="new-post" element={<NewPost />} />
           <Route path="blog" element={<Blog />}>
             <Route path=":blogId"></Route>
           </Route>
