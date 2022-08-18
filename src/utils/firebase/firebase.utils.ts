@@ -20,7 +20,7 @@ import {
   runTransaction,
   QueryDocumentSnapshot,
 } from "firebase/firestore";
-import { Blog } from "../../store/blogs/blogs.types";
+import { Blog, BlogItem } from "../../store/blogs/blogs.types";
 
 export type AdditionalInformation = {
   displayName?: string;
@@ -49,6 +49,7 @@ const firebaseConfig = {
   appId: process.env["REACT_APP_FIREBASE_APP_ID"],
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const firebaseApp = initializeApp(firebaseConfig);
 
 export const auth = getAuth();
@@ -56,21 +57,6 @@ export const db = getFirestore();
 
 export type ObjectToAdd = {
   email: string;
-};
-
-export const addCollectionAndDocuments = async <T extends ObjectToAdd>(
-  collectionKey: string,
-  objectsToAdd: T[]
-): Promise<void> => {
-  const collectionRef = collection(db, collectionKey);
-  const batch = writeBatch(db);
-
-  objectsToAdd.forEach((object) => {
-    const docRef = doc(collectionRef, object.email.toLowerCase());
-    batch.set(docRef, object);
-  });
-
-  await batch.commit();
 };
 
 export const getBlogsAndDocuments = async (): Promise<Blog[]> => {
@@ -137,23 +123,59 @@ export const getCurrentUser = (): Promise<User | null> => {
   });
 };
 
-export const getBlogsId = async (): Promise<number> => {
+export enum gettingID {
+  ID_POST = "ID_POST",
+  ID_COMMENT = "ID_COMMENT",
+}
+
+export const getBlogsId = async (id: gettingID): Promise<number> => {
   const sfDocRef = doc(db, "blogs", "id");
   let newID = -1;
   try {
     await runTransaction(db, async (transaction) => {
       const sfDoc = await transaction.get(sfDocRef);
       if (!sfDoc.exists()) {
+        // eslint-disable-next-line no-throw-literal
         throw "Document does not exist!";
       }
-
-      newID = sfDoc.data().currentID + 1;
-      transaction.update(sfDocRef, { currentID: newID });
+      if (id === gettingID.ID_POST) {
+        newID = sfDoc.data().currentID + 1;
+        transaction.update(sfDocRef, { currentID: newID });
+      }
+      if (id === gettingID.ID_COMMENT) {
+        newID = sfDoc.data().commentID + 1;
+        transaction.update(sfDocRef, { commentID: newID });
+      }
     });
-    console.log("Transaction successfully committed!");
     return newID;
   } catch (e) {
-    console.log("Transaction failed: ", e);
+    console.log(e);
     return newID;
   }
+};
+
+export const setBlogs = async (
+  userEmail: string,
+  usersBlogs: BlogItem[]
+): Promise<void> => {
+  const batch = writeBatch(db);
+  const usersBlogsRef = doc(db, "blogs", userEmail);
+  batch.update(usersBlogsRef, { items: usersBlogs });
+
+  await batch.commit();
+};
+
+export const addCollectionAndDocuments = async <T extends ObjectToAdd>(
+  collectionKey: string,
+  objectsToAdd: T[]
+): Promise<void> => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.email.toLowerCase());
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
 };

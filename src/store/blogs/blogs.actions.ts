@@ -15,7 +15,7 @@ export type FetchBlogsSuccess = ActionWithPayload<
 >;
 
 export type FetchBlogsFailed = ActionWithPayload<
-  BLOGS_ACTION_TYPES.FETCH_BLOGS_SUCCESS,
+  BLOGS_ACTION_TYPES.FETCH_BLOGS_FAILED,
   Error
 >;
 
@@ -29,21 +29,30 @@ export type AddNewPost = ActionWithPayload<
   BlogItem
 >;
 
-export const fetchBlogsStart = withMatcher(() =>
-  createAction(BLOGS_ACTION_TYPES.FETCH_BLOGS_START)
+export type AddNewComment = ActionWithPayload<
+  BLOGS_ACTION_TYPES.ADD_NEW_COMMENT,
+  Comment[]
+>;
+
+export const fetchBlogsStart = withMatcher(
+  (): FetchBlogsStart => createAction(BLOGS_ACTION_TYPES.FETCH_BLOGS_START)
 );
 
-export const fetchBlogsSuccess = withMatcher((blogsArray: Blog[]) =>
-  createAction(BLOGS_ACTION_TYPES.FETCH_BLOGS_SUCCESS, blogsArray)
+export const fetchBlogsSuccess = withMatcher(
+  (blogsArray: Blog[]): FetchBlogsSuccess =>
+    createAction(BLOGS_ACTION_TYPES.FETCH_BLOGS_SUCCESS, blogsArray)
 );
 
-export const fetchBlogsFailed = withMatcher((error: Error) =>
-  createAction(BLOGS_ACTION_TYPES.FETCH_BLOGS_FAILED, error)
+export const fetchBlogsFailed = withMatcher(
+  (error: Error): FetchBlogsFailed =>
+    createAction(BLOGS_ACTION_TYPES.FETCH_BLOGS_FAILED, error)
 );
 
-export const updatePost = withMatcher((updatedPost: BlogItem) =>
-  createAction(BLOGS_ACTION_TYPES.UPDATE_POST, updatedPost)
+export const updatePost = withMatcher(
+  (updatedPost: BlogItem): UpdatePost =>
+    createAction(BLOGS_ACTION_TYPES.UPDATE_POST, updatedPost)
 );
-export const addNewPost = withMatcher((newPost: BlogItem) =>
-  createAction(BLOGS_ACTION_TYPES.ADD_NEW_POST, newPost)
+export const addNewPost = withMatcher(
+  (newPost: BlogItem): AddNewPost =>
+    createAction(BLOGS_ACTION_TYPES.ADD_NEW_POST, newPost)
 );

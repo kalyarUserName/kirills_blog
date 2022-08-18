@@ -6,6 +6,7 @@ import "./newPost.styles.scss";
 import Button from "../../components/button/button.component";
 import {
   getBlogsId,
+  gettingID,
   UserForDisplay,
 } from "../../utils/firebase/firebase.utils";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,7 +34,7 @@ const NewPost = () => {
   }, [currentUser]);
 
   const addPost = async () => {
-    const newID = await getBlogsId().then((value) => value);
+    const newID = await getBlogsId(gettingID.ID_POST).then((value) => value);
     const newDate = new Date().toISOString();
     const newTextPreview = post.text.slice(0, post.text.indexOf(".")) + "...";
     const newPost: BlogItem = {

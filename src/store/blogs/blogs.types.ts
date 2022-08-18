@@ -26,6 +26,7 @@ export type BlogMap = {
 };
 
 export type Comment = {
+  id: string;
   user: UserForDisplay;
   text: string;
   date: string;

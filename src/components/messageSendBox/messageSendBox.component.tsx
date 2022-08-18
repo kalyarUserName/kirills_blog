@@ -4,11 +4,14 @@ import "./messageSendBox.styles.scss";
 
 type MessageSendBoxProps = {
   onTextChange: (message: string) => void;
-  onSendMessage: () => void;
+  onSendMessage: (message: string) => void;
+  textMessage: string;
 };
+
 const MessageSendBox: FC<MessageSendBoxProps> = ({
   onTextChange,
   onSendMessage,
+  textMessage,
 }) => {
   return (
     <div className="messageBox-container">
@@ -17,8 +20,9 @@ const MessageSendBox: FC<MessageSendBoxProps> = ({
         onChange={(event) => {
           onTextChange(event.target.value);
         }}
+        value={textMessage}
       />
-      <button onClick={() => onSendMessage()}>Send</button>
+      <button onClick={() => onSendMessage(textMessage)}> {"Send"} </button>
     </div>
   );
 };

@@ -7,10 +7,14 @@ import BigPost from "../../components/bigPost/bigPost.component";
 
 import Comments from "../../components/comments/comments.component";
 
-import { BlogItem } from "../../store/blogs/blogs.types";
+import { BlogItem, Comment } from "../../store/blogs/blogs.types";
 import { useDispatch, useSelector } from "react-redux";
 import { selectBlogs, selectBlogsMap } from "../../store/blogs/blogs.selector";
-import { UserForDisplay } from "../../utils/firebase/firebase.utils";
+import {
+  getBlogsId,
+  gettingID,
+  UserForDisplay,
+} from "../../utils/firebase/firebase.utils";
 import Spinner from "../../components/spinner/spinner.component";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { changePost, isChangesPost } from "../../utils/general";
@@ -40,6 +44,7 @@ const BlogPage = () => {
 
   if (!id && blogs.length !== 0) post = blogs[0].items[0];
 
+  // eslint-disable-next-line array-callback-return
   Object.keys(blogsMap).map((email) => {
     const blogs = blogsMap[email];
     const res = blogs.find((blog) => blog.id === id);
@@ -59,6 +64,24 @@ const BlogPage = () => {
     }
   };
 
+  const onCommentSend = async (message: string) => {
+    const date = new Date().toISOString();
+    const newID = await getBlogsId(gettingID.ID_COMMENT).then((value) => value);
+    const newComment: Comment = {
+      id: newID.toString(),
+      date: date,
+      text: message,
+      user: post.user,
+    };
+
+    if (post.comments) post.comments.unshift(newComment);
+    else {
+      post = { ...post, comments: [newComment] };
+    }
+
+    dispatch(updatePost(post));
+  };
+
   return (
     <div className={"blog-container"}>
       {post === defaultPost ? (
@@ -76,7 +99,7 @@ const BlogPage = () => {
             onSavePost={onSaveChangesPost}
           />
           <hr />
-          <Comments />
+          <Comments comments={post.comments} onSendComment={onCommentSend} />
         </Fragment>
       )}
     </div>

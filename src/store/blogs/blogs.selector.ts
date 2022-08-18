@@ -15,14 +15,12 @@ export const selectBlogsIsLoading = createSelector(
   (blogsSlice) => blogsSlice.isLoading
 );
 
-export const selectBlogsMap = createSelector(
-  [selectBlogs],
-  (blogs): BlogMap =>
-    blogs.reduce((acc, blog) => {
-      if (blog.email && blog.items) {
-        const { email, items } = blog;
-        acc[email.toLowerCase()] = items;
-      }
-      return acc;
-    }, {} as BlogMap)
+export const selectBlogsMap = createSelector([selectBlogs], (blogs) =>
+  blogs.reduce((acc, blog) => {
+    if (blog.email && blog.items) {
+      const { email, items } = blog;
+      acc[email.toLowerCase()] = items;
+    }
+    return acc;
+  }, {} as BlogMap)
 );

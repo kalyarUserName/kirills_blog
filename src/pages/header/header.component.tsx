@@ -1,4 +1,11 @@
-import { useEffect, Fragment, useState, ChangeEvent } from "react";
+import React, {
+  useEffect,
+  Fragment,
+  useState,
+  ChangeEvent,
+  FC,
+  SetStateAction,
+} from "react";
 import { Link, Outlet } from "react-router-dom";
 
 import SearchBar from "../../components/searchBox/search.component";
@@ -7,17 +14,43 @@ import "./header.scss";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { signOutStart } from "../../store/user/user.actions";
 import { useSelector, useDispatch } from "react-redux";
+import { BlogItem } from "../../store/blogs/blogs.types";
+import { selectBlogsMap } from "../../store/blogs/blogs.selector";
+type HeaderProps = {
+  setFilteredBlogs: React.Dispatch<SetStateAction<BlogItem[]>>;
+};
 
-const Header = () => {
+const Header: FC<HeaderProps> = ({ setFilteredBlogs }) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
+  const blogMap = useSelector(selectBlogsMap);
   const [searchField, setSearchField] = useState("");
+
+  const [blogsArray, setBlogsArray] = useState<BlogItem[]>([]);
 
   const signOutUser = () => {
     dispatch(signOutStart());
   };
 
-  useEffect(() => {}, [searchField]);
+  useEffect(() => {
+    let arrayT: BlogItem[] = [];
+    // eslint-disable-next-line array-callback-return
+    Object.keys(blogMap).map((email) => {
+      arrayT.push(...blogMap[email].map((blog) => blog));
+    });
+
+    setBlogsArray(arrayT);
+  }, [blogMap]);
+
+  useEffect(() => {
+    const newFilteredBlogs = blogsArray.filter((blog) => {
+      return (
+        blog.headline.toLowerCase().includes(searchField) ||
+        blog.text.toLowerCase().includes(searchField)
+      );
+    });
+    setFilteredBlogs(newFilteredBlogs);
+  }, [searchField, blogsArray, setFilteredBlogs]);
 
   const onSearchChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const searchFieldString = event.target.value.toLowerCase();
