@@ -49,6 +49,7 @@ const firebaseConfig = {
   appId: process.env["REACT_APP_FIREBASE_APP_ID"],
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const firebaseApp = initializeApp(firebaseConfig);
 
 export const auth = getAuth();
@@ -122,18 +123,29 @@ export const getCurrentUser = (): Promise<User | null> => {
   });
 };
 
-export const getBlogsId = async (): Promise<number> => {
+export enum gettingID {
+  ID_POST = "ID_POST",
+  ID_COMMENT = "ID_COMMENT",
+}
+
+export const getBlogsId = async (id: gettingID): Promise<number> => {
   const sfDocRef = doc(db, "blogs", "id");
   let newID = -1;
   try {
     await runTransaction(db, async (transaction) => {
       const sfDoc = await transaction.get(sfDocRef);
       if (!sfDoc.exists()) {
+        // eslint-disable-next-line no-throw-literal
         throw "Document does not exist!";
       }
-
-      newID = sfDoc.data().currentID + 1;
-      transaction.update(sfDocRef, { currentID: newID });
+      if (id === gettingID.ID_POST) {
+        newID = sfDoc.data().currentID + 1;
+        transaction.update(sfDocRef, { currentID: newID });
+      }
+      if (id === gettingID.ID_COMMENT) {
+        newID = sfDoc.data().commentID + 1;
+        transaction.update(sfDocRef, { commentID: newID });
+      }
     });
     return newID;
   } catch (e) {
