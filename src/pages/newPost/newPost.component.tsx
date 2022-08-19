@@ -17,13 +17,13 @@ import {
 } from "../../utils/firebase/firebase.utils";
 
 const defaultNewPost: BlogItem = {
+  id: "",
   headline: "",
   imageUrl: "",
   text: "",
+  textPreview: "",
   user: guest as UserForDisplay,
   date: "",
-  id: "",
-  textPreview: "",
 };
 
 const NewPost = () => {
@@ -42,13 +42,14 @@ const NewPost = () => {
     const newTextPreview = post.text.slice(0, post.text.indexOf(".")) + "...";
     const newPost: BlogItem = {
       id: newID.toString(),
+      headline: post.headline,
       imageUrl: post.imageUrl,
-      date: newDate,
       text: post.text,
       textPreview: newTextPreview,
-      headline: post.headline,
       user: post.user,
+      date: newDate,
     };
+    if (newPost.text === "" && newPost.headline === "") return;
     dispatch(addNewPost(newPost));
     setPost(defaultNewPost);
   };
@@ -79,6 +80,9 @@ const NewPost = () => {
         onChangeHeadline={onChangeHeadline}
         onChangeText={onChangeText}
       />
+      <div className="button-container-for-mobile">
+        <Button onClick={addPost} text={"Create new post"} />
+      </div>
     </div>
   );
 };

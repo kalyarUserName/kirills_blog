@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from "react";
+import React, { ChangeEvent, Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -8,24 +8,49 @@ import NewestPost from "../../components/bigPost/bigPost.component";
 import PostCard from "../../components/postCard/postCard.component";
 import Spinner from "../../components/spinner/spinner.component";
 
-import { selectBlogsIsLoading } from "../../store/blogs/blogs.selector";
+import {
+  selectBlogsIsLoading,
+  selectBlogsMap,
+} from "../../store/blogs/blogs.selector";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { updatePost } from "../../store/blogs/blogs.actions";
 import { BlogItem } from "../../store/blogs/blogs.types";
 import { changePost, isChangesPost } from "../../utils/general";
+import SearchBar from "../../components/searchBox/search.component";
 
-export type HomeProps = {
-  filteredBlogs: BlogItem[];
-};
-
-const Home: FC<HomeProps> = ({ filteredBlogs }) => {
+const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [searchField, setSearchField] = useState("");
+  const [blogsArray, setBlogsArray] = useState<BlogItem[]>([]);
+  const [filteredBlogs, setFilteredBlogs] = useState<BlogItem[]>([]);
+
+  const blogMap = useSelector(selectBlogsMap);
   const isLoading = useSelector(selectBlogsIsLoading);
   const currentUser = useSelector(selectCurrentUser);
 
   let firstPost: BlogItem;
+
+  useEffect(() => {
+    let arrayT: BlogItem[] = [];
+    // eslint-disable-next-line array-callback-return
+    Object.keys(blogMap).map((email) => {
+      arrayT.push(...blogMap[email].map((blog) => blog));
+    });
+
+    setBlogsArray(arrayT);
+  }, [blogMap]);
+
+  useEffect(() => {
+    const newFilteredBlogs = blogsArray.filter((blog) => {
+      return (
+        blog.headline.toLowerCase().includes(searchField) ||
+        blog.text.toLowerCase().includes(searchField)
+      );
+    });
+    setFilteredBlogs(newFilteredBlogs);
+  }, [searchField, blogsArray, setFilteredBlogs]);
 
   const redirectToBlog = (id: string) => {
     navigate("/blog/" + id);
@@ -42,12 +67,23 @@ const Home: FC<HomeProps> = ({ filteredBlogs }) => {
     }
   };
 
+  const onSearchChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const searchFieldString = event.target.value.toLowerCase();
+    setSearchField(searchFieldString);
+  };
+
   return (
-    <Fragment>
+    <div className={"posts-container"}>
+      <div className="search-bar">
+        <SearchBar
+          placeholder={"Search post"}
+          onChangeHandler={onSearchChange}
+        />
+      </div>
       {isLoading || filteredBlogs.length === 0 ? (
         <Spinner />
       ) : (
-        <div className={"posts-container"}>
+        <Fragment>
           <div className="newest-post">
             <NewestPost
               key={filteredBlogs[0].id}
@@ -78,9 +114,10 @@ const Home: FC<HomeProps> = ({ filteredBlogs }) => {
             })}
           </div>
           <hr />
-        </div>
+        </Fragment>
       )}
-    </Fragment>
+    </div>
+
     // <button
     //   onClick={(e) => addCollectionAndDocuments("blogs", dataPosts)}
     // ></button>

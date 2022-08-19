@@ -3,6 +3,7 @@
   display: grid;
   margin: 30px auto;
   grid-template-areas:
+  "C"
     "A"
     "B";
   row-gap: 20px;
@@ -17,5 +18,17 @@
     display: grid;
     grid-template-columns: 40vw 40vw;
     grid-gap: 10px;
+    @media screen and (max-width:700px){
+      grid-template-columns: 1fr;
+    }
+  }
+  .search-bar{
+    grid-area: C;
+    height: 50px;
+    width: 400px;
+    display: flex;
+    @media screen and (max-width:700px){
+      width: 80vw;
+    }
   }
 }

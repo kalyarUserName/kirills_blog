@@ -3,11 +3,13 @@
   cursor: pointer;
   padding: 0 10px;
   margin: 0 20px;
-
   display: grid;
   grid-template-areas:
     "A"
     "B";
+  @media screen and (max-width:700px) {
+    margin: 0;
+  }
 
   &:hover {
     filter: brightness(90%);
@@ -28,7 +30,10 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-    }
+      @media screen and (max-width:700px) {
+        width: 90%;
+      }
+      }
   }
   .post-container {
     width: 95%;
@@ -44,5 +49,9 @@
       font-size: 16pt;
       font-family: "Arial", sans-serif;
     }
+  }
+
+  @media screen and (max-width:700px) {
+    width: 100%;
   }
 }

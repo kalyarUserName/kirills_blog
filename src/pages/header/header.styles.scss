@@ -1,0 +1,71 @@
+$second-color: #7ca47c;
+
+.headerContainer {
+  display: flex;
+  width: 50vw;
+  height: 65px;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  .logoContainer {
+    width: 65px;
+    img {
+      height: 70px;
+      width: auto;
+      margin-left: 3.5vw;
+    }
+    @media screen and (max-width:700px) {
+      width: 40px;
+      img{
+        margin-left: 10px;
+      }
+    }
+  }
+  .navLinks {
+    width: 40vw;
+    height: 100%;
+    display: flex;
+    margin-left: 0;
+    margin-right:auto ;
+    align-items: center;
+    justify-content: center;
+
+    .navLink {
+      cursor: pointer;
+      text-decoration-line: unset;
+      font-family: "Poppins", sans-serif, bold;
+      color: black;
+      font-size: 15pt;
+      padding: 10px 20px;
+    }
+  }
+  @media screen and (max-width:700px) {
+    display: grid;
+    grid-template-areas:
+            "B B"
+            "C C";
+    height: fit-content;
+    width: 100%;
+    margin-left: 0;
+    .logoContainer{
+      grid-area: A;
+      display: none;
+    }
+    .navLinks{
+      grid-area: B;
+      margin-left: auto;
+      margin-right:auto;
+      display: grid;
+
+      .navLink {
+        font-size: 18pt;
+        margin:  0 10px;
+        padding: 10px;
+        width: 70vw;
+      }
+    }
+    .search-bar{
+      grid-area: C;
+  }
+  }
+}

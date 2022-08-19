@@ -1,61 +1,18 @@
-import React, {
-  useEffect,
-  Fragment,
-  useState,
-  ChangeEvent,
-  FC,
-  SetStateAction,
-} from "react";
+import React, { Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 
-import "./header.scss";
+import "./header.styles.scss";
 
-import SearchBar from "../../components/searchBox/search.component";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { signOutStart } from "../../store/user/user.actions";
-import { BlogItem } from "../../store/blogs/blogs.types";
-import { selectBlogsMap } from "../../store/blogs/blogs.selector";
 
-type HeaderProps = {
-  setFilteredBlogs: React.Dispatch<SetStateAction<BlogItem[]>>;
-};
-
-const Header: FC<HeaderProps> = ({ setFilteredBlogs }) => {
+const Header = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
-  const blogMap = useSelector(selectBlogsMap);
-  const [searchField, setSearchField] = useState("");
-
-  const [blogsArray, setBlogsArray] = useState<BlogItem[]>([]);
-
-  useEffect(() => {
-    let arrayT: BlogItem[] = [];
-    // eslint-disable-next-line array-callback-return
-    Object.keys(blogMap).map((email) => {
-      arrayT.push(...blogMap[email].map((blog) => blog));
-    });
-
-    setBlogsArray(arrayT);
-  }, [blogMap]);
-
-  useEffect(() => {
-    const newFilteredBlogs = blogsArray.filter((blog) => {
-      return (
-        blog.headline.toLowerCase().includes(searchField) ||
-        blog.text.toLowerCase().includes(searchField)
-      );
-    });
-    setFilteredBlogs(newFilteredBlogs);
-  }, [searchField, blogsArray, setFilteredBlogs]);
 
   const signOutUser = () => {
     dispatch(signOutStart());
-  };
-
-  const onSearchChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const searchFieldString = event.target.value.toLowerCase();
-    setSearchField(searchFieldString);
   };
 
   return (
@@ -79,9 +36,9 @@ const Header: FC<HeaderProps> = ({ setFilteredBlogs }) => {
               <Link className={"navLink"} to={"/new-post"}>
                 NEW POST
               </Link>
-              <a className={"navLink"} onClick={signOutUser}>
+              <Link className={"navLink"} onClick={signOutUser} to={""}>
                 SIGN OUT
-              </a>
+              </Link>
             </Fragment>
           ) : (
             <Fragment>
@@ -93,10 +50,6 @@ const Header: FC<HeaderProps> = ({ setFilteredBlogs }) => {
               </Link>
             </Fragment>
           )}
-          <SearchBar
-            placeholder={"Search post"}
-            onChangeHandler={onSearchChange}
-          />
         </div>
       </div>
       <Outlet />
