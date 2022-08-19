@@ -102,14 +102,16 @@ const Home = () => {
           <div className="post-list">
             {filteredBlogs.slice(1).map((post) => {
               return (
-                <PostCard
-                  id={post.id}
-                  key={post.id}
-                  headline={post.headline}
-                  textPreview={post.textPreview}
-                  image={post.imageUrl}
-                  toNavigate={redirectToBlog}
-                />
+                <Fragment>
+                  <PostCard
+                    id={post.id}
+                    key={post.id}
+                    headline={post.headline}
+                    textPreview={post.textPreview}
+                    image={post.imageUrl}
+                    toNavigate={redirectToBlog}
+                  />
+                </Fragment>
               );
             })}
           </div>

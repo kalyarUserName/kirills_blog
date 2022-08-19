@@ -39,16 +39,17 @@ $shadow-color: #dcd8d8;
     width: 90vw;
       margin: 0;
     }
-      textarea {
-      padding: 10px 10px;
-      width: 700px;
-      overflow-y: scroll;
-      border-radius: 15px;
-      box-shadow: 15px 10px 15px $shadow-color;
-      @media screen and (max-width:700px) {
-        width: 80vw;
-      }
+    textarea {
+    padding: 10px 10px;
+    width: 700px;
+    overflow-y: scroll;
+    border-radius: 15px;
+    box-shadow: 15px 10px 15px $shadow-color;
+    @media screen and (max-width:700px) {
+      width: 87vw;
+      font-size: 20pt!important;
     }
+  }
     textarea::-webkit-scrollbar {
       width: 0;
       height: 0;

@@ -1,16 +1,23 @@
 $second-color: #7ca47c;
+$shadow-color: #dcd8d8;
 
 .newestPost-container {
+  box-shadow: 5px 5px 10px $shadow-color;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  padding-left: 20px;
   margin-right: auto;
   width: 90vw;
   margin-left: 0;
   display: grid;
   column-gap: 0;
+
   @media screen and (min-width: 701px){
     grid-template-areas: "A A A A   B B B B";
   }
   @media screen and (max-width:700px){
-  grid-template:
+    box-shadow: 0 5px 5px $shadow-color;
+    grid-template:
     "A"
     "B";
   }
@@ -34,6 +41,7 @@ $second-color: #7ca47c;
         margin-right: auto;
         width: 85vw;
         height: auto;
+        padding-right: 10px;
       }
     }
   }
@@ -46,7 +54,9 @@ $second-color: #7ca47c;
       font-size: 30pt;
       font-weight: 700;
       font-style: italic;
-
+      @media screen and (max-width:700px) {
+          font-size: 20pt;
+        }
       &:hover {
         cursor: pointer;
         text-decoration: $second-color underline;
@@ -56,6 +66,11 @@ $second-color: #7ca47c;
       display: flex;
       font-size: 18pt;
       font-family: "Arial", sans-serif;
+      @media screen and (max-width:700px) {
+        font-size: 12pt;
+        padding-right: 10px;
+
+      }
     }
     .userbar {
     }
