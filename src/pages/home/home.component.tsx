@@ -33,12 +33,12 @@ const Home = () => {
   let firstPost: BlogItem;
 
   useEffect(() => {
+    if (blogMap[0]) firstPost = blogMap[0][0];
     let arrayT: BlogItem[] = [];
     // eslint-disable-next-line array-callback-return
     Object.keys(blogMap).map((email) => {
       arrayT.push(...blogMap[email].map((blog) => blog));
     });
-
     setBlogsArray(arrayT);
   }, [blogMap]);
 
@@ -61,9 +61,10 @@ const Home = () => {
     headline: string,
     text: string
   ) => {
-    if (isChangesPost(firstPost, imageUrl, headline, text)) {
-      dispatch(updatePost(changePost(firstPost, imageUrl, headline, text)));
-      firstPost = changePost(firstPost, imageUrl, headline, text);
+    if (isChangesPost(filteredBlogs[0], imageUrl, headline, text)) {
+      dispatch(
+        updatePost(changePost(filteredBlogs[0], imageUrl, headline, text))
+      );
     }
   };
 
@@ -102,10 +103,9 @@ const Home = () => {
           <div className="post-list">
             {filteredBlogs.slice(1).map((post) => {
               return (
-                <Fragment>
+                <Fragment key={post.id}>
                   <PostCard
                     id={post.id}
-                    key={post.id}
                     headline={post.headline}
                     textPreview={post.textPreview}
                     image={post.imageUrl}
