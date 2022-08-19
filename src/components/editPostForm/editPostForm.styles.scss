@@ -7,15 +7,23 @@ $shadow-color: #dcd8d8;
   display: grid;
   column-gap: 10px;
   grid-template-areas: "A B B B   B B B B";
-
+  @media screen and (max-width:700px) {
+  grid-template-areas: "A"
+  "B";
+  }
   .image-container {
     grid-area: A;
-
+    @media screen and (max-width:700px) {
+      width: 90vw;
+    }
     img {
       margin-top: 20px;
       width: 30vw;
       height: auto;
-    }
+      @media screen and (max-width:700px) {
+      width: 90vw;
+      }
+      }
     .image {
       margin-left: 15%;
     }
@@ -24,12 +32,19 @@ $shadow-color: #dcd8d8;
     grid-area: B;
     margin: 0 30px;
     width: 60vw;
-    textarea {
+    @media screen and (max-width:700px) {
+    width: 90vw;
+      margin: 0;
+    }
+      textarea {
       padding: 10px 10px;
       width: 700px;
       overflow-y: scroll;
       border-radius: 15px;
       box-shadow: 15px 10px 15px $shadow-color;
+      @media screen and (max-width:700px) {
+        width: 90vw;
+      }
     }
     textarea::-webkit-scrollbar {
       width: 0;

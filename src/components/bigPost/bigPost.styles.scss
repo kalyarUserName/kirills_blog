@@ -6,18 +6,34 @@ $second-color: #7ca47c;
   margin-left: 0;
   display: grid;
   column-gap: 0;
-  grid-template-areas: "A A A A   B B B B";
-
+  @media screen and (min-width: 701px){
+    grid-template-areas: "A A A A   B B B B";
+  }
+  @media screen and (max-width:700px){
+  grid-template:
+    "A"
+    "B";
+  }
   .image {
     grid-area: A;
+    @media screen and (min-width: 701px){
     width: 500px;
-
     img {
       width: 500px;
       height: auto;
       cursor: pointer;
       &:hover {
         filter: brightness(80%);
+      }
+    }
+    }
+    @media screen and (max-width:700px) {
+      width: 100%;
+      img {
+        margin-left: auto;
+        margin-right: auto;
+        width: 85vw;
+        height: auto;
       }
     }
   }
@@ -42,6 +58,10 @@ $second-color: #7ca47c;
       font-family: "Arial", sans-serif;
     }
     .userbar {
+    }
+    @media screen and (max-width:700px){
+      width: 100%;
+      margin-left: 5px;
     }
   }
 }
