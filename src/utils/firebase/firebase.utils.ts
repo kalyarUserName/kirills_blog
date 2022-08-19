@@ -85,10 +85,12 @@ export const createUserDocumentFromAuth = async (
         createdAt,
         ...additionInformation,
       });
+      return (await getDoc(userDocRef)) as QueryDocumentSnapshot<UserData>;
     } catch (error) {
       console.log("error creating the user", error);
     }
   }
+
   return userSnapshot as QueryDocumentSnapshot<UserData>;
 };
 

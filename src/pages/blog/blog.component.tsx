@@ -71,7 +71,7 @@ const BlogPage = () => {
       id: newID.toString(),
       date: date,
       text: message,
-      user: post.user,
+      user: currentUser,
     };
 
     if (post.comments) post.comments.unshift(newComment);
