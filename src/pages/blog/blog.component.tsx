@@ -64,7 +64,7 @@ const BlogPage = () => {
   };
 
   const onCommentSend = async (message: string) => {
-    if (message === "") return;
+    if (message === "" || !currentUser) return;
     const date = new Date().toISOString();
     const newID = await getBlogsId(gettingID.ID_COMMENT).then((value) => value);
     const newComment: Comment = {
