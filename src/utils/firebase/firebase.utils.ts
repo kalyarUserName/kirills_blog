@@ -161,9 +161,12 @@ export const setBlogs = async (
   usersBlogs: BlogItem[]
 ): Promise<void> => {
   const batch = writeBatch(db);
-  const usersBlogsRef = doc(db, "blogs", userEmail);
-  batch.update(usersBlogsRef, { items: usersBlogs });
-
+  const usersBlogsRef = doc(db, "blogs", userEmail.toLowerCase());
+  const userSnapshot = await getDoc(usersBlogsRef);
+  if (userSnapshot.exists()) batch.update(usersBlogsRef, { items: usersBlogs });
+  else {
+    await setDoc(usersBlogsRef, { items: usersBlogs });
+  }
   await batch.commit();
 };
 
