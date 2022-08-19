@@ -8,6 +8,9 @@ $shadow-color: #dcd8d8;
   column-gap: 10px;
   grid-template-areas: "A B B B   B B B B";
   @media screen and (max-width:700px) {
+    width: 90vw;
+    margin-left: 0;
+    margin-right: 0;
   grid-template-areas: "A"
   "B";
   }
@@ -43,7 +46,7 @@ $shadow-color: #dcd8d8;
       border-radius: 15px;
       box-shadow: 15px 10px 15px $shadow-color;
       @media screen and (max-width:700px) {
-        width: 90vw;
+        width: 80vw;
       }
     }
     textarea::-webkit-scrollbar {

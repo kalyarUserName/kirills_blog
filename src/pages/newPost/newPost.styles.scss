@@ -34,10 +34,12 @@ $shadow-color: #dcd8d8;
     display: none;
     @media screen and (max-width:700px) {
     display: block;
+      width: 90vw;
+
       button{
         width: 70vw;
         height: 50px;
-        margin-left: 20vw;
+        margin-left: 10vw;
         margin-right: 20vw;
       }
 
