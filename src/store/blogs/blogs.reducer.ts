@@ -60,6 +60,15 @@ export const blogsReducer = (
     if (blogIndex >= 0) {
       state.blogs[blogIndex].items.unshift(action.payload);
       setBlogs(action.payload.user.email, state.blogs[blogIndex].items);
+    } else {
+      state.blogs.push({
+        email: action.payload.user.email.toLowerCase(),
+        items: [action.payload],
+      });
+      blogIndex = state.blogs.findIndex(
+        (blog) => blog.email === action.payload.user.email
+      );
+      setBlogs(action.payload.user.email, state.blogs[blogIndex].items);
     }
     return state;
   }
