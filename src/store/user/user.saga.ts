@@ -3,8 +3,6 @@ import { User } from "firebase/auth";
 
 import { USER_ACTION_TYPES } from "./user.types";
 
-import { AdditionalInformation } from "../../utils/firebase/firebase.utils";
-
 import {
   signInSuccess,
   signUpSuccess,
@@ -16,8 +14,8 @@ import {
   SignUpStart,
   SignUpSuccess,
 } from "./user.actions";
-
 import {
+  AdditionalInformation,
   getCurrentUser,
   createUserDocumentFromAuth,
   signInAuthUserWithEmailAndPassword,

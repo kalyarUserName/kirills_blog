@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 
 import "./postCard.styles.scss";
+
 import { UserForDisplay } from "../../utils/firebase/firebase.utils";
 
 type PostCardProps = {

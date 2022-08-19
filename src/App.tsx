@@ -13,7 +13,6 @@ import SignUp from "./components/signUpForm/signUp.component";
 
 import { selectCurrentUser } from "./store/user/user.selector";
 import { fetchBlogsStart } from "./store/blogs/blogs.actions";
-
 import { BlogItem } from "./store/blogs/blogs.types";
 
 function App() {

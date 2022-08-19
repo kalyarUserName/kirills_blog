@@ -1,26 +1,23 @@
 import React, { FC, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-
-import NewestPost from "../../components/bigPost/bigPost.component";
-import PostCard from "../../components/postCard/postCard.component";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./home.styles.scss";
 
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectBlogsIsLoading,
-  selectBlogsMap,
-} from "../../store/blogs/blogs.selector";
-
+import NewestPost from "../../components/bigPost/bigPost.component";
+import PostCard from "../../components/postCard/postCard.component";
 import Spinner from "../../components/spinner/spinner.component";
+
+import { selectBlogsIsLoading } from "../../store/blogs/blogs.selector";
 import { selectCurrentUser } from "../../store/user/user.selector";
+import { updatePost } from "../../store/blogs/blogs.actions";
 import { BlogItem } from "../../store/blogs/blogs.types";
 import { changePost, isChangesPost } from "../../utils/general";
-import { updatePost } from "../../store/blogs/blogs.actions";
 
 export type HomeProps = {
   filteredBlogs: BlogItem[];
 };
+
 const Home: FC<HomeProps> = ({ filteredBlogs }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

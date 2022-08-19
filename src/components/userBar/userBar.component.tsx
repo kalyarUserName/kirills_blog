@@ -8,6 +8,7 @@ type UserBarProps = {
   date: string;
   text?: string;
 };
+
 const UserBar: FC<UserBarProps> = ({ image, name, date, text }) => {
   return (
     <div className={"userBar-container"}>

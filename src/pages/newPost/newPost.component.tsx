@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import EditPostForm from "../../components/editPostForm/editPostForm.component";
-import { guest } from "../../utils/types";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./newPost.styles.scss";
+
+import EditPostForm from "../../components/editPostForm/editPostForm.component";
 import Button from "../../components/button/button.component";
+
+import { selectCurrentUser } from "../../store/user/user.selector";
+import { addNewPost } from "../../store/blogs/blogs.actions";
+import { BlogItem } from "../../store/blogs/blogs.types";
+import { guest } from "../../utils/types";
 import {
   getBlogsId,
   gettingID,
   UserForDisplay,
 } from "../../utils/firebase/firebase.utils";
-import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentUser } from "../../store/user/user.selector";
-import { addNewPost } from "../../store/blogs/blogs.actions";
-import { BlogItem } from "../../store/blogs/blogs.types";
 
 const defaultNewPost: BlogItem = {
   headline: "",
@@ -25,9 +27,10 @@ const defaultNewPost: BlogItem = {
 };
 
 const NewPost = () => {
+  const dispatch = useDispatch();
+
   const [post, setPost] = useState(defaultNewPost);
   const currentUser = useSelector(selectCurrentUser);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (currentUser) setPost({ ...post, user: currentUser });
@@ -49,12 +52,15 @@ const NewPost = () => {
     dispatch(addNewPost(newPost));
     setPost(defaultNewPost);
   };
+
   const onChangeHeadline = (headline: string) => {
     setPost({ ...post, headline: headline });
   };
+
   const onChangeImage = (imageSrc: string) => {
     setPost({ ...post, imageUrl: imageSrc });
   };
+
   const onChangeText = (text: string) => {
     setPost({ ...post, text: text });
   };

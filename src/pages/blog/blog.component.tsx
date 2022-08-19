@@ -1,24 +1,23 @@
 import React, { Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import "./blog.styles.scss";
 
 import BigPost from "../../components/bigPost/bigPost.component";
-
 import Comments from "../../components/comments/comments.component";
+import Spinner from "../../components/spinner/spinner.component";
 
 import { BlogItem, Comment } from "../../store/blogs/blogs.types";
-import { useDispatch, useSelector } from "react-redux";
 import { selectBlogs, selectBlogsMap } from "../../store/blogs/blogs.selector";
+import { selectCurrentUser } from "../../store/user/user.selector";
+import { updatePost } from "../../store/blogs/blogs.actions";
 import {
   getBlogsId,
   gettingID,
   UserForDisplay,
 } from "../../utils/firebase/firebase.utils";
-import Spinner from "../../components/spinner/spinner.component";
-import { selectCurrentUser } from "../../store/user/user.selector";
 import { changePost, isChangesPost } from "../../utils/general";
-import { updatePost } from "../../store/blogs/blogs.actions";
 
 const defaultPost: BlogItem = {
   id: "",

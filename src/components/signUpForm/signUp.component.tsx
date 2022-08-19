@@ -2,9 +2,9 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-import FormInput from "../formInput/formInput.component";
-
 import "./signUp.styles.scss";
+
+import FormInput from "../formInput/formInput.component";
 import Button from "../button/button.component";
 import { signUpStart } from "../../store/user/user.actions";
 import { AuthError, AuthErrorCodes } from "firebase/auth";
