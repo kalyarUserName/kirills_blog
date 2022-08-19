@@ -29,6 +29,7 @@
   font-weight: 700;
   font-style: italic;
 }
+
 .newestPost-container .post-container h2:hover {
   cursor: pointer;
   text-decoration: #7ca47c underline;
