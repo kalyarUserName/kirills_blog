@@ -6,6 +6,7 @@ type SearchBarProps = {
   placeholder: string;
   onChangeHandler: ChangeEventHandler<HTMLInputElement>;
 };
+
 const SearchBar: FC<SearchBarProps> = ({ placeholder, onChangeHandler }) => {
   return (
     <div className={"searchBox"}>

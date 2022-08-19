@@ -1,10 +1,8 @@
 import { takeLatest, all, call, put } from "typed-redux-saga/macro";
 
-import { getBlogsAndDocuments } from "../../utils/firebase/firebase.utils";
-
 import { fetchBlogsFailed, fetchBlogsSuccess } from "./blogs.actions";
-
 import { BLOGS_ACTION_TYPES } from "./blogs.types";
+import { getBlogsAndDocuments } from "../../utils/firebase/firebase.utils";
 
 export function* fetchBlogsAsync() {
   try {

@@ -6,16 +6,17 @@ import React, {
   FC,
   SetStateAction,
 } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 
-import SearchBar from "../../components/searchBox/search.component";
-
 import "./header.scss";
+
+import SearchBar from "../../components/searchBox/search.component";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { signOutStart } from "../../store/user/user.actions";
-import { useSelector, useDispatch } from "react-redux";
 import { BlogItem } from "../../store/blogs/blogs.types";
 import { selectBlogsMap } from "../../store/blogs/blogs.selector";
+
 type HeaderProps = {
   setFilteredBlogs: React.Dispatch<SetStateAction<BlogItem[]>>;
 };
@@ -27,10 +28,6 @@ const Header: FC<HeaderProps> = ({ setFilteredBlogs }) => {
   const [searchField, setSearchField] = useState("");
 
   const [blogsArray, setBlogsArray] = useState<BlogItem[]>([]);
-
-  const signOutUser = () => {
-    dispatch(signOutStart());
-  };
 
   useEffect(() => {
     let arrayT: BlogItem[] = [];
@@ -51,6 +48,10 @@ const Header: FC<HeaderProps> = ({ setFilteredBlogs }) => {
     });
     setFilteredBlogs(newFilteredBlogs);
   }, [searchField, blogsArray, setFilteredBlogs]);
+
+  const signOutUser = () => {
+    dispatch(signOutStart());
+  };
 
   const onSearchChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const searchFieldString = event.target.value.toLowerCase();

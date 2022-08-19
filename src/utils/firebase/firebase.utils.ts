@@ -7,7 +7,6 @@ import {
   onAuthStateChanged,
   User,
 } from "firebase/auth";
-
 import {
   getFirestore,
   doc,
@@ -20,6 +19,7 @@ import {
   runTransaction,
   QueryDocumentSnapshot,
 } from "firebase/firestore";
+
 import { Blog, BlogItem } from "../../store/blogs/blogs.types";
 
 export type AdditionalInformation = {

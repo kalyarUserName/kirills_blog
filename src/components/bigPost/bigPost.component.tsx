@@ -32,10 +32,11 @@ const BigPost: FC<NewestPostProps> = ({
   currentUser,
   onSavePost,
 }) => {
-  const [isEdit, setIsEdit] = useState(false);
   const [newImage, setNewImage] = useState(image);
   const [newHeadline, setNewHeadline] = useState(headline);
   const [newText, setNewText] = useState(text);
+  const [isEdit, setIsEdit] = useState(false);
+  const [hovering, setHovering] = useState(false);
 
   useEffect(() => {
     setNewImage(image);
@@ -49,8 +50,6 @@ const BigPost: FC<NewestPostProps> = ({
     }
     setIsEdit(!isEdit);
   };
-
-  const [hovering, setHovering] = useState(false);
 
   return (
     <div>

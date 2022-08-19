@@ -1,6 +1,7 @@
+import { createSelector } from "reselect";
+
 import { RootState } from "../store";
 import { BlogsState } from "./blogs.reducer";
-import { createSelector } from "reselect";
 import { BlogMap } from "./blogs.types";
 
 const selectBlogReducer = (state: RootState): BlogsState => state.blogs;
