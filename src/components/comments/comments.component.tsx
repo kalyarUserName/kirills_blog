@@ -6,13 +6,21 @@ import CommentComponent from "../comment/comment.component";
 import MessageSendBox from "../messageSendBox/messageSendBox.component";
 
 import { Comment } from "../../store/blogs/blogs.types";
+import { UserForDisplay } from "../../utils/firebase/firebase.utils";
 
 export type CommentsProps = {
   comments: Comment[] | undefined;
   onSendComment: (message: string) => void;
+  currentUser: UserForDisplay | null;
+  onSaveComment: (idComment: string, textComment: string) => void;
 };
 
-const Comments: FC<CommentsProps> = ({ comments, onSendComment }) => {
+const Comments: FC<CommentsProps> = ({
+  comments,
+  onSendComment,
+  currentUser,
+  onSaveComment,
+}) => {
   const [newCommentText, setNewCommentText] = useState("");
 
   const onTextChange = (message: string) => {
@@ -24,18 +32,27 @@ const Comments: FC<CommentsProps> = ({ comments, onSendComment }) => {
     await setNewCommentText("");
   };
 
+  const onSavingComment = (idComment: string, newText: string) => {
+    const savingComment = comments?.find((comment) => comment.id === idComment);
+    if (!savingComment || savingComment.text === newText) return;
+    onSaveComment(idComment, newText);
+  };
+
   return (
     <div className="comments-container">
       <div className="body">
         <h2>Comments:</h2>
         {comments &&
-          comments.map((comment, index) => (
+          comments.map((comment) => (
             <CommentComponent
-              key={index}
+              key={comment.id}
+              id={comment.id}
               user={comment.user}
               date={comment.date.slice(0, 10)}
               text={comment.text}
               className={"box"}
+              currentUser={currentUser}
+              onSaveComment={onSavingComment}
             />
           ))}
       </div>

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -35,22 +35,27 @@ const BlogPage = () => {
 
   const dispatch = useDispatch();
 
-  let post: BlogItem = defaultPost;
+  // let post: BlogItem = defaultPost;
+  const [post, setPost] = useState(defaultPost);
 
   const blogsMap = useSelector(selectBlogsMap);
   const blogs = useSelector(selectBlogs);
   const currentUser = useSelector(selectCurrentUser);
 
-  if (!id && blogs.length !== 0) post = blogs[0].items[0];
+  if (!id && blogs.length !== 0) setPost(blogs[0].items[0]);
 
-  // eslint-disable-next-line array-callback-return
-  Object.keys(blogsMap).map((email) => {
-    const blogs = blogsMap[email];
-    const res = blogs.find((blog) => blog.id === id);
-    if (res) {
-      post = res;
-    }
-  });
+  useEffect(() => {
+    // eslint-disable-next-line array-callback-return
+    Object.keys(blogsMap).map((email) => {
+      const blogs = blogsMap[email];
+      const res = blogs.find((blog) => blog.id === id);
+      if (res) {
+        setPost(res);
+      }
+    });
+  }, [blogsMap, id]);
+
+  console.log("render", post.comments);
 
   const onSaveChangesPost = (
     imageUrl: string,
@@ -58,8 +63,8 @@ const BlogPage = () => {
     text: string
   ) => {
     if (isChangesPost(post, imageUrl, headline, text)) {
-      dispatch(updatePost(changePost(post, imageUrl, headline, text)));
-      post = changePost(post, imageUrl, headline, text);
+      setPost(changePost(post, imageUrl, headline, text));
+      dispatch(updatePost(post));
     }
   };
 
@@ -76,10 +81,25 @@ const BlogPage = () => {
 
     if (post.comments) post.comments.unshift(newComment);
     else {
-      post = { ...post, comments: [newComment] };
+      setPost({ ...post, comments: [newComment] });
     }
 
     dispatch(updatePost(post));
+  };
+
+  const onSaveComment = (id: string, text: string) => {
+    if (text === "" || !currentUser) return;
+    const newComment: Comment = {
+      id: id,
+      user: currentUser,
+      text: text,
+      date: new Date().toISOString(),
+    };
+    const updPostComments = post.comments?.map((comment) => {
+      return comment.id !== id ? comment : newComment;
+    });
+    dispatch(updatePost({ ...post, comments: updPostComments }));
+    setPost({ ...post, comments: updPostComments });
   };
 
   return (
@@ -99,7 +119,12 @@ const BlogPage = () => {
             onSavePost={onSaveChangesPost}
           />
           <hr />
-          <Comments comments={post.comments} onSendComment={onCommentSend} />
+          <Comments
+            comments={post.comments}
+            currentUser={currentUser}
+            onSendComment={onCommentSend}
+            onSaveComment={onSaveComment}
+          />
         </Fragment>
       )}
     </div>

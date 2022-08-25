@@ -9,7 +9,8 @@ $second-color: #7ca47c;
   margin: 20px 0;
 
   &:hover {
-    border-style: solid;
-    border-color: $second-color;
+    //border-style: solid;
+    //border-color: $second-color;
+    box-shadow: 0 0 10px $second-color;
   }
 }

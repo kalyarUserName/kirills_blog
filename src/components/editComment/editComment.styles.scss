@@ -1,0 +1,27 @@
+$shadow-color: #dcd8d8;
+
+.edit-comment-container {
+  textarea::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+  textarea {
+    padding: 10px 10px;
+    margin: 15px 0;
+    width: 300px;
+    max-width: 40vw;
+    height: 80px;
+    overflow-y: scroll;
+    border-radius: 15px;
+    box-shadow: 15px 10px 15px $shadow-color;
+    font-size: 16pt;
+    font-style: italic;
+    text-align: right;
+
+    @media screen and (max-width: 700px) {
+      width: 87vw;
+      font-size: 20pt !important;
+    }
+  }
+  padding-bottom: 60px;
+}

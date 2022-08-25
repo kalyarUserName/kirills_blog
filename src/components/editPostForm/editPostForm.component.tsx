@@ -38,7 +38,7 @@ const EditPostForm: FC<EditPostFormProps> = ({
           }}
         />
         <img
-          src={newImage === "" ? "/images/blank/blankPhoto1.png" : newImage}
+          src={newImage !== "" ? "/images/blank/blankPhoto1.png" : newImage}
           alt="Image for post"
         />
       </div>

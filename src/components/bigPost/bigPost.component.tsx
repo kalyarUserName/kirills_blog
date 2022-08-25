@@ -19,8 +19,6 @@ type NewestPostProps = {
   onSavePost: (imageUrl: string, headline: string, text: string) => void;
 };
 
-let hover = false;
-
 const BigPost: FC<NewestPostProps> = ({
   toNavigate,
   id,
@@ -36,13 +34,12 @@ const BigPost: FC<NewestPostProps> = ({
   const [newHeadline, setNewHeadline] = useState(headline);
   const [newText, setNewText] = useState(text);
   const [isEdit, setIsEdit] = useState(false);
-  const [hovering, setHovering] = useState(false);
 
   useEffect(() => {
     setNewImage(image);
     setNewHeadline(headline);
     setNewText(text);
-  }, [image]);
+  }, [image, headline, text]);
 
   const edition = () => {
     if (isEdit) {
@@ -53,31 +50,13 @@ const BigPost: FC<NewestPostProps> = ({
 
   return (
     <div>
-      {currentUser && currentUser.email === user.email && (
-        <div
-          className="edit-button"
-          onClick={() => edition()}
-          onMouseOver={() => {
-            hover = true;
-            setTimeout(() => {
-              if (hover) {
-                setHovering(true);
-              }
-            }, 100);
-          }}
-          onMouseLeave={() => {
-            hover = false;
-            setHovering(false);
-          }}
-        >
-          <EditButton />
-          {hovering && (
-            <div className="hovering-text">
-              {!isEdit ? "Editing post" : "Save post"}
-            </div>
-          )}
-        </div>
-      )}
+      <EditButton
+        isEdit={isEdit}
+        currentUser={currentUser}
+        user={user}
+        onClick={edition}
+      />
+
       {!isEdit ? (
         <div className="newestPost-container">
           <div
