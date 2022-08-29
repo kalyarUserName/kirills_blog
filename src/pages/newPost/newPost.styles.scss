@@ -5,42 +5,42 @@ $shadow-color: #dcd8d8;
   width: 90vw;
   margin-left: auto;
   margin-right: auto;
-  @media screen and (max-width:700px) {
-  display: grid;
+  @media screen and (max-width: 700px) {
+    display: grid;
     grid-template-columns: 1fr;
   }
   input {
   }
   .headAndButton {
     display: inline-flex;
-    @media screen and (max-width:700px) {
+    @media screen and (max-width: 700px) {
       width: 90vw;
     }
     h1 {
       width: fit-content;
-      }
+    }
     button {
       margin-left: 18vw;
       height: 60px;
       width: 150px;
-      @media screen and (max-width:700px) {
+      @media screen and (max-width: 700px) {
         display: none;
       }
     }
   }
 
-  .button-container-for-mobile{
+  .button-container-for-mobile {
     display: none;
-    @media screen and (max-width:700px) {
-    display: block;
+    @media screen and (max-width: 700px) {
+      display: block;
       width: 90vw;
 
-      button{
+      button {
         width: 70vw;
         height: 50px;
         margin-left: 10vw;
         margin-right: 20vw;
       }
     }
-    }
+  }
 }

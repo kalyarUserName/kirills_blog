@@ -7,10 +7,34 @@ $second-color: #7ca47c;
   border-radius: 2rem 15px;
   background-color: #cbe5cb;
   border-style: hidden;
-  box-shadow: 15px 20px 15px $shadow-color;
+  //box-shadow: 15px 20px 15px $shadow-color;
+  box-shadow: 5px 5px 10px $shadow-color;
+  text-align: center;
 
   &:hover {
-    border-style: solid;
-    border-color: $second-color;
+    //border-style: solid;
+    //border-color: $second-color;
+    box-shadow: 0 0 10px $second-color;
+  }
+  .spinner {
+    border: 3px solid rgba(195, 195, 195, 0.6);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    margin-top: 7px;
+    border-top-color: #636767;
+    display: inline-block;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+    @keyframes spin {
+      to {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+    @-webkit-keyframes spin {
+      to {
+        -webkit-transform: rotate(360deg);
+      }
+    }
   }
 }

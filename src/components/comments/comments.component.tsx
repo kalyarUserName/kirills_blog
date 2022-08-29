@@ -22,14 +22,17 @@ const Comments: FC<CommentsProps> = ({
   onSaveComment,
 }) => {
   const [newCommentText, setNewCommentText] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const onTextChange = (message: string) => {
     setNewCommentText(message);
   };
 
   const onSendingComment = async (message: string) => {
+    setIsProcessing(true);
     await onSendComment(message);
     await setNewCommentText("");
+    setIsProcessing(false);
   };
 
   const onSavingComment = (idComment: string, newText: string) => {
@@ -37,6 +40,8 @@ const Comments: FC<CommentsProps> = ({
     if (!savingComment || savingComment.text === newText) return;
     onSaveComment(idComment, newText);
   };
+
+  const onDeletingComment = (idComment: string) => {};
 
   return (
     <div className="comments-container">
@@ -62,6 +67,7 @@ const Comments: FC<CommentsProps> = ({
           onTextChange={onTextChange}
           onSendMessage={onSendingComment}
           textMessage={newCommentText}
+          isLoading={isProcessing}
         />
       </div>
     </div>

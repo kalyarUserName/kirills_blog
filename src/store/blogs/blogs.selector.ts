@@ -11,11 +11,6 @@ export const selectBlogs = createSelector(
   (blogsSlice) => blogsSlice.blogs
 );
 
-export const selectBlogsIsLoading = createSelector(
-  [selectBlogReducer],
-  (blogsSlice) => blogsSlice.isLoading
-);
-
 export const selectBlogsMap = createSelector([selectBlogs], (blogs) =>
   blogs.reduce((acc, blog) => {
     if (blog.email && blog.items) {
@@ -24,4 +19,9 @@ export const selectBlogsMap = createSelector([selectBlogs], (blogs) =>
     }
     return acc;
   }, {} as BlogMap)
+);
+
+export const selectBlogsIsLoading = createSelector(
+  [selectBlogReducer],
+  (blogsSlice) => blogsSlice.isLoading
 );

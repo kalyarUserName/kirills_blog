@@ -7,6 +7,7 @@ export enum BLOGS_ACTION_TYPES {
   UPDATE_POST = "blogs/UPDATE_POST",
   ADD_NEW_COMMENT = "blogs/ADD_NEW_COMMENT",
   ADD_NEW_POST = "blogs/ADD_NEW_POST",
+  DELETE_POST = "blogs/DELETE_POST",
 }
 
 export type BlogItem = {

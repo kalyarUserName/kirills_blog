@@ -34,6 +34,11 @@ export type AddNewComment = ActionWithPayload<
   Comment[]
 >;
 
+export type DeletePost = ActionWithPayload<
+  BLOGS_ACTION_TYPES.DELETE_POST,
+  BlogItem
+>;
+
 export const fetchBlogsStart = withMatcher(
   (): FetchBlogsStart => createAction(BLOGS_ACTION_TYPES.FETCH_BLOGS_START)
 );
@@ -52,7 +57,13 @@ export const updatePost = withMatcher(
   (updatedPost: BlogItem): UpdatePost =>
     createAction(BLOGS_ACTION_TYPES.UPDATE_POST, updatedPost)
 );
+
 export const addNewPost = withMatcher(
   (newPost: BlogItem): AddNewPost =>
     createAction(BLOGS_ACTION_TYPES.ADD_NEW_POST, newPost)
+);
+
+export const deletePost = withMatcher(
+  (deletingPost: BlogItem): DeletePost =>
+    createAction(BLOGS_ACTION_TYPES.DELETE_POST, deletingPost)
 );

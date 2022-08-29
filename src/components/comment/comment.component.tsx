@@ -43,8 +43,9 @@ const Comment: FC<CommentProps> = ({
     <div className={`${className}`}>
       <EditButton
         isEdit={isEdit}
-        currentUser={currentUser}
-        user={user}
+        isCurrentUserCreator={
+          currentUser !== null && currentUser.email === user.email
+        }
         onClick={edition}
       />
       {isEdit ? (

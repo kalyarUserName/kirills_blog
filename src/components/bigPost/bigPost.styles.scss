@@ -1,7 +1,8 @@
 $second-color: #7ca47c;
 $shadow-color: #dcd8d8;
+$width-post-container: calc(90vw - 600px);
 
-.newestPost-container {
+.bigPost-container {
   box-shadow: 5px 5px 10px $shadow-color;
   margin-bottom: 40px;
   padding-bottom: 20px;
@@ -13,11 +14,14 @@ $shadow-color: #dcd8d8;
   column-gap: 0;
 
   @media screen and (min-width: 701px) {
-    grid-template-areas: "A A A A   B B B B";
+    grid-template-areas:
+      "C C C C C C"
+      "A B B B B B";
   }
   @media screen and (max-width: 700px) {
     box-shadow: 0 5px 5px $shadow-color;
     grid-template:
+      "C"
       "A"
       "B";
   }
@@ -52,9 +56,10 @@ $shadow-color: #dcd8d8;
   }
   .post-container {
     grid-area: B;
-    width: 85%;
+    width: $width-post-container;
     margin-left: 50px;
     margin-bottom: auto;
+
     h2 {
       font-size: 30pt;
       font-weight: 700;
@@ -71,6 +76,12 @@ $shadow-color: #dcd8d8;
       display: flex;
       font-size: 18pt;
       font-family: "Arial", sans-serif;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      word-break: break-word;
+      line-break: auto;
+      hyphens: manual;
+
       @media screen and (max-width: 700px) {
         font-size: 12pt;
         padding-right: 10px;
@@ -81,6 +92,17 @@ $shadow-color: #dcd8d8;
     @media screen and (max-width: 700px) {
       width: 100%;
       margin-left: 5px;
+    }
+  }
+  .icons {
+    grid-area: C;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 90vw;
+
+    .edit-button {
+    }
+    .delete-button {
     }
   }
 }
