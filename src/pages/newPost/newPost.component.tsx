@@ -28,22 +28,25 @@ const defaultNewPost: BlogItem = {
 
 const NewPost = () => {
   const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
 
   const [post, setPost] = useState(defaultNewPost);
-  const currentUser = useSelector(selectCurrentUser);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
     if (currentUser) setPost({ ...post, user: currentUser });
   }, [currentUser]);
 
   const addPost = async () => {
+    setIsProcessing(true);
     const newID = await getBlogsId(gettingID.ID_POST).then((value) => value);
     const newDate = new Date().toISOString();
     const newTextPreview = post.text.slice(0, post.text.indexOf(".")) + "...";
     const newPost: BlogItem = {
       id: newID.toString(),
       headline: post.headline,
-      imageUrl: post.imageUrl,
+      imageUrl:
+        post.imageUrl === "" ? "/images/blank/blankPhoto1.png" : post.imageUrl,
       text: post.text,
       textPreview: newTextPreview,
       user: post.user,
@@ -52,6 +55,7 @@ const NewPost = () => {
     if (newPost.text === "" && newPost.headline === "") return;
     dispatch(addNewPost(newPost));
     setPost(defaultNewPost);
+    setIsProcessing(false);
   };
 
   const onChangeHeadline = (headline: string) => {
@@ -70,9 +74,15 @@ const NewPost = () => {
     <div className="create-post-container">
       <div className="headAndButton">
         <h1>Create new Post</h1>
-        <Button onClick={addPost} text={"Create new post"} />
+        <Button
+          onClick={addPost}
+          text={"Create new post"}
+          isLoading={isProcessing}
+        />
       </div>
       <EditPostForm
+        id={post.id}
+        user={post.user}
         text={post.text}
         headline={post.headline}
         image={post.imageUrl}

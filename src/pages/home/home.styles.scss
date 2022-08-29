@@ -18,16 +18,16 @@
     display: grid;
     grid-template-columns: 40vw 40vw;
     grid-gap: 10px;
-    @media screen and (max-width:700px){
+    @media screen and (max-width: 700px) {
       grid-template-columns: 1fr;
     }
   }
-  .search-bar{
+  .search-bar {
     grid-area: C;
     height: 50px;
     width: 400px;
     display: flex;
-    @media screen and (max-width:700px){
+    @media screen and (max-width: 700px) {
       width: 80vw;
     }
   }

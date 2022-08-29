@@ -1,6 +1,11 @@
-import { FC, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 
 import "./editPostForm.styles.scss";
+import {
+  createReferenceToImage,
+  TypeOfImage,
+  UserForDisplay,
+} from "../../utils/firebase/firebase.utils";
 
 type EditPostFormProps = {
   text: string;
@@ -9,6 +14,8 @@ type EditPostFormProps = {
   onChangeImage: (imageSrc: string) => void;
   onChangeHeadline: (headline: string) => void;
   onChangeText: (text: string) => void;
+  user: UserForDisplay;
+  id: string;
 };
 
 const EditPostForm: FC<EditPostFormProps> = ({
@@ -18,8 +25,26 @@ const EditPostForm: FC<EditPostFormProps> = ({
   onChangeImage,
   onChangeHeadline,
   onChangeText,
+  user,
+  id,
 }) => {
   const [newImage, setNewImage] = useState(image);
+
+  useEffect(() => {
+    if (newImage && newImage !== "") onChangeImage(newImage);
+  }, [newImage]);
+
+  const addImage = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      createReferenceToImage(
+        event.target.files[0],
+        user.email,
+        TypeOfImage.postImage,
+        setNewImage,
+        id
+      );
+    }
+  };
 
   return (
     <div className="edit-post-container">
@@ -29,18 +54,13 @@ const EditPostForm: FC<EditPostFormProps> = ({
           type="file"
           id="uploadImage"
           placeholder="Select image for post..."
-          onChange={(event) => {
-            if (event.target.files && event.target.files[0]) {
-              const imageT = URL.createObjectURL(event.target.files[0]);
-              onChangeImage(imageT);
-              setNewImage(imageT);
-            }
-          }}
+          onChange={(event) => addImage(event)}
         />
-        <img
-          src={newImage !== "" ? "/images/blank/blankPhoto1.png" : newImage}
-          alt="Image for post"
-        />
+        {newImage && newImage !== "" ? (
+          <img src={newImage} alt="Image for post" />
+        ) : (
+          <img src={"/images/blank/blankPhoto1.png"} alt="Image for post" />
+        )}
       </div>
       <div className="post-container">
         <div className="headline">

@@ -1,4 +1,10 @@
-import React, { ChangeEvent, Fragment, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  Fragment,
+  // useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -13,14 +19,18 @@ import {
   selectBlogsMap,
 } from "../../store/blogs/blogs.selector";
 import { selectCurrentUser } from "../../store/user/user.selector";
-import { updatePost } from "../../store/blogs/blogs.actions";
+import { deletePost, updatePost } from "../../store/blogs/blogs.actions";
 import { BlogItem } from "../../store/blogs/blogs.types";
 import { changePost, isChangesPost } from "../../utils/general";
 import SearchBar from "../../components/searchBox/search.component";
+// import { ModalContext } from "../../context/modal.context";
+// import PopupAgreement from "../../components/popupAgreement/popupAgreement.component";
 
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // const { isModalOpen, setModalOpen, isConfirm, setConfirm } =
+  //   useContext(ModalContext);
 
   const [searchField, setSearchField] = useState("");
   const [blogsArray, setBlogsArray] = useState<BlogItem[]>([]);
@@ -30,10 +40,10 @@ const Home = () => {
   const isLoading = useSelector(selectBlogsIsLoading);
   const currentUser = useSelector(selectCurrentUser);
 
-  let firstPost: BlogItem;
+  // let firstPost: BlogItem;
 
   useEffect(() => {
-    if (blogMap[0]) firstPost = blogMap[0][0];
+    // if (blogMap[0]) firstPost = blogMap[0][0];
     let arrayT: BlogItem[] = [];
     // eslint-disable-next-line array-callback-return
     Object.keys(blogMap).map((email) => {
@@ -56,6 +66,11 @@ const Home = () => {
     navigate("/blog/" + id);
   };
 
+  const onSearchChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const searchFieldString = event.target.value.toLowerCase();
+    setSearchField(searchFieldString);
+  };
+
   const onSaveChangesPost = (
     imageUrl: string,
     headline: string,
@@ -68,9 +83,12 @@ const Home = () => {
     }
   };
 
-  const onSearchChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const searchFieldString = event.target.value.toLowerCase();
-    setSearchField(searchFieldString);
+  const onDeletePost = (postId: string) => {
+    const deletingPost = filteredBlogs.find((post) => post.id === postId);
+    if (deletingPost) {
+      dispatch(deletePost(deletingPost));
+      setFilteredBlogs(filteredBlogs.filter((post) => post.id !== postId));
+    }
   };
 
   return (
@@ -85,6 +103,17 @@ const Home = () => {
         <Spinner />
       ) : (
         <Fragment>
+          {/*{isModalOpen && (*/}
+          {/*  <PopupAgreement*/}
+          {/*    text={"qweqweq"}*/}
+          {/*    closePopup={() => {*/}
+          {/*      setModalOpen(false);*/}
+          {/*    }}*/}
+          {/*    confirm={() => {*/}
+          {/*      setConfirm(true);*/}
+          {/*    }}*/}
+          {/*  />*/}
+          {/*)}*/}
           <div className="newest-post">
             <NewestPost
               key={filteredBlogs[0].id}
@@ -92,30 +121,32 @@ const Home = () => {
               image={filteredBlogs[0].imageUrl}
               headline={filteredBlogs[0].headline}
               date={filteredBlogs[0].date.slice(0, 10)}
-              text={filteredBlogs[0].textPreview}
+              text={filteredBlogs[0].text}
               user={filteredBlogs[0].user}
               toNavigate={redirectToBlog}
               currentUser={currentUser}
               onSavePost={onSaveChangesPost}
+              onDeletePost={onDeletePost}
             />
             <hr />
           </div>
           <div className="post-list">
             {filteredBlogs.slice(1).map((post) => {
               return (
-                <Fragment key={post.id}>
-                  <PostCard
-                    id={post.id}
-                    headline={post.headline}
-                    textPreview={post.textPreview}
-                    image={post.imageUrl}
-                    toNavigate={redirectToBlog}
-                  />
-                </Fragment>
+                <PostCard
+                  key={post.id}
+                  id={post.id}
+                  headline={post.headline}
+                  textPreview={post.textPreview}
+                  image={post.imageUrl}
+                  toNavigate={redirectToBlog}
+                  currentUser={currentUser}
+                  user={post.user}
+                  onDeletePost={onDeletePost}
+                />
               );
             })}
           </div>
-          <hr />
         </Fragment>
       )}
     </div>

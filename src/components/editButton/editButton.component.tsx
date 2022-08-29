@@ -3,11 +3,9 @@ import React, { FC, Fragment, useState } from "react";
 import "./editButton.styles.scss";
 
 import { ReactComponent as Edit } from "../../assets/edit.svg";
-import { UserForDisplay } from "../../utils/firebase/firebase.utils";
 
 export type EditButtonProps = {
-  currentUser: UserForDisplay | null;
-  user: UserForDisplay;
+  isCurrentUserCreator: boolean;
   onClick: () => void;
   isEdit: boolean;
 };
@@ -16,14 +14,13 @@ let hover = false;
 
 const EditButton: FC<EditButtonProps> = ({
   isEdit,
-  user,
-  currentUser,
+  isCurrentUserCreator,
   onClick,
 }) => {
   const [hovering, setHovering] = useState(false);
   return (
     <Fragment>
-      {currentUser && currentUser.email === user.email && (
+      {isCurrentUserCreator && (
         <div
           className="edit-button"
           onClick={() => onClick()}
@@ -40,7 +37,9 @@ const EditButton: FC<EditButtonProps> = ({
             setHovering(false);
           }}
         >
-          <Edit />
+          <div className="button">
+            <Edit />
+          </div>
           {hovering && (
             <div className="hovering-text">
               {!isEdit ? "Editing post" : "Save post"}

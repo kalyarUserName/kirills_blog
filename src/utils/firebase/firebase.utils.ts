@@ -19,8 +19,16 @@ import {
   runTransaction,
   QueryDocumentSnapshot,
 } from "firebase/firestore";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  StorageReference,
+} from "firebase/storage";
 
 import { Blog, BlogItem } from "../../store/blogs/blogs.types";
+import { Dispatch, SetStateAction } from "react";
 
 export type AdditionalInformation = {
   displayName?: string;
@@ -49,8 +57,8 @@ const firebaseConfig = {
   appId: process.env["REACT_APP_FIREBASE_APP_ID"],
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const firebaseApp = initializeApp(firebaseConfig);
+const storage = getStorage(firebaseApp);
 
 export const auth = getAuth();
 export const db = getFirestore();
@@ -183,4 +191,68 @@ export const addCollectionAndDocuments = async <T extends ObjectToAdd>(
   });
 
   await batch.commit();
+};
+
+export enum TypeOfImage {
+  postImage = "post",
+  avatarImage = "avatar",
+}
+export const createReferenceToImage = (
+  file: Blob,
+  userEmail: string,
+  typeOfImage: TypeOfImage,
+  setNewImage: Dispatch<SetStateAction<string | undefined>>,
+  postId?: string
+) => {
+  let imageRef: StorageReference;
+
+  const metadata = {
+    contentType: "image/jpeg",
+  };
+  if (typeOfImage === TypeOfImage.avatarImage) {
+    imageRef = ref(storage, `images/${userEmail}/avatar.jpg`);
+  } else {
+    imageRef = ref(storage, `images/${userEmail}/${postId}.jpg`);
+  }
+  // uploadBytes(imageRef, file, metadata).then((snapshot) => {
+  //   console.log("Uploaded a blob or file!", snapshot);
+  // });
+  const uploadTask = uploadBytesResumable(imageRef, file, metadata);
+  uploadTask.on(
+    "state_changed",
+    (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log("Upload is " + progress + "% done");
+      switch (snapshot.state) {
+        case "paused":
+          console.log("Upload is paused");
+          break;
+        case "running":
+          console.log("Upload is running");
+          break;
+      }
+    },
+    (error) => {
+      switch (error.code) {
+        case "storage/unauthorized":
+          // User doesn't have permission to access the object
+          break;
+        case "storage/canceled":
+          // User canceled the upload
+          break;
+        case "storage/unknown":
+          // Unknown error occurred, inspect error.serverResponse
+          break;
+      }
+    },
+    () => {
+      // const downloadURLProm = getDownloadURL(uploadTask.snapshot.ref);
+      // console.log("downloadURLProm", downloadURLProm);
+      // return downloadURLProm;
+      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        console.log("File available at", downloadURL);
+        setNewImage(downloadURL);
+      });
+    }
+  );
 };

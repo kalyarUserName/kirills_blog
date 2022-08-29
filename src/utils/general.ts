@@ -1,4 +1,4 @@
-import { BlogItem } from "../store/blogs/blogs.types";
+import { Blog, BlogItem } from "../store/blogs/blogs.types";
 
 export function dateToString(date: Date): string {
   return `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`;
@@ -29,4 +29,8 @@ export function changePost(
     headline: newHeadline,
     text: newText,
   };
+}
+
+export function findPostIndexInBlogs(blogs: Blog[], post: BlogItem): number {
+  return blogs.findIndex((blog) => blog.email === post.user.email);
 }

@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import "./blog.styles.scss";
 
@@ -11,7 +11,7 @@ import Spinner from "../../components/spinner/spinner.component";
 import { BlogItem, Comment } from "../../store/blogs/blogs.types";
 import { selectBlogs, selectBlogsMap } from "../../store/blogs/blogs.selector";
 import { selectCurrentUser } from "../../store/user/user.selector";
-import { updatePost } from "../../store/blogs/blogs.actions";
+import { deletePost, updatePost } from "../../store/blogs/blogs.actions";
 import {
   getBlogsId,
   gettingID,
@@ -34,28 +34,26 @@ const BlogPage = () => {
   const id = params.blogId;
 
   const dispatch = useDispatch();
+  // const navigate = useNavigate();
 
-  // let post: BlogItem = defaultPost;
   const [post, setPost] = useState(defaultPost);
 
   const blogsMap = useSelector(selectBlogsMap);
   const blogs = useSelector(selectBlogs);
   const currentUser = useSelector(selectCurrentUser);
 
-  if (!id && blogs.length !== 0) setPost(blogs[0].items[0]);
-
   useEffect(() => {
-    // eslint-disable-next-line array-callback-return
-    Object.keys(blogsMap).map((email) => {
-      const blogs = blogsMap[email];
-      const res = blogs.find((blog) => blog.id === id);
-      if (res) {
-        setPost(res);
-      }
-    });
+    if (!id && blogs.length !== 0) setPost(blogs[0].items[0]);
+    else {
+      Object.keys(blogsMap).map((email) => {
+        const blogs = blogsMap[email];
+        const res = blogs.find((blog) => blog.id === id);
+        if (res) {
+          setPost(res);
+        }
+      });
+    }
   }, [blogsMap, id]);
-
-  console.log("render", post.comments);
 
   const onSaveChangesPost = (
     imageUrl: string,
@@ -63,8 +61,8 @@ const BlogPage = () => {
     text: string
   ) => {
     if (isChangesPost(post, imageUrl, headline, text)) {
+      dispatch(updatePost(changePost(post, imageUrl, headline, text)));
       setPost(changePost(post, imageUrl, headline, text));
-      dispatch(updatePost(post));
     }
   };
 
@@ -95,6 +93,7 @@ const BlogPage = () => {
       text: text,
       date: new Date().toISOString(),
     };
+
     const updPostComments = post.comments?.map((comment) => {
       return comment.id !== id ? comment : newComment;
     });
@@ -102,6 +101,15 @@ const BlogPage = () => {
     setPost({ ...post, comments: updPostComments });
   };
 
+  const onDeletePost = (postId: string) => {
+    const deletingPost = post;
+    if (deletingPost !== defaultPost) {
+      dispatch(deletePost(deletingPost));
+      // navigate("/");
+      // dispatch(fetchBlogsStart());
+      if (!id && blogs.length !== 0) setPost(blogs[0].items[0]);
+    }
+  };
   return (
     <div className={"blog-container"}>
       {post === defaultPost ? (
@@ -117,6 +125,7 @@ const BlogPage = () => {
             date={post.date.slice(0, 10)}
             currentUser={currentUser}
             onSavePost={onSaveChangesPost}
+            onDeletePost={onDeletePost}
           />
           <hr />
           <Comments

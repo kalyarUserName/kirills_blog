@@ -1,18 +1,22 @@
+$shadow-color: #dcd8d8;
+
 .messageBox-container {
   display: grid;
-  grid-gap: 20px;
+  grid-gap: 40px;
   grid-template-columns: 500px 1fr;
-  @media screen and (max-width:700px) {
+  @media screen and (max-width: 700px) {
     grid-template-columns: 1fr;
   }
 
-    textarea {
-    padding: 10px 10px;
+  textarea {
     width: 500px;
+    padding: 10px 10px;
     font-size: 12pt;
     height: fit-content;
     overflow-y: scroll;
-    @media screen and (max-width:700px) {
+    box-shadow: 5px 5px 10px $shadow-color;
+
+    @media screen and (max-width: 700px) {
       width: 80vw;
     }
   }
@@ -27,9 +31,9 @@
     height: 100%;
     width: 100px;
     font-size: 16pt;
-    @media screen and (max-width:700px) {
-    border-radius: 10px;
+    @media screen and (max-width: 700px) {
+      border-radius: 10px;
       font-family: "Cormorant Garamond", sans-serif;
     }
-    }
+  }
 }

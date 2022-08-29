@@ -5,10 +5,12 @@
   margin: 0 20px;
   display: grid;
   grid-template-areas:
+    "C"
     "A"
     "B";
-  @media screen and (max-width:700px) {
+  @media screen and (max-width: 700px) {
     margin: 0;
+    width: 100%;
   }
 
   &:hover {
@@ -22,6 +24,7 @@
     margin-right: auto;
     width: 100%;
     position: relative;
+    padding-top: 10px;
 
     img {
       position: relative;
@@ -30,10 +33,10 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      @media screen and (max-width:700px) {
+      @media screen and (max-width: 700px) {
         width: 90%;
       }
-      }
+    }
   }
   .post-container {
     width: 95%;
@@ -44,7 +47,7 @@
     h2 {
       font-size: 30pt;
       font-style: italic;
-      @media screen and (max-width:700px) {
+      @media screen and (max-width: 700px) {
         font-size: 20pt;
         font-weight: bold;
       }
@@ -52,13 +55,12 @@
     p {
       font-size: 16pt;
       font-family: "Arial", sans-serif;
-      @media screen and (max-width:700px) {
+      @media screen and (max-width: 700px) {
         font-size: 12pt;
       }
     }
   }
-
-  @media screen and (max-width:700px) {
-    width: 100%;
+  .delete-button {
+    grid-area: C;
   }
 }

@@ -13,6 +13,9 @@ import SignUp from "./components/signUpForm/signUp.component";
 
 import { selectCurrentUser } from "./store/user/user.selector";
 import { fetchBlogsStart } from "./store/blogs/blogs.actions";
+import {testAttr} from "./utils/tests/testsUtils";
+
+
 
 function App() {
   const dispatch = useDispatch();
@@ -24,7 +27,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className={"App"}>
+    <div className={"App"} {...testAttr('app')}>
       <Routes>
         <Route path="/" element={<Header />}>
           <Route index element={<Home />} />
