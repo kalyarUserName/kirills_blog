@@ -80,7 +80,7 @@ export const blogsReducer = (
     let blogIndex = findPostIndexInBlogs(state.blogs, action.payload);
     if (blogIndex >= 0) {
       state.blogs[blogIndex].items = Object.assign(
-        {},
+        [],
         state.blogs[blogIndex].items.filter(
           (post) => post.id !== action.payload.id
         )

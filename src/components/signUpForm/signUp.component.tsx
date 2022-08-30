@@ -8,20 +8,23 @@ import FormInput from "../formInput/formInput.component";
 import Button from "../button/button.component";
 import { signUpStart } from "../../store/user/user.actions";
 import { AuthError, AuthErrorCodes } from "firebase/auth";
+import {
+  createReferenceToImage,
+  TypeOfImage,
+} from "../../utils/firebase/firebase.utils";
 
 const defaultFormFields = {
   displayName: "",
   email: "",
   password: "",
   confirmPassword: "",
-  imageUrl: "",
 };
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const { displayName, email, password, confirmPassword, imageUrl } =
-    formFields;
+  const [imageUrl, setImageUrl] = useState<string | undefined>("");
+  const { displayName, email, password, confirmPassword } = formFields;
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -41,17 +44,32 @@ const SignUp = () => {
     }
 
     const avatarImageUrl =
-      imageUrl === "" ? "/images/avatar/default_avatar.png" : imageUrl;
+      imageUrl === "" || !imageUrl
+        ? "/images/avatar/default_avatar.png"
+        : imageUrl;
 
     try {
-      dispatch(signUpStart(email, password, displayName, avatarImageUrl));
-      resetFormFields();
+      if (avatarImageUrl) {
+        dispatch(signUpStart(email, password, displayName, avatarImageUrl));
+        resetFormFields();
+      }
     } catch (error) {
       if ((error as AuthError).code === AuthErrorCodes.EMAIL_EXISTS)
         alert("Cannot create user, email already in use");
       else {
         console.log("user created encountered an error", error);
       }
+    }
+  };
+
+  const addImage = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      createReferenceToImage(
+        event.target.files[0],
+        email,
+        TypeOfImage.avatarImage,
+        setImageUrl
+      );
     }
   };
 
@@ -98,11 +116,11 @@ const SignUp = () => {
         />
         <FormInput
           label={"Avatar link"}
-          type="text"
+          type="image"
           name="imageUrl"
           placeholder="Enter link to avatar"
           value={imageUrl}
-          onChange={handleChange}
+          onChange={(event) => addImage(event)}
         />
         <div className="button-container">
           <Button type="submit" text="SIGN UP"></Button>

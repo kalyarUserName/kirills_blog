@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import "./blog.styles.scss";
 
@@ -44,8 +44,11 @@ const BlogPage = () => {
 
   useEffect(() => {
     if (!id && blogs.length !== 0) {
-      if (blogs[0].items) setPost(blogs[0].items[0]);
-      else setPost(blogs[1].items[0]);
+      if (blogs[0].items.length !== 0) {
+        setPost(blogs[0].items[0]);
+      } else {
+        setPost(blogs[1].items[0]);
+      }
     } else {
       Object.keys(blogsMap).map((email) => {
         const blogs = blogsMap[email];
@@ -55,7 +58,7 @@ const BlogPage = () => {
         }
       });
     }
-  }, [blogsMap, id]);
+  }, [blogsMap, id, blogs]);
 
   const onSaveChangesPost = (
     imageUrl: string,
@@ -109,7 +112,13 @@ const BlogPage = () => {
       dispatch(deletePost(deletingPost));
       // navigate("/");
       // dispatch(fetchBlogsStart());
-      if (!id && blogs.length !== 0) setPost(blogs[0].items[0]);
+      if (!id && blogs.length !== 0) {
+        if (blogs[0].items.length !== 0) {
+          setPost(blogs[0].items[0]);
+        } else {
+          setPost(blogs[1].items[0]);
+        }
+      }
     }
   };
   return (

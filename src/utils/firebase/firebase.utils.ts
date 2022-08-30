@@ -168,7 +168,6 @@ export const setBlogs = async (
   userEmail: string,
   usersBlogs: BlogItem[]
 ): Promise<void> => {
-  console.log("usersBlogs from utils", usersBlogs);
   const batch = writeBatch(db);
   const usersBlogsRef = doc(db, "blogs", userEmail.toLowerCase());
   const userSnapshot = await getDoc(usersBlogsRef);
@@ -246,6 +245,7 @@ export const createReferenceToImage = (
           // Unknown error occurred, inspect error.serverResponse
           break;
       }
+      console.log(error);
     },
     () => {
       // const downloadURLProm = getDownloadURL(uploadTask.snapshot.ref);
