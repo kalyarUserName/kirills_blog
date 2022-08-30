@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 import "./home.styles.scss";
 
@@ -43,6 +43,7 @@ const Home = () => {
   // let firstPost: BlogItem;
 
   useEffect(() => {
+    console.log("blogMap", blogMap);
     // if (blogMap[0]) firstPost = blogMap[0][0];
     let arrayT: BlogItem[] = [];
     // eslint-disable-next-line array-callback-return

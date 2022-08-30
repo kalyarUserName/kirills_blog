@@ -43,8 +43,10 @@ const BlogPage = () => {
   const currentUser = useSelector(selectCurrentUser);
 
   useEffect(() => {
-    if (!id && blogs.length !== 0) setPost(blogs[0].items[0]);
-    else {
+    if (!id && blogs.length !== 0) {
+      if (blogs[0].items) setPost(blogs[0].items[0]);
+      else setPost(blogs[1].items[0]);
+    } else {
       Object.keys(blogsMap).map((email) => {
         const blogs = blogsMap[email];
         const res = blogs.find((blog) => blog.id === id);
