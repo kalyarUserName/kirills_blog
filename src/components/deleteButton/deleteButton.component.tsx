@@ -6,19 +6,11 @@ import { ReactComponent as Delete } from "../../assets/delete.svg";
 import PopupAgreement from "../popupAgreement/popupAgreement.component";
 
 export type DeleteButtonProps = {
-  isCurrentUserCreator: boolean;
   onDeleteClick: () => void;
 };
 
-let hover = false;
-
-const DeleteButton: FC<DeleteButtonProps> = ({
-  isCurrentUserCreator,
-  onDeleteClick,
-}) => {
-  const [hovering, setHovering] = useState(false);
+const DeleteButton: FC<DeleteButtonProps> = ({ onDeleteClick }) => {
   const [popup, setPopup] = useState(false);
-  // const [isConfirm, setIsConfirm] = useState(false);
 
   const closePopup = () => {
     setPopup(false);
@@ -38,35 +30,19 @@ const DeleteButton: FC<DeleteButtonProps> = ({
           confirm={onDelete}
         />
       )}
-      {isCurrentUserCreator && (
-        <div
-          className="delete-button"
-          onClick={() => {
-            setPopup(true);
-          }}
-          onMouseOver={() => {
-            hover = true;
-            setTimeout(() => {
-              if (hover) {
-                setHovering(true);
-              }
-            }, 100);
-          }}
-          onMouseLeave={() => {
-            hover = false;
-            setHovering(false);
-          }}
-        >
-          {hovering && <div className="hovering-text">{"Delete post"}</div>}
-          <div className="button">
-            <Delete
-              onClick={() => {
-                setPopup(true);
-              }}
-            />
-          </div>
+      <div
+        onClick={() => {
+          setPopup(true);
+        }}
+      >
+        <div className="button">
+          <Delete
+            onClick={() => {
+              setPopup(true);
+            }}
+          />
         </div>
-      )}
+      </div>
     </Fragment>
   );
 };

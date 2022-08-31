@@ -1,12 +1,11 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useEffect, useMemo, useState } from "react";
 
 import "./bigPost.styles.scss";
 
 import UserBar from "../userBar/userBar.component";
-import EditButton from "../editButton/editButton.component";
-import DeleteButton from "../deleteButton/deleteButton.component";
 import EditPostForm from "../editPostForm/editPostForm.component";
 import { UserForDisplay } from "../../utils/firebase/firebase.utils";
+import ButtonsForCreator from "../buttonsForCreator/buttonsForCreator.component";
 
 type NewestPostProps = {
   id: string;
@@ -42,9 +41,9 @@ const BigPost: FC<NewestPostProps> = ({
     setNewImage(image);
     setNewHeadline(headline);
     setNewText(text);
-  }, [image]);
+  }, [image, headline, text]);
 
-  const onEdition = () => {
+  const onEdit = () => {
     if (isEdit) {
       onSavePost(newImage, newHeadline, newText);
     }
@@ -55,73 +54,67 @@ const BigPost: FC<NewestPostProps> = ({
     onDeletePost(id);
   };
 
+  const isCurUserCreator = useMemo(
+    () => currentUser !== null && currentUser.email === user.email,
+    [currentUser, user]
+  );
+
   return (
-    <Fragment>
-      <div className={`bigPost-container`}>
-        <div className={"icons"}>
-          <div className="edit-button">
-            <EditButton
-              isEdit={isEdit}
-              isCurrentUserCreator={
-                currentUser !== null && currentUser.email === user.email
-              }
-              onClick={onEdition}
-            />
-          </div>
-          <div className="delete-button">
-            <DeleteButton
-              isCurrentUserCreator={
-                currentUser !== null && currentUser.email === user.email
-              }
-              onDeleteClick={onDelete}
-            />
-          </div>
+    <div className={`bigPost-container`}>
+      {isCurUserCreator && (
+        <div className={"buttons-for-creator-container"}>
+          <ButtonsForCreator
+            onDeleteClick={onDelete}
+            onEditClick={onEdit}
+            isDelete={true}
+            isEditing={true}
+          />
         </div>
-        {!isEdit ? (
-          <Fragment>
-            <div
-              className="image"
+      )}
+      {!isEdit ? (
+        <Fragment>
+          <div
+            className="image"
+            onClick={() => (toNavigate ? toNavigate(id) : {})}
+          >
+            <img src={newImage} alt={headline} id="image" />
+          </div>
+          <div className="post-container">
+            <h2
+              id="headline"
               onClick={() => (toNavigate ? toNavigate(id) : {})}
             >
-              <img src={newImage} alt={headline} id="image" />
+              {newHeadline}
+            </h2>
+            <p id="text">{newText}</p>
+            <div className="userbar">
+              <UserBar
+                image={user.imageUrl}
+                name={user.displayName}
+                date={date}
+              />
             </div>
-            <div className="post-container">
-              <h2
-                id="headline"
-                onClick={() => (toNavigate ? toNavigate(id) : {})}
-              >
-                {newHeadline}
-              </h2>
-              <p id="text">{newText}</p>
-              <div className="userbar">
-                <UserBar
-                  image={user.imageUrl}
-                  name={user.displayName}
-                  date={date}
-                />
-              </div>
-            </div>
-          </Fragment>
-        ) : (
-          <EditPostForm
-            id={id}
-            user={user}
-            text={newText}
-            headline={newHeadline}
-            image={newImage}
-            onChangeImage={(imageT) => {
-              setNewImage(imageT);
-            }}
-            onChangeHeadline={(headlineT) => {
-              setNewHeadline(headlineT);
-            }}
-            onChangeText={(textT) => {
-              setNewText(textT);
-            }}
-          />
-        )}
-      </div>
-    </Fragment>
+          </div>
+        </Fragment>
+      ) : (
+        <EditPostForm
+          id={id}
+          user={user}
+          text={newText}
+          headline={newHeadline}
+          image={newImage}
+          onChangeImage={(imageT) => {
+            setNewImage(imageT);
+          }}
+          onChangeHeadline={(headlineT) => {
+            setNewHeadline(headlineT);
+          }}
+          onChangeText={(textT) => {
+            setNewText(textT);
+          }}
+        />
+      )}
+    </div>
   );
 };
 

@@ -107,7 +107,7 @@ const BlogPage = () => {
     setPost({ ...post, comments: updPostComments });
   };
 
-  const onDeletePost = (postId: string) => {
+  const onDeletePost = (_postId: string) => {
     const deletingPost = post;
     if (deletingPost !== defaultPost) {
       dispatch(deletePost(deletingPost));
@@ -122,6 +122,16 @@ const BlogPage = () => {
       }
     }
   };
+
+  const onDeleteComment = (commentId: string) => {
+    const newComments = post.comments?.filter(
+      (comment) => comment.id !== commentId
+    );
+    const updPost = { ...post, comments: newComments };
+    dispatch(updatePost(updPost));
+    setPost(updPost);
+  };
+
   return (
     <div className={"blog-container"}>
       {post === defaultPost ? (
@@ -145,6 +155,7 @@ const BlogPage = () => {
             currentUser={currentUser}
             onSendComment={onCommentSend}
             onSaveComment={onSaveComment}
+            onDeleteComment={onDeleteComment}
           />
         </Fragment>
       )}
