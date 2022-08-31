@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import "./blog.styles.scss";
 
@@ -34,7 +34,7 @@ const BlogPage = () => {
   const id = params.blogId;
 
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [post, setPost] = useState(defaultPost);
 
@@ -50,6 +50,7 @@ const BlogPage = () => {
         setPost(blogs[1].items[0]);
       }
     } else {
+      // eslint-disable-next-line array-callback-return
       Object.keys(blogsMap).map((email) => {
         const blogs = blogsMap[email];
         const res = blogs.find((blog) => blog.id === id);
@@ -110,8 +111,8 @@ const BlogPage = () => {
     const deletingPost = post;
     if (deletingPost !== defaultPost) {
       dispatch(deletePost(deletingPost));
-      // navigate("/");
-      // dispatch(fetchBlogsStart());
+      navigate("/blog");
+
       if (!id && blogs.length !== 0) {
         if (blogs[0].items.length !== 0) {
           setPost(blogs[0].items[0]);
