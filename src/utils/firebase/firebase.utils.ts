@@ -253,69 +253,8 @@ export const createReferenceToImage = (
       // return downloadURLProm;
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
         console.log("File available at", downloadURL);
-        // setNewImage(downloadURL);
-        setNewImage("it works1");
+        setNewImage(downloadURL);
       });
     }
   );
-};
-
-export const uploadAvatarAndSaveSrc = (
-  file: Blob,
-  userEmail: string,
-  typeOfImage: TypeOfImage,
-  imageChange: (image: string) => void
-) => {
-  let imageRef: StorageReference;
-
-  const metadata = {
-    contentType: "image/jpeg",
-  };
-  if (typeOfImage === TypeOfImage.avatarImage) {
-    imageRef = ref(storage, `images/${userEmail}/avatar.jpg`);
-
-    // uploadBytes(imageRef, file, metadata).then((snapshot) => {
-    //   console.log("Uploaded a blob or file!", snapshot);
-    // });
-    const uploadTask = uploadBytesResumable(imageRef, file, metadata);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-        }
-      },
-      (error) => {
-        switch (error.code) {
-          case "storage/unauthorized":
-            // User doesn't have permission to access the object
-            break;
-          case "storage/canceled":
-            // User canceled the upload
-            break;
-          case "storage/unknown":
-            // Unknown error occurred, inspect error.serverResponse
-            break;
-        }
-        console.log(error);
-      },
-      () => {
-        // const downloadURLProm = getDownloadURL(uploadTask.snapshot.ref);
-        // console.log("downloadURLProm", downloadURLProm);
-        // return downloadURLProm;
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
-          imageChange(downloadURL);
-        });
-      }
-    );
-  }
 };

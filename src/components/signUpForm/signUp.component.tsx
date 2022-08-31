@@ -11,7 +11,6 @@ import { AuthError, AuthErrorCodes } from "firebase/auth";
 import {
   createReferenceToImage,
   TypeOfImage,
-  uploadAvatarAndSaveSrc,
 } from "../../utils/firebase/firebase.utils";
 
 const defaultFormFields = {
@@ -24,14 +23,8 @@ const defaultFormFields = {
 const SignUp = () => {
   const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState<string | undefined>("");
   const { displayName, email, password, confirmPassword } = formFields;
-
-  console.log("imageUrl", imageUrl);
-
-  const handleImageChange = (image: string) => {
-    setImageUrl(image);
-  };
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -71,11 +64,11 @@ const SignUp = () => {
 
   const addImage = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      uploadAvatarAndSaveSrc(
+      createReferenceToImage(
         event.target.files[0],
         email,
         TypeOfImage.avatarImage,
-        handleImageChange
+        setImageUrl
       );
     }
   };
@@ -121,7 +114,8 @@ const SignUp = () => {
           required
           onChange={handleChange}
         />
-        <input
+        <FormInput
+          label="Avatar image"
           type="file"
           name="imageUrl"
           placeholder="Enter link to avatar"
