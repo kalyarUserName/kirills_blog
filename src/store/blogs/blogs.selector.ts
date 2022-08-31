@@ -6,9 +6,8 @@ import { BlogMap } from "./blogs.types";
 
 const selectBlogReducer = (state: RootState): BlogsState => state.blogs;
 
-export const selectBlogs = createSelector(
-  [selectBlogReducer],
-  (blogsSlice) => blogsSlice.blogs
+export const selectBlogs = createSelector([selectBlogReducer], (blogsSlice) =>
+  blogsSlice.blogs.filter((blogs) => blogs.email && blogs.items)
 );
 
 export const selectBlogsMap = createSelector([selectBlogs], (blogs) =>

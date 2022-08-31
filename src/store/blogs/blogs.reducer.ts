@@ -39,11 +39,8 @@ export const blogsReducer = (
   }
   if (updatePost.match(action)) {
     let blogIndex = findPostIndexInBlogs(state.blogs, action.payload);
-    // state.blogs.findIndex(
-    //   (blog) => blog.email === action.payload.user.email
-    // );
-
     let postIndex = -2;
+
     if (blogIndex !== -1)
       postIndex = state.blogs[blogIndex].items.findIndex(
         (post) => post.id === action.payload.id
@@ -57,13 +54,14 @@ export const blogsReducer = (
   }
 
   if (addNewPost.match(action)) {
+    console.log("add new post start");
     let blogIndex = findPostIndexInBlogs(state.blogs, action.payload);
-    // let blogIndex = state.blogs.findIndex(
-    //   (blog) => blog.email === action.payload.user.email
-    // );
+    console.log("blogIndex", blogIndex);
     if (blogIndex >= 0) {
       state.blogs[blogIndex].items.unshift(action.payload);
+      console.log("blogIndex more/eq than 0", blogIndex);
     } else {
+      console.log("blogIndex less than 0", blogIndex);
       state.blogs.push({
         email: action.payload.user.email.toLowerCase(),
         items: [action.payload],
@@ -71,30 +69,24 @@ export const blogsReducer = (
       blogIndex = state.blogs.findIndex(
         (blog) => blog.email === action.payload.user.email
       );
+      console.log("blogIndex new 111", blogIndex);
+      console.log("state.blogs[blogIndex]", state.blogs[blogIndex]);
     }
     setBlogs(action.payload.user.email, state.blogs[blogIndex].items);
     return state;
   }
 
   if (deletePost.match(action)) {
-    console.log("state1", state);
     let blogIndex = findPostIndexInBlogs(state.blogs, action.payload);
-    console.log("blogIndex", blogIndex);
     if (blogIndex >= 0) {
-      console.log(
-        "state.blogs[blogIndex].items111",
-        state.blogs[blogIndex].items
-      );
-      state.blogs[blogIndex].items = state.blogs[blogIndex].items.filter(
-        (post) => post.id !== action.payload.id
-      );
-      console.log(
-        "state.blogs[blogIndex].items111",
-        state.blogs[blogIndex].items
+      state.blogs[blogIndex].items = Object.assign(
+        [],
+        state.blogs[blogIndex].items.filter(
+          (post) => post.id !== action.payload.id
+        )
       );
       setBlogs(action.payload.user.email, state.blogs[blogIndex].items);
     }
-    console.log("state2", state);
   }
   return state;
 };

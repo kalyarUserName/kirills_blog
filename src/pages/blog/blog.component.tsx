@@ -34,7 +34,7 @@ const BlogPage = () => {
   const id = params.blogId;
 
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [post, setPost] = useState(defaultPost);
 
@@ -43,8 +43,14 @@ const BlogPage = () => {
   const currentUser = useSelector(selectCurrentUser);
 
   useEffect(() => {
-    if (!id && blogs.length !== 0) setPost(blogs[0].items[0]);
-    else {
+    if (!id && blogs.length !== 0) {
+      if (blogs[0].items.length !== 0) {
+        setPost(blogs[0].items[0]);
+      } else {
+        setPost(blogs[1].items[0]);
+      }
+    } else {
+      // eslint-disable-next-line array-callback-return
       Object.keys(blogsMap).map((email) => {
         const blogs = blogsMap[email];
         const res = blogs.find((blog) => blog.id === id);
@@ -53,7 +59,7 @@ const BlogPage = () => {
         }
       });
     }
-  }, [blogsMap, id]);
+  }, [blogsMap, id, blogs]);
 
   const onSaveChangesPost = (
     imageUrl: string,
@@ -105,9 +111,15 @@ const BlogPage = () => {
     const deletingPost = post;
     if (deletingPost !== defaultPost) {
       dispatch(deletePost(deletingPost));
-      // navigate("/");
-      // dispatch(fetchBlogsStart());
-      if (!id && blogs.length !== 0) setPost(blogs[0].items[0]);
+      navigate("/blog");
+
+      if (!id && blogs.length !== 0) {
+        if (blogs[0].items.length !== 0) {
+          setPost(blogs[0].items[0]);
+        } else {
+          setPost(blogs[1].items[0]);
+        }
+      }
     }
   };
   return (

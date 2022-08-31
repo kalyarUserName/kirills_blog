@@ -171,9 +171,10 @@ export const setBlogs = async (
   const batch = writeBatch(db);
   const usersBlogsRef = doc(db, "blogs", userEmail.toLowerCase());
   const userSnapshot = await getDoc(usersBlogsRef);
-  if (userSnapshot.exists()) batch.update(usersBlogsRef, { items: usersBlogs });
+  if (userSnapshot.exists())
+    batch.update(usersBlogsRef, { email: userEmail, items: usersBlogs });
   else {
-    await setDoc(usersBlogsRef, { items: usersBlogs });
+    await setDoc(usersBlogsRef, { email: userEmail, items: usersBlogs });
   }
   await batch.commit();
 };
@@ -244,6 +245,7 @@ export const createReferenceToImage = (
           // Unknown error occurred, inspect error.serverResponse
           break;
       }
+      console.log(error);
     },
     () => {
       // const downloadURLProm = getDownloadURL(uploadTask.snapshot.ref);
