@@ -2,11 +2,11 @@ import React, { FC } from "react";
 
 import "./editComment.styles.scss";
 
-import { CommentProps } from "../comment/comment.component";
+import { Comment } from "../../store/blogs/blogs.types";
 
 export type EditCommentProps = {
   onChangeText: (text: string) => void;
-} & CommentProps;
+} & Comment;
 
 const EditComment: FC<EditCommentProps> = ({ text, onChangeText }) => {
   return (

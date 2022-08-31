@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./home.styles.scss";
 
@@ -40,11 +40,7 @@ const Home = () => {
   const isLoading = useSelector(selectBlogsIsLoading);
   const currentUser = useSelector(selectCurrentUser);
 
-  // let firstPost: BlogItem;
-
   useEffect(() => {
-    console.log("blogMap", blogMap);
-    // if (blogMap[0]) firstPost = blogMap[0][0];
     let arrayT: BlogItem[] = [];
     // eslint-disable-next-line array-callback-return
     Object.keys(blogMap).map((email) => {
@@ -104,17 +100,6 @@ const Home = () => {
         <Spinner />
       ) : (
         <Fragment>
-          {/*{isModalOpen && (*/}
-          {/*  <PopupAgreement*/}
-          {/*    text={"qweqweq"}*/}
-          {/*    closePopup={() => {*/}
-          {/*      setModalOpen(false);*/}
-          {/*    }}*/}
-          {/*    confirm={() => {*/}
-          {/*      setConfirm(true);*/}
-          {/*    }}*/}
-          {/*  />*/}
-          {/*)}*/}
           <div className="newest-post">
             <NewestPost
               key={filteredBlogs[0].id}
@@ -131,18 +116,20 @@ const Home = () => {
             />
             <hr />
           </div>
-          <div className="post-list">
+          <div className="post-list" id={"post-list"}>
             {filteredBlogs.slice(1).map((post) => {
               return (
                 <PostCard
                   key={post.id}
                   id={post.id}
                   headline={post.headline}
+                  text={post.text}
                   textPreview={post.textPreview}
                   image={post.imageUrl}
                   toNavigate={redirectToBlog}
                   currentUser={currentUser}
                   user={post.user}
+                  onSavePost={onSaveChangesPost}
                   onDeletePost={onDeletePost}
                 />
               );

@@ -1,0 +1,28 @@
+.buttons-container {
+  display: grid;
+  grid-template-columns: 40px auto 40px;
+  padding: 10px 0;
+
+  .hovering-text {
+    padding: 13px 5px 0 10px;
+    height: 20px;
+    font-size: 15pt;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .isDelete {
+    margin-left: auto;
+    margin-right: 5px;
+    text-align: right;
+  }
+  .edit-button {
+    max-width: 200px;
+  }
+  .delete-button {
+    max-width: 200px;
+  }
+}

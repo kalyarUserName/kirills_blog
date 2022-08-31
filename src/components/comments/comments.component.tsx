@@ -10,16 +10,18 @@ import { UserForDisplay } from "../../utils/firebase/firebase.utils";
 
 export type CommentsProps = {
   comments: Comment[] | undefined;
-  onSendComment: (message: string) => void;
   currentUser: UserForDisplay | null;
+  onSendComment: (message: string) => void;
   onSaveComment: (idComment: string, textComment: string) => void;
+  onDeleteComment: (idComment: string) => void;
 };
 
 const Comments: FC<CommentsProps> = ({
   comments,
-  onSendComment,
   currentUser,
+  onSendComment,
   onSaveComment,
+  onDeleteComment,
 }) => {
   const [newCommentText, setNewCommentText] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
@@ -41,8 +43,6 @@ const Comments: FC<CommentsProps> = ({
     onSaveComment(idComment, newText);
   };
 
-  const onDeletingComment = (idComment: string) => {};
-
   return (
     <div className="comments-container">
       <div className="body">
@@ -58,6 +58,7 @@ const Comments: FC<CommentsProps> = ({
               className={"box"}
               currentUser={currentUser}
               onSaveComment={onSavingComment}
+              onDeleteComment={onDeleteComment}
             />
           ))}
       </div>

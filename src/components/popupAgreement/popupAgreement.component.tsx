@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 
 import "./popupAgreement.styles.scss";
 import Button from "../button/button.component";
@@ -14,6 +14,15 @@ const PopupAgreement: FC<PopupAgreementProps> = ({
   closePopup,
   confirm,
 }) => {
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+    let postListElement = document.getElementById("post-list");
+    if (postListElement) postListElement.style.pointerEvents = "false";
+
+    return () => {
+      document.body.style.overflowY = "scroll";
+    };
+  }, []);
   return (
     <div className={"modal"}>
       {/*<div className={"modal"} onClick={() => closePopup()}>*/}

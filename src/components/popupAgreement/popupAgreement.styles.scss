@@ -2,15 +2,17 @@ $shadow-color: #dcd8d8;
 
 .modal {
   position: fixed;
-  display: flex;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
+
+  display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 99;
+  z-index: 100;
+
   //pointer-events: fill;
 
   .modal-container {

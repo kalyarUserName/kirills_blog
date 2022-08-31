@@ -1,20 +1,21 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 
 import "./comment.styles.scss";
 
 import UserBar from "../userBar/userBar.component";
 import { UserForDisplay } from "../../utils/firebase/firebase.utils";
-import EditButton from "../editButton/editButton.component";
 import EditComment from "../editComment/editComment.component";
+import ButtonsForCreator from "../buttonsForCreator/buttonsForCreator.component";
 
 export type CommentProps = {
   id: string;
   text: string;
   date: string;
   user: UserForDisplay;
-  className?: string;
-  onSaveComment: (idComment: string, text: string) => void;
   currentUser: UserForDisplay | null;
+  onSaveComment: (idComment: string, text: string) => void;
+  onDeleteComment: (idComment: string) => void;
+  className?: string;
 };
 
 const Comment: FC<CommentProps> = ({
@@ -23,8 +24,9 @@ const Comment: FC<CommentProps> = ({
   user,
   date,
   className,
-  onSaveComment,
   currentUser,
+  onSaveComment,
+  onDeleteComment,
 }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [newText, setNewText] = useState(text);
@@ -33,21 +35,32 @@ const Comment: FC<CommentProps> = ({
     setNewText(text);
   }, [text]);
 
+  const isCurUserCreator = useMemo(
+    () => currentUser !== null && currentUser.email === user.email,
+    [currentUser, user]
+  );
+
   const edition = () => {
     if (isEdit) {
       onSaveComment(id, newText);
     }
     setIsEdit(!isEdit);
   };
+
+  const deletion = () => {
+    onDeleteComment(id);
+  };
+
   return (
     <div className={`${className}`}>
-      <EditButton
-        isEdit={isEdit}
-        isCurrentUserCreator={
-          currentUser !== null && currentUser.email === user.email
-        }
-        onClick={edition}
-      />
+      {isCurUserCreator && (
+        <ButtonsForCreator
+          onDeleteClick={deletion}
+          onEditClick={edition}
+          isDelete={true}
+          isEditing={true}
+        />
+      )}
       {isEdit ? (
         <EditComment
           onChangeText={setNewText}
@@ -55,8 +68,6 @@ const Comment: FC<CommentProps> = ({
           text={newText}
           date={date}
           user={user}
-          onSaveComment={onSaveComment}
-          currentUser={currentUser}
         />
       ) : (
         <UserBar

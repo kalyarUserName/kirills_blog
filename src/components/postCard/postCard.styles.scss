@@ -1,5 +1,4 @@
 .postCard-container {
-  width: 40vw;
   cursor: pointer;
   padding: 0 10px;
   margin: 0 20px;
@@ -28,8 +27,11 @@
 
     img {
       position: relative;
-      width: 30vw;
-      height: auto;
+      //width: 30vw;
+      //height: auto;
+      width: auto;
+      max-height: 60vh;
+      max-width: 30vw;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -60,7 +62,15 @@
       }
     }
   }
-  .delete-button {
+  .buttons {
+    height: 60px;
     grid-area: C;
   }
+}
+.card {
+  width: 40vw;
+}
+
+.bigCard {
+  width: 90vw;
 }

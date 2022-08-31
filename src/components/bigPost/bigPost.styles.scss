@@ -94,15 +94,8 @@ $width-post-container: calc(90vw - 600px);
       margin-left: 5px;
     }
   }
-  .icons {
+  .buttons-for-creator-container {
     grid-area: C;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
     width: 90vw;
-
-    .edit-button {
-    }
-    .delete-button {
-    }
   }
 }
