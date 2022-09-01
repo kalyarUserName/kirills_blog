@@ -49,14 +49,7 @@ const ButtonsForCreator: FC<ButtonsForCreatorProps> = ({
     onDeleteClick();
   };
   return (
-    <div
-      className={"buttons-container"}
-      onWheelCapture={(e) => e.preventDefault()}
-      onWheel={(event) => {
-        event.preventDefault();
-        return false;
-      }}
-    >
+    <div className={"buttons-container"}>
       {isEditing ? (
         <div
           className="edit-button"
