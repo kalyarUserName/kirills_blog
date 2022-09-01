@@ -13,6 +13,7 @@ import "./home.styles.scss";
 import NewestPost from "../../components/bigPost/bigPost.component";
 import PostCard from "../../components/postCard/postCard.component";
 import Spinner from "../../components/spinner/spinner.component";
+import SearchBar from "../../components/searchBox/search.component";
 
 import {
   selectBlogsIsLoading,
@@ -22,9 +23,7 @@ import { selectCurrentUser } from "../../store/user/user.selector";
 import { deletePost, updatePost } from "../../store/blogs/blogs.actions";
 import { BlogItem } from "../../store/blogs/blogs.types";
 import { changePost, isChangesPost } from "../../utils/general";
-import SearchBar from "../../components/searchBox/search.component";
 // import { ModalContext } from "../../context/modal.context";
-// import PopupAgreement from "../../components/popupAgreement/popupAgreement.component";
 
 const Home = () => {
   const navigate = useNavigate();

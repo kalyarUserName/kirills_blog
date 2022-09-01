@@ -9,7 +9,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { store, persistor } from "./store/store";
-// import { ModalProvider } from "./context/modal.context";
+import { ModalProvider } from "./context/modal.context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -19,9 +19,9 @@ root.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          {/*<ModalProvider>*/}
-          <App />
-          {/*</ModalProvider>*/}
+          <ModalProvider>
+            <App />
+          </ModalProvider>
         </BrowserRouter>
       </PersistGate>
     </Provider>
