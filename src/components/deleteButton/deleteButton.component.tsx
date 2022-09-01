@@ -16,20 +16,15 @@ const DeleteButton: FC<DeleteButtonProps> = ({ onDeleteClick }) => {
 
   useEffect(() => {
     if (isSelected && isModalOpen) setText("delete");
+  }, [isSelected, isModalOpen, setText]);
+
+  useEffect(() => {
     if (isSelected && isConfirm) {
       onDeleteClick();
       setConfirm(false);
       setIsSelected(false);
     }
-  }, [
-    isConfirm,
-    isModalOpen,
-    isSelected,
-    setConfirm,
-    setIsSelected,
-    onDeleteClick,
-    setText,
-  ]);
+  }, [isConfirm, isSelected, setConfirm, setIsSelected, onDeleteClick]);
 
   return (
     <Fragment>
