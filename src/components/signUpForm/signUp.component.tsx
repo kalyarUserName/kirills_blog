@@ -8,10 +8,7 @@ import FormInput from "../formInput/formInput.component";
 import Button from "../button/button.component";
 import { signUpStart } from "../../store/user/user.actions";
 import { AuthError, AuthErrorCodes } from "firebase/auth";
-import {
-  createReferenceToImage,
-  TypeOfImage,
-} from "../../utils/firebase/firebase.utils";
+import { createReferenceToAvatar } from "../../utils/firebase/firebase.utils";
 
 const defaultFormFields = {
   displayName: "",
@@ -23,7 +20,7 @@ const defaultFormFields = {
 const SignUp = () => {
   const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const [imageUrl, setImageUrl] = useState<string | undefined>("");
+  const [imageUrl, setImageUrl] = useState<string>("");
   const { displayName, email, password, confirmPassword } = formFields;
 
   const resetFormFields = () => {
@@ -64,12 +61,7 @@ const SignUp = () => {
 
   const addImage = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      createReferenceToImage(
-        event.target.files[0],
-        email,
-        TypeOfImage.avatarImage,
-        setImageUrl
-      );
+      createReferenceToAvatar(event.target.files[0], email, setImageUrl);
     }
   };
 

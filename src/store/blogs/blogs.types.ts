@@ -13,7 +13,7 @@ export enum BLOGS_ACTION_TYPES {
 export type BlogItem = {
   id: string;
   headline: string;
-  imageUrl: string;
+  imagesUrl: string[];
   text: string;
   textPreview: string;
   user: UserForDisplay;

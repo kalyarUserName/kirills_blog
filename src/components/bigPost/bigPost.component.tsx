@@ -1,5 +1,7 @@
 import { FC, Fragment, useEffect, useMemo, useState } from "react";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
 
+import "@splidejs/react-splide/css";
 import "./bigPost.styles.scss";
 
 import UserBar from "../userBar/userBar.component";
@@ -9,14 +11,14 @@ import ButtonsForCreator from "../buttonsForCreator/buttonsForCreator.component"
 
 type NewestPostProps = {
   id: string;
-  image: string;
+  images: string[];
   headline: string;
   text: string;
   user: UserForDisplay;
   date: string;
   toNavigate?: (id: string) => void;
   currentUser: UserForDisplay | null;
-  onSavePost: (imageUrl: string, headline: string, text: string) => void;
+  onSavePost: (imageUrl: string[], headline: string, text: string) => void;
   onDeletePost: (id: string) => void;
 };
 
@@ -24,7 +26,7 @@ const BigPost: FC<NewestPostProps> = ({
   toNavigate,
   id,
   date,
-  image,
+  images,
   headline,
   text,
   user,
@@ -32,20 +34,20 @@ const BigPost: FC<NewestPostProps> = ({
   onSavePost,
   onDeletePost,
 }) => {
-  const [newImage, setNewImage] = useState(image);
+  const [newImages, setNewImages] = useState(images);
   const [newHeadline, setNewHeadline] = useState(headline);
   const [newText, setNewText] = useState(text);
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
-    setNewImage(image);
+    setNewImages(images);
     setNewHeadline(headline);
     setNewText(text);
-  }, [image, headline, text]);
+  }, [images, headline, text]);
 
   const onEdit = () => {
     if (isEdit) {
-      onSavePost(newImage, newHeadline, newText);
+      onSavePost(newImages, newHeadline, newText);
     }
     setIsEdit(!isEdit);
   };
@@ -73,12 +75,14 @@ const BigPost: FC<NewestPostProps> = ({
       )}
       {!isEdit ? (
         <Fragment>
-          <div
-            className="image"
-            onClick={() => (toNavigate ? toNavigate(id) : {})}
-          >
-            <img src={newImage} alt={headline} id="image" />
-          </div>
+          <Splide aria-label={headline} className="image">
+            {newImages &&
+              newImages.map((newImage, index) => (
+                <SplideSlide key={index}>
+                  <img src={newImage} alt={`headline ${index + 1}`} />
+                </SplideSlide>
+              ))}
+          </Splide>
           <div className="post-container">
             <h2
               id="headline"
@@ -102,9 +106,9 @@ const BigPost: FC<NewestPostProps> = ({
           user={user}
           text={newText}
           headline={newHeadline}
-          image={newImage}
-          onChangeImage={(imageT) => {
-            setNewImage(imageT);
+          images={newImages}
+          onChangeImages={(imageT: string[]) => {
+            setNewImages(imageT);
           }}
           onChangeHeadline={(headlineT) => {
             setNewHeadline(headlineT);

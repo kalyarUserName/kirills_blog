@@ -1,7 +1,6 @@
 import React, {
   ChangeEvent,
   Fragment,
-  // useContext,
   useEffect,
   useState,
 } from "react";
@@ -23,13 +22,10 @@ import { selectCurrentUser } from "../../store/user/user.selector";
 import { deletePost, updatePost } from "../../store/blogs/blogs.actions";
 import { BlogItem } from "../../store/blogs/blogs.types";
 import { changePost, isChangesPost } from "../../utils/general";
-// import { ModalContext } from "../../context/modal.context";
 
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { isModalOpen, setModalOpen, isConfirm, setConfirm } =
-  //   useContext(ModalContext);
 
   const [searchField, setSearchField] = useState("");
   const [blogsArray, setBlogsArray] = useState<BlogItem[]>([]);
@@ -68,13 +64,13 @@ const Home = () => {
   };
 
   const onSaveChangesPost = (
-    imageUrl: string,
+    imagesUrl: string[],
     headline: string,
     text: string
   ) => {
-    if (isChangesPost(filteredBlogs[0], imageUrl, headline, text)) {
+    if (isChangesPost(filteredBlogs[0], imagesUrl, headline, text)) {
       dispatch(
-        updatePost(changePost(filteredBlogs[0], imageUrl, headline, text))
+        updatePost(changePost(filteredBlogs[0], imagesUrl, headline, text))
       );
     }
   };
@@ -103,7 +99,7 @@ const Home = () => {
             <NewestPost
               key={filteredBlogs[0].id}
               id={filteredBlogs[0].id}
-              image={filteredBlogs[0].imageUrl}
+              images={filteredBlogs[0].imagesUrl}
               headline={filteredBlogs[0].headline}
               date={filteredBlogs[0].date.slice(0, 10)}
               text={filteredBlogs[0].text}
@@ -124,7 +120,7 @@ const Home = () => {
                   headline={post.headline}
                   text={post.text}
                   textPreview={post.textPreview}
-                  image={post.imageUrl}
+                  images={post.imagesUrl}
                   toNavigate={redirectToBlog}
                   currentUser={currentUser}
                   user={post.user}
