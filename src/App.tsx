@@ -13,9 +13,8 @@ import SignUp from "./components/signUpForm/signUp.component";
 
 import { selectCurrentUser } from "./store/user/user.selector";
 import { fetchBlogsStart } from "./store/blogs/blogs.actions";
-import {testAttr} from "./utils/tests/testsUtils";
-
-
+import { testAttr } from "./utils/tests/testsUtils";
+import Modal from "./components/modal/modal.component";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,7 +26,9 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className={"App"} {...testAttr('app')}>
+    <div className={"App"} {...testAttr("app")}>
+      <Modal />
+
       <Routes>
         <Route path="/" element={<Header />}>
           <Route index element={<Home />} />
