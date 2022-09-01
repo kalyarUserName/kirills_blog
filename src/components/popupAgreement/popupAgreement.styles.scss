@@ -11,9 +11,7 @@ $shadow-color: #dcd8d8;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100;
-
-  //pointer-events: fill;
+  z-index: 98;
 
   .modal-container {
     width: 500px;
