@@ -21,7 +21,7 @@ import { changePost, isChangesPost } from "../../utils/general";
 
 const defaultPost: BlogItem = {
   id: "",
-  imageUrl: "",
+  imagesUrl: [],
   headline: "",
   textPreview: "",
   text: "",
@@ -62,13 +62,13 @@ const BlogPage = () => {
   }, [blogsMap, id, blogs]);
 
   const onSaveChangesPost = (
-    imageUrl: string,
+    imagesUrl: string[],
     headline: string,
     text: string
   ) => {
-    if (isChangesPost(post, imageUrl, headline, text)) {
-      dispatch(updatePost(changePost(post, imageUrl, headline, text)));
-      setPost(changePost(post, imageUrl, headline, text));
+    if (isChangesPost(post, imagesUrl, headline, text)) {
+      dispatch(updatePost(changePost(post, imagesUrl, headline, text)));
+      setPost(changePost(post, imagesUrl, headline, text));
     }
   };
 
@@ -140,7 +140,7 @@ const BlogPage = () => {
         <Fragment>
           <BigPost
             id={post.id}
-            image={post.imageUrl}
+            images={post.imagesUrl}
             headline={post.headline}
             text={post.text}
             user={post.user}

@@ -2,16 +2,15 @@ import { ChangeEvent, FC, useEffect, useState } from "react";
 
 import "./editPostForm.styles.scss";
 import {
-  createReferenceToImage,
-  TypeOfImage,
+  createReferenceToImageForPost,
   UserForDisplay,
 } from "../../utils/firebase/firebase.utils";
 
 type EditPostFormProps = {
   text: string;
   headline: string;
-  image?: string;
-  onChangeImage: (imageSrc: string) => void;
+  images: string[];
+  onChangeImages: (imagesSrc: string[]) => void;
   onChangeHeadline: (headline: string) => void;
   onChangeText: (text: string) => void;
   user: UserForDisplay;
@@ -21,26 +20,27 @@ type EditPostFormProps = {
 const EditPostForm: FC<EditPostFormProps> = ({
   text,
   headline,
-  image,
-  onChangeImage,
+  images,
+  onChangeImages,
   onChangeHeadline,
   onChangeText,
   user,
   id,
 }) => {
-  const [newImage, setNewImage] = useState(image);
+  const [newImages, setNewImages] = useState(images);
 
   useEffect(() => {
-    if (newImage && newImage !== "") onChangeImage(newImage);
-  }, [newImage]);
+    if (newImages.length !== 0 && newImages[0] !== "")
+      onChangeImages(newImages);
+  }, [newImages, onChangeImages]);
 
   const addImage = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      createReferenceToImage(
+      createReferenceToImageForPost(
         event.target.files[0],
         user.email,
-        TypeOfImage.postImage,
-        setNewImage,
+        setNewImages,
+        newImages,
         id
       );
     }
@@ -56,10 +56,10 @@ const EditPostForm: FC<EditPostFormProps> = ({
           placeholder="Select image for post..."
           onChange={(event) => addImage(event)}
         />
-        {newImage && newImage !== "" ? (
-          <img src={newImage} alt="Image for post" />
+        {newImages.length !== 0 && newImages[0] !== "" ? (
+          newImages.map((image) => <img src={image} alt="post" />)
         ) : (
-          <img src={"/images/blank/blankPhoto1.png"} alt="Image for post" />
+          <img src={"/images/blank/blankPhoto1.png"} alt="post" />
         )}
       </div>
       <div className="post-container">

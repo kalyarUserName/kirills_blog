@@ -19,7 +19,7 @@ import {
 const defaultNewPost: BlogItem = {
   id: "",
   headline: "",
-  imageUrl: "",
+  imagesUrl: [],
   text: "",
   textPreview: "",
   user: guest as UserForDisplay,
@@ -35,7 +35,7 @@ const NewPost = () => {
 
   useEffect(() => {
     if (currentUser) setPost({ ...post, user: currentUser });
-  }, [currentUser]);
+  }, [currentUser, setPost]);
 
   const addPost = async () => {
     setIsProcessing(true);
@@ -45,8 +45,10 @@ const NewPost = () => {
     const newPost: BlogItem = {
       id: newID.toString(),
       headline: post.headline,
-      imageUrl:
-        post.imageUrl === "" ? "/images/blank/blankPhoto1.png" : post.imageUrl,
+      imagesUrl:
+        post.imagesUrl.length === 0 || post.imagesUrl[0] === ""
+          ? ["/images/blank/blankPhoto1.png"]
+          : post.imagesUrl,
       text: post.text,
       textPreview: newTextPreview,
       user: post.user,
@@ -62,8 +64,8 @@ const NewPost = () => {
     setPost({ ...post, headline: headline });
   };
 
-  const onChangeImage = (imageSrc: string) => {
-    setPost({ ...post, imageUrl: imageSrc });
+  const onChangeImage = (imagesSrc: string[]) => {
+    setPost({ ...post, imagesUrl: imagesSrc });
   };
 
   const onChangeText = (text: string) => {
@@ -85,8 +87,8 @@ const NewPost = () => {
         user={post.user}
         text={post.text}
         headline={post.headline}
-        image={post.imageUrl}
-        onChangeImage={onChangeImage}
+        images={post.imagesUrl}
+        onChangeImages={onChangeImage}
         onChangeHeadline={onChangeHeadline}
         onChangeText={onChangeText}
       />

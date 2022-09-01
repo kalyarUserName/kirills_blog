@@ -6,26 +6,26 @@ export function dateToString(date: Date): string {
 
 export function isChangesPost(
   post: BlogItem,
-  newImageUrl: string,
+  newImagesUrl: string[],
   newHeadline: string,
   newText: string
 ): boolean {
   return !(
     post.headline === newHeadline &&
-    post.imageUrl === newImageUrl &&
+    JSON.stringify(post.imagesUrl) === JSON.stringify(newImagesUrl) &&
     post.text === newText
   );
 }
 
 export function changePost(
   post: BlogItem,
-  newImageUrl: string,
+  newImagesUrl: string[],
   newHeadline: string,
   newText: string
 ): BlogItem {
   return {
     ...post,
-    imageUrl: newImageUrl,
+    imagesUrl: newImagesUrl,
     headline: newHeadline,
     text: newText,
   };
