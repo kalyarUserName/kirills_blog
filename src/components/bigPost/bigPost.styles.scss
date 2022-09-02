@@ -5,8 +5,7 @@ $width-post-container: calc(90vw - 600px);
 .bigPost-container {
   box-shadow: 5px 5px 10px $shadow-color;
   margin-bottom: 40px;
-  padding-bottom: 20px;
-  padding-left: 10px;
+  padding: 0 10px 20px 10px;
   margin-right: auto;
   width: 90vw;
   margin-left: 0;
@@ -28,6 +27,8 @@ $width-post-container: calc(90vw - 600px);
   .image {
     grid-area: A;
     background: rgb(0, 0, 0, 0.05);
+    height: fit-content;
+
     @media screen and (min-width: 701px) {
       width: 500px;
       img {
@@ -52,7 +53,7 @@ $width-post-container: calc(90vw - 600px);
       img {
         margin-left: auto;
         margin-right: auto;
-        width: 85vw;
+        width: 90vw;
         height: auto;
         padding-right: 10px;
       }
