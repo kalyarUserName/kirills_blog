@@ -2,7 +2,7 @@
   width: 400px;
   justify-self: center;
   margin-right: 40px;
-  margin-left: 20px;
+  //margin-left: 20px;
 
   input {
     width: 100%;
@@ -13,10 +13,12 @@
     padding: 10px;
     margin-top: 5px;
   }
-  @media screen and (max-width:700px) {
+  @media screen and (max-width: 700px) {
     width: 80vw;
-    input{width: 80vw;
+    input {
+      width: 80vw;
       margin-left: 7.5vw;
-      margin-right: auto}
+      margin-right: auto;
+    }
   }
 }

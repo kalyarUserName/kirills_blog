@@ -202,14 +202,18 @@ export const createReferenceToImageForPost = (
   file: Blob,
   userEmail: string,
   setNewImages: Dispatch<SetStateAction<string[]>>,
-  newImages:string[],
-  postId: string
+  newImages: string[],
+  postId: string,
+  indexOfImage: number | undefined
 ) => {
   const metadata = {
     contentType: "image/jpeg",
   };
   let imageRef: StorageReference;
-  imageRef = ref(storage, `images/${userEmail}/${postId}/${newImages.length+1}.jpg`);
+  imageRef = ref(
+    storage,
+    `images/${userEmail}/${postId}/${newImages.length + 1}.jpg`
+  );
 
   const uploadTask = uploadBytesResumable(imageRef, file, metadata);
   uploadTask.on(
@@ -232,46 +236,49 @@ export const createReferenceToImageForPost = (
     () => {
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
         console.log("File available at", downloadURL);
-        setNewImages([...newImages, downloadURL]);
+        if (indexOfImage) {
+          setNewImages([...newImages, (newImages[indexOfImage] = downloadURL)]);
+        } else setNewImages([...newImages, downloadURL]);
+      });
     }
   );
-})}
+};
 
 export const createReferenceToAvatar = (
-    file: Blob,
-    userEmail: string,
-    setNewImages:  Dispatch<SetStateAction<string>>,
+  file: Blob,
+  userEmail: string,
+  setNewImages: Dispatch<SetStateAction<string>>
 ) => {
   const metadata = {
     contentType: "image/jpeg",
   };
 
   let imageRef: StorageReference;
- imageRef = ref(storage, `images/${userEmail}/avatar.jpg`);
+  imageRef = ref(storage, `images/${userEmail}/avatar.jpg`);
 
   const uploadTask = uploadBytesResumable(imageRef, file, metadata);
   uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-        }
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
-         setNewImages(downloadURL)
-        })
+    "state_changed",
+    (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log("Upload is " + progress + "% done");
+      switch (snapshot.state) {
+        case "paused":
+          console.log("Upload is paused");
+          break;
+        case "running":
+          console.log("Upload is running");
+          break;
       }
-  )
+    },
+    (error) => {
+      console.log(error);
+    },
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        console.log("File available at", downloadURL);
+        setNewImages(downloadURL);
+      });
+    }
+  );
 };

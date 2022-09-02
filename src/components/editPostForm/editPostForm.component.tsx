@@ -1,10 +1,11 @@
-import { ChangeEvent, FC, useEffect, useState } from "react";
+import { ChangeEvent, FC, Fragment, useEffect, useState } from "react";
 
 import "./editPostForm.styles.scss";
 import {
   createReferenceToImageForPost,
   UserForDisplay,
 } from "../../utils/firebase/firebase.utils";
+import FormInput from "../formInput/formInput.component";
 
 type EditPostFormProps = {
   text: string;
@@ -28,39 +29,57 @@ const EditPostForm: FC<EditPostFormProps> = ({
   id,
 }) => {
   const [newImages, setNewImages] = useState(images);
+  const [imageIndex, setImageIndex] = useState(-1);
 
   useEffect(() => {
-    if (newImages.length !== 0 && newImages[0] !== "")
+    if (newImages.length !== 0 && (newImages[0] !== "" || imageIndex !== -1)) {
       onChangeImages(newImages);
-  }, [newImages, onChangeImages]);
+      if (imageIndex !== -1) setImageIndex(-1);
+    }
+  }, [newImages, imageIndex, onChangeImages]);
 
-  const addImage = (event: ChangeEvent<HTMLInputElement>) => {
+  const addImage = (event: ChangeEvent<HTMLInputElement>, index?: number) => {
     if (event.target.files && event.target.files[0]) {
       createReferenceToImageForPost(
         event.target.files[0],
         user.email,
         setNewImages,
         newImages,
-        id
+        id,
+        index
       );
+      if (index) setImageIndex(index);
     }
   };
 
   return (
     <div className="edit-post-container">
       <div className="image-container">
-        <input
+        {newImages.length !== 0 && newImages[0] !== "" ? (
+          newImages.map((image, index) => (
+            <Fragment key={index}>
+              <FormInput
+                className={`image`}
+                label={`Select image №${index + 1}`}
+                type="file"
+                id="uploadImage"
+                placeholder="Select image for post..."
+                onChange={(event) => addImage(event, index)}
+              />
+              <img src={image} alt="post" />
+            </Fragment>
+          ))
+        ) : (
+          <img src={"/images/blank/blankPhoto1.png"} alt="post" />
+        )}
+        <FormInput
           className={`image`}
+          label={`Select image №${images.length + 1}`}
           type="file"
           id="uploadImage"
           placeholder="Select image for post..."
           onChange={(event) => addImage(event)}
         />
-        {newImages.length !== 0 && newImages[0] !== "" ? (
-          newImages.map((image) => <img src={image} alt="post" />)
-        ) : (
-          <img src={"/images/blank/blankPhoto1.png"} alt="post" />
-        )}
       </div>
       <div className="post-container">
         <div className="headline">

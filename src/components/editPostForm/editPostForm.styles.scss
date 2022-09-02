@@ -36,7 +36,12 @@ $shadow-color: #dcd8d8;
       }
     }
     .image {
-      margin-left: 15%;
+      padding: 15px;
+      width: 28.5vw;
+      @media screen and (max-width: 700px) {
+        margin-left: 0;
+        width: 80vw;
+      }
     }
   }
   .post-container {
@@ -54,9 +59,11 @@ $shadow-color: #dcd8d8;
       overflow-y: scroll;
       border-radius: 15px;
       box-shadow: 15px 10px 15px $shadow-color;
+
       @media screen and (max-width: 700px) {
-        width: 87vw;
+        width: 80vw;
         font-size: 20pt !important;
+        max-width: 80vw;
       }
     }
     textarea::-webkit-scrollbar {

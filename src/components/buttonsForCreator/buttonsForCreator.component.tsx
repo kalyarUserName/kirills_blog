@@ -25,6 +25,7 @@ const ButtonsForCreator: FC<ButtonsForCreatorProps> = ({
 }) => {
   const [hovering, setHovering] = useState(false);
   const [hoveringText, setHoveringText] = useState("");
+  const [isEdit, setIsEdit] = useState(false);
 
   const onMouseHover = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -48,6 +49,11 @@ const ButtonsForCreator: FC<ButtonsForCreatorProps> = ({
   const onDeleting = () => {
     onDeleteClick();
   };
+
+  const EditClick = () => {
+    onEditClick();
+    setIsEdit(!isEdit);
+  };
   return (
     <div className={"buttons-container"}>
       {isEditing ? (
@@ -55,14 +61,14 @@ const ButtonsForCreator: FC<ButtonsForCreatorProps> = ({
           className="edit-button"
           onMouseOver={(event) => {
             onMouseHover(event);
-            setHoveringText("Edit");
+            isEdit ? setHoveringText("Save") : setHoveringText("Edit");
           }}
           onMouseLeave={(event) => {
             onMouseLeave(event);
             setHoveringText("");
           }}
         >
-          <EditButton onEditClick={onEditClick} />
+          <EditButton onEditClick={EditClick} />
         </div>
       ) : (
         <div></div>

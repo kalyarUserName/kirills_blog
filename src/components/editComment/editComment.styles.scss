@@ -18,9 +18,13 @@ $shadow-color: #dcd8d8;
     font-style: italic;
 
     @media screen and (max-width: 700px) {
-      width: 87vw;
+      width: 70vw;
+      max-width: 70vw;
       font-size: 20pt !important;
     }
   }
   padding-bottom: 60px;
+  @media screen and (max-width: 700px) {
+    width: 75vw;
+  }
 }
