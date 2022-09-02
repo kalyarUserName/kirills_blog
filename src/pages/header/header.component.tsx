@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 
@@ -10,6 +10,8 @@ import { signOutStart } from "../../store/user/user.actions";
 const Header = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
+
+  const [isBurger, setIsBurger] = useState(true);
 
   const signOutUser = () => {
     dispatch(signOutStart());
@@ -23,7 +25,11 @@ const Header = () => {
             <img src="/logo2.png" alt={"logo"} />
           </Link>
         </div>
-        <div className={"navLinks"}>
+        <div
+          className={`burger ${isBurger ? "" : "isOpen"}`}
+          onClick={() => setIsBurger(!isBurger)}
+        />
+        <div className={`navLinks ${!isBurger ? "" : "burger-now"}`}>
           <Link className={"navLink"} to={"/"}>
             HOME
           </Link>

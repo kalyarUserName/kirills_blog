@@ -4,6 +4,7 @@ import "./postCard.styles.scss";
 
 import { UserForDisplay } from "../../utils/firebase/firebase.utils";
 import ButtonsForCreator from "../buttonsForCreator/buttonsForCreator.component";
+import Slider, { SliderSize } from "../slider/slider.component";
 
 type PostCardProps = {
   id: string;
@@ -50,10 +51,7 @@ const PostCard: FC<PostCardProps> = ({
       )}
       <Fragment>
         <div className={"image-container"} onClick={() => toNavigate(id)}>
-          {images &&
-            images.map((image, index) => (
-              <img src={image} alt={headline + (index + 1)} key={index} />
-            ))}
+          <Slider images={images} headline={headline} size={SliderSize.card} />
         </div>
         <div className={"post-container"} onClick={() => toNavigate(id)}>
           <h2>{headline}</h2>

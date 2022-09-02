@@ -1,13 +1,12 @@
 import { FC, Fragment, useEffect, useMemo, useState } from "react";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
 
-import "@splidejs/react-splide/css";
 import "./bigPost.styles.scss";
 
 import UserBar from "../userBar/userBar.component";
 import EditPostForm from "../editPostForm/editPostForm.component";
 import { UserForDisplay } from "../../utils/firebase/firebase.utils";
 import ButtonsForCreator from "../buttonsForCreator/buttonsForCreator.component";
+import Slider from "../slider/slider.component";
 
 type NewestPostProps = {
   id: string;
@@ -75,14 +74,9 @@ const BigPost: FC<NewestPostProps> = ({
       )}
       {!isEdit ? (
         <Fragment>
-          <Splide aria-label={headline} className="image">
-            {newImages &&
-              newImages.map((newImage, index) => (
-                <SplideSlide key={index}>
-                  <img src={newImage} alt={`headline ${index + 1}`} />
-                </SplideSlide>
-              ))}
-          </Splide>
+          <div className="image">
+            <Slider images={newImages} headline={newHeadline} />
+          </div>
           <div className="post-container">
             <h2
               id="headline"

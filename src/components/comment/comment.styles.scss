@@ -13,4 +13,8 @@ $second-color: #7ca47c;
     //border-color: $second-color;
     box-shadow: 0 0 10px $second-color;
   }
+  @media screen and (max-width: 700px) {
+    width: 75vw;
+    margin: 10px;
+  }
 }
