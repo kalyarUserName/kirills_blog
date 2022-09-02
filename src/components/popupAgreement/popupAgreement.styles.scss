@@ -24,10 +24,26 @@ $shadow-color: #dcd8d8;
     font-size: 13pt;
     font-family: "Poppins", serif;
     z-index: 99;
+
+    @media screen and (max-width: 700px) {
+      width: 80vw;
+      max-width: 86vw;
+      margin: auto;
+      padding: 35px 15px;
+      font-size: 13pt;
+    }
     .cancel-button {
       button {
         background-color: #ff6b6b;
         font-size: 16pt;
+      }
+    }
+    button {
+      @media screen and (max-width: 700px) {
+        width: 38vw;
+        margin-right: 5px;
+        padding: 15px;
+        font-size: 14pt;
       }
     }
   }
