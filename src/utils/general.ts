@@ -28,6 +28,7 @@ export function changePost(
     imagesUrl: newImagesUrl,
     headline: newHeadline,
     text: newText,
+    textPreview: newText.slice(0, newText.indexOf(".")) + "...",
   };
 }
 

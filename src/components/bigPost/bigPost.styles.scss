@@ -85,7 +85,10 @@ $width-post-container: calc(90vw - 600px);
       word-break: break-word;
       line-break: auto;
       hyphens: manual;
-
+      &::first-letter {
+        font-size: 30pt;
+        color: $second-color;
+      }
       @media screen and (max-width: 700px) {
         font-size: 12pt;
         padding-right: 10px;
