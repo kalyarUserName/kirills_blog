@@ -1,9 +1,4 @@
-import React, {
-  ChangeEvent,
-  Fragment,
-  useEffect,
-  useState,
-} from "react";
+import React, { ChangeEvent, Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,8 +10,8 @@ import Spinner from "../../components/spinner/spinner.component";
 import SearchBar from "../../components/searchBox/search.component";
 
 import {
+  selectAllPosts,
   selectBlogsIsLoading,
-  selectBlogsMap,
 } from "../../store/blogs/blogs.selector";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { deletePost, updatePost } from "../../store/blogs/blogs.actions";
@@ -31,18 +26,19 @@ const Home = () => {
   const [blogsArray, setBlogsArray] = useState<BlogItem[]>([]);
   const [filteredBlogs, setFilteredBlogs] = useState<BlogItem[]>([]);
 
-  const blogMap = useSelector(selectBlogsMap);
   const isLoading = useSelector(selectBlogsIsLoading);
   const currentUser = useSelector(selectCurrentUser);
+  const allPosts = useSelector(selectAllPosts);
 
   useEffect(() => {
-    let arrayT: BlogItem[] = [];
-    // eslint-disable-next-line array-callback-return
-    Object.keys(blogMap).map((email) => {
-      arrayT.push(...blogMap[email].map((blog) => blog));
-    });
-    setBlogsArray(arrayT);
-  }, [blogMap]);
+    setBlogsArray(
+      allPosts.sort((post1, post2) => {
+        if (new Date(post1.date) > new Date(post2.date)) return -1;
+        if (new Date(post1.date) === new Date(post2.date)) return 0;
+        return 1;
+      })
+    );
+  }, [allPosts]);
 
   useEffect(() => {
     const newFilteredBlogs = blogsArray.filter((blog) => {
