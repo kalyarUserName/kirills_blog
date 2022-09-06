@@ -2,7 +2,7 @@ import { createSelector } from "reselect";
 
 import { RootState } from "../store";
 import { BlogsState } from "./blogs.reducer";
-import { BlogMap } from "./blogs.types";
+import { BlogItem, BlogMap } from "./blogs.types";
 
 const selectBlogReducer = (state: RootState): BlogsState => state.blogs;
 
@@ -23,4 +23,10 @@ export const selectBlogsMap = createSelector([selectBlogs], (blogs) =>
 export const selectBlogsIsLoading = createSelector(
   [selectBlogReducer],
   (blogsSlice) => blogsSlice.isLoading
+);
+
+export const selectAllPosts = createSelector([selectBlogs], (blogs) =>
+  blogs.reduce((acc, blog) => {
+    return acc.concat(blog.items);
+  }, [] as BlogItem[])
 );
