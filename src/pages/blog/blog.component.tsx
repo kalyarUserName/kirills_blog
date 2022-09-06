@@ -87,12 +87,18 @@ const BlogPage = () => {
       user: currentUser,
     };
 
-    if (post.comments) post.comments.unshift(newComment);
-    else {
-      setPost({ ...post, comments: [newComment] });
-    }
-
-    dispatch(updatePost(post));
+    // if (post.comments && post.comments.length > 0) {
+    //   post.comments.unshift(newComment);
+    // } else {
+    //   let newPost: BlogItem = { ...post, comments: [newComment] };
+    //   setPost(newPost);
+    // }
+    // console.log("post", post);
+    let newPost = post;
+    newPost.comments = post.comments ? post.comments : [];
+    newPost.comments.unshift(newComment);
+    dispatch(updatePost(newPost));
+    setPost(newPost);
   };
 
   const onSaveComment = (id: string, text: string) => {
