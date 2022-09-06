@@ -1,5 +1,5 @@
-import { useState, FormEvent, ChangeEvent } from "react";
-import { useDispatch } from "react-redux";
+import { useState, FormEvent, ChangeEvent, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./signIn.styles.scss";
 import FormInput from "../formInput/formInput.component";
@@ -7,6 +7,7 @@ import Button from "../button/button.component";
 import { Link } from "react-router-dom";
 
 import { emailSignInStart } from "../../store/user/user.actions";
+import { selectUserError } from "../../store/user/user.selector";
 
 const defaultFormFields = {
   email: "",
@@ -16,18 +17,29 @@ const defaultFormFields = {
 const SignIn = () => {
   const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
+  const [errorEnter, setErrorEnter] = useState("");
 
   const { email, password } = formFields;
 
-  const resetFormFields = () => {
-    setFormFields(defaultFormFields);
-  };
+  const userAuthError = useSelector(selectUserError);
+
+  useEffect(() => {
+    if (userAuthError) {
+      switch (userAuthError.message) {
+        case "Firebase: Error (auth/user-not-found).":
+          setErrorEnter("email");
+          break;
+        case "Firebase: Error (auth/wrong-password).":
+          setErrorEnter("password");
+          break;
+      }
+    }
+  }, [userAuthError]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       dispatch(emailSignInStart(email, password));
-      resetFormFields();
     } catch (error) {
       console.log("user sign in failed", error);
     }
@@ -36,6 +48,8 @@ const SignIn = () => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
+    if (errorEnter !== "" && (name === "password" || name === "email"))
+      setErrorEnter("");
   };
   return (
     <div className={"sign-in-container"}>
@@ -50,6 +64,7 @@ const SignIn = () => {
           value={email}
           required
           onChange={handleChange}
+          error={errorEnter === "email"}
         />
         <FormInput
           label="Password"
@@ -59,6 +74,7 @@ const SignIn = () => {
           value={password}
           required
           onChange={handleChange}
+          error={errorEnter === "password"}
         />
         <div className={"button-container"}>
           <Button type="submit" text="SIGN IN"></Button>

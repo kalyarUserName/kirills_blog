@@ -11,6 +11,7 @@ import {
 } from "./blogs.actions";
 import { setBlogs } from "../../utils/firebase/firebase.utils";
 import { findPostIndexInBlogs } from "../../utils/general";
+import { signOutSuccess } from "../user/user.actions";
 
 export type BlogsState = {
   readonly blogs: Blog[];
@@ -54,23 +55,19 @@ export const blogsReducer = (
   }
 
   if (addNewPost.match(action)) {
-    console.log("add new post start");
     let blogIndex = findPostIndexInBlogs(state.blogs, action.payload);
-    console.log("blogIndex", blogIndex);
+
     if (blogIndex >= 0) {
       state.blogs[blogIndex].items.unshift(action.payload);
-      console.log("blogIndex more/eq than 0", blogIndex);
     } else {
-      console.log("blogIndex less than 0", blogIndex);
       state.blogs.push({
         email: action.payload.user.email.toLowerCase(),
         items: [action.payload],
       });
+
       blogIndex = state.blogs.findIndex(
         (blog) => blog.email === action.payload.user.email
       );
-      console.log("blogIndex new 111", blogIndex);
-      console.log("state.blogs[blogIndex]", state.blogs[blogIndex]);
     }
     setBlogs(action.payload.user.email, state.blogs[blogIndex].items);
     return state;
@@ -87,6 +84,10 @@ export const blogsReducer = (
       );
       setBlogs(action.payload.user.email, state.blogs[blogIndex].items);
     }
+  }
+
+  if (signOutSuccess.match(action)) {
+    return { ...state, error: null };
   }
   return state;
 };
