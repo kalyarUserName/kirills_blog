@@ -1,6 +1,8 @@
 .input-container {
   margin: 15px 0 10px 0;
   display: grid;
+  box-sizing: border-box;
+
   label {
     font-size: 15pt;
     font-weight: normal;
@@ -30,12 +32,7 @@
     margin-left: 10px;
     opacity: 0.6;
   }
-  .opened {
-    background-image: url("https://cdn-icons-png.flaticon.com/512/2767/2767146.png");
-  }
-  .closed {
-    background-image: url("https://cdn-icons-png.flaticon.com/512/2767/2767194.png");
-  }
+
   .inputBox {
     display: flex;
     width: 80%;
@@ -56,5 +53,25 @@
   }
   .file {
     background: transparent;
+  }
+  .error {
+    //border: 1px solid red;
+    //background-color: #ffe2e2;
+    animation: shake 0.2s ease-in-out 0s 2;
+    box-shadow: 0 0 0.5em red;
+  }
+}
+@keyframes shake {
+  0% {
+    margin-left: 0;
+  }
+  25% {
+    margin-left: 0.5rem;
+  }
+  75% {
+    margin-left: -0.5rem;
+  }
+  100% {
+    margin-left: 0;
   }
 }

@@ -21,6 +21,8 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const [imageUrl, setImageUrl] = useState<string>("");
+  const [isErrorPassword, setIsErrorPassword] = useState(false);
+
   const { displayName, email, password, confirmPassword } = formFields;
 
   const resetFormFields = () => {
@@ -30,16 +32,22 @@ const SignUp = () => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
+    if (isErrorPassword && (name === "password" || name === "confirmPassword"))
+      setIsErrorPassword(false);
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (password !== confirmPassword) {
-      alert("passwords do not match");
+      setIsErrorPassword(true);
       return;
+      // alert("passwords do not match");
     }
-
+    if (password.length < 6)
+      return alert(
+        "The password is too short. Use a password of 6 or more symbols"
+      );
     const avatarImageUrl =
       imageUrl === "" || !imageUrl
         ? "/images/avatar/default_avatar.png"
@@ -68,7 +76,9 @@ const SignUp = () => {
   return (
     <div className={"sign-up-container"}>
       <h2>Sign up</h2>
-      <h3>Sign up with your email and password</h3>
+      <h3>
+        Sign up with your email and password. Use 6 and more symbol for password
+      </h3>
       <form onSubmit={handleSubmit}>
         <FormInput
           label={"Display name"}
@@ -93,7 +103,9 @@ const SignUp = () => {
           type="password"
           name="password"
           placeholder="Enter your password"
+          minLength={6}
           value={password}
+          error={isErrorPassword}
           required
           onChange={handleChange}
         />
@@ -102,7 +114,9 @@ const SignUp = () => {
           type="password"
           name="confirmPassword"
           placeholder="Enter confirm password"
+          minLength={6}
           value={confirmPassword}
+          error={isErrorPassword}
           required
           onChange={handleChange}
         />
