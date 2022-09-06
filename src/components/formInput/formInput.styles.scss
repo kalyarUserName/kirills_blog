@@ -1,28 +1,60 @@
 .input-container {
-  margin: 30px 0 10px 0;
-  position: relative;
-
+  margin: 15px 0 10px 0;
+  display: grid;
   label {
     font-size: 15pt;
     font-weight: normal;
-    position: absolute;
     pointer-events: none;
-    left: 5px;
-    top: -20px;
     transition: 300ms ease all;
+    margin-left: 10px;
     color: darkblue;
     font-family: "Cormorant Garamond", serif;
   }
   input[type="password"] {
-    letter-spacing: 0.3em;
+    letter-spacing: 0.2em;
+  }
+  input[type="file"] {
+    height: 15px;
+    font-size: 10pt;
+    margin-top: 2px;
   }
   input {
-    margin-top: 10px;
-    width: 80%;
-    height: 20px;
-    padding: 10px;
     font-size: 13pt;
-    border-radius: 15px;
     border-style: hidden;
+  }
+  .eye {
+    width: 24px;
+    height: 24px;
+    background-size: cover;
+    margin-top: 0;
+    margin-left: 10px;
+    opacity: 0.6;
+  }
+  .opened {
+    background-image: url("https://cdn-icons-png.flaticon.com/512/2767/2767146.png");
+  }
+  .closed {
+    background-image: url("https://cdn-icons-png.flaticon.com/512/2767/2767194.png");
+  }
+  .inputBox {
+    display: flex;
+    width: 80%;
+    height: 25px;
+    padding: 7px 5px;
+    margin-top: 5px;
+
+    border-radius: 15px;
+    background-color: white;
+
+    input {
+      background: transparent;
+      border: none;
+      height: 25px;
+      width: calc(100% - 50px);
+      padding: 0 5px;
+    }
+  }
+  .file {
+    background: transparent;
   }
 }
