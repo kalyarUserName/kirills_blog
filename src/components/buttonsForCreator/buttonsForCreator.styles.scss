@@ -1,6 +1,6 @@
 .buttons-container {
   display: grid;
-  grid-template-columns: 40px auto 40px;
+  grid-template-columns: auto 40px 40px;
   padding: 10px 0;
 
   .hovering-text {
@@ -21,6 +21,7 @@
   }
   .edit-button {
     max-width: 200px;
+    margin-top: 2.2px;
   }
   .delete-button {
     max-width: 200px;

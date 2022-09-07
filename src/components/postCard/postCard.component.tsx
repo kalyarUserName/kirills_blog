@@ -5,15 +5,11 @@ import "./postCard.styles.scss";
 import { UserForDisplay } from "../../utils/firebase/firebase.utils";
 import ButtonsForCreator from "../buttonsForCreator/buttonsForCreator.component";
 import Slider, { SliderSize } from "../slider/slider.component";
+import { BlogItem } from "../../store/blogs/blogs.types";
 
 type PostCardProps = {
-  id: string;
-  images: string[];
-  text: string;
-  headline: string;
-  textPreview: string;
+  post: BlogItem;
   toNavigate: (id: string) => void;
-  user: UserForDisplay;
   currentUser: UserForDisplay | null;
   onSavePost: (imagesUrl: string[], headline: string, text: string) => void;
   onDeletePost: (id: string) => void;
@@ -21,14 +17,12 @@ type PostCardProps = {
 
 const PostCard: FC<PostCardProps> = ({
   toNavigate,
-  id,
-  images,
-  headline,
-  textPreview,
-  user,
+  post,
   currentUser,
   onDeletePost,
 }) => {
+  const { id, imagesUrl, headline, textPreview, user } = post;
+
   const onDelete = () => {
     onDeletePost(id);
   };
@@ -51,7 +45,11 @@ const PostCard: FC<PostCardProps> = ({
       )}
       <Fragment>
         <div className={"image-container"} onClick={() => toNavigate(id)}>
-          <Slider images={images} headline={headline} size={SliderSize.card} />
+          <Slider
+            images={imagesUrl}
+            headline={headline}
+            size={SliderSize.card}
+          />
         </div>
         <div className={"post-container"} onClick={() => toNavigate(id)}>
           <h2>{headline}</h2>

@@ -138,12 +138,7 @@ const BlogPage = () => {
       ) : (
         <Fragment>
           <BigPost
-            id={post.id}
-            images={post.imagesUrl}
-            headline={post.headline}
-            text={post.text}
-            user={post.user}
-            date={post.date.slice(0, 10)}
+            post={post}
             currentUser={currentUser}
             onSavePost={onSaveChangesPost}
             onDeletePost={onDeletePost}

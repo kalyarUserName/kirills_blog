@@ -58,8 +58,8 @@ export function comparePostByRating(post1: BlogItem, post2: BlogItem): number {
   return 1;
 }
 
+export const defaultRating: Rating = { count: 0, up: [], down: [] };
 export function addToAllPostsRating(blogsMap: BlogMap): void {
-  const defaultRating: Rating = { count: 0, up: [], down: [] };
   Object.keys(blogsMap).map(async (email) => {
     const blogs = blogsMap[email];
     if (blogs.length > 0) {

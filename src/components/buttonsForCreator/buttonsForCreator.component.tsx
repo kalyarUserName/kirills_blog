@@ -56,6 +56,18 @@ const ButtonsForCreator: FC<ButtonsForCreatorProps> = ({
   };
   return (
     <div className={"buttons-container"}>
+      {hovering ? (
+        <div
+          className={`hovering-text ${
+            hoveringText !== "Delete" ? "" : "isDelete"
+          } ${hoveringText !== "Edit" ? "" : "isDelete"}`}
+        >
+          {hoveringText}
+        </div>
+      ) : (
+        <div />
+      )}
+
       {isEditing ? (
         <div
           className="edit-button"
@@ -73,17 +85,7 @@ const ButtonsForCreator: FC<ButtonsForCreatorProps> = ({
       ) : (
         <div></div>
       )}
-      {hovering ? (
-        <div
-          className={`hovering-text ${
-            hoveringText !== "Delete" ? "" : "isDelete"
-          }`}
-        >
-          {hoveringText}
-        </div>
-      ) : (
-        <div />
-      )}
+
       {isDelete ? (
         <div
           className="delete-button"

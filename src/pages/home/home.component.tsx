@@ -131,12 +131,7 @@ const Home = () => {
           <div className="newest-post">
             <NewestPost
               key={filteredBlogs[0].id}
-              id={filteredBlogs[0].id}
-              images={filteredBlogs[0].imagesUrl}
-              headline={filteredBlogs[0].headline}
-              date={filteredBlogs[0].date.slice(0, 10)}
-              text={filteredBlogs[0].text}
-              user={filteredBlogs[0].user}
+              post={filteredBlogs[0]}
               toNavigate={redirectToBlog}
               currentUser={currentUser}
               onSavePost={onSaveChangesPost}
@@ -149,14 +144,9 @@ const Home = () => {
               return (
                 <PostCard
                   key={post.id}
-                  id={post.id}
-                  headline={post.headline}
-                  text={post.text}
-                  textPreview={post.textPreview}
-                  images={post.imagesUrl}
+                  post={post}
                   toNavigate={redirectToBlog}
                   currentUser={currentUser}
-                  user={post.user}
                   onSavePost={onSaveChangesPost}
                   onDeletePost={onDeletePost}
                 />

@@ -1,7 +1,6 @@
 $second-color: #7ca47c;
 $shadow-color: #dcd8d8;
-$width-post-container: calc(90vw - 600px);
-
+$width-post-container: calc(90vw - 600px - 50px);
 .bigPost-container {
   box-shadow: 5px 5px 10px $shadow-color;
   margin-bottom: 40px;
@@ -15,14 +14,14 @@ $width-post-container: calc(90vw - 600px);
   @media screen and (min-width: 701px) {
     grid-template-areas:
       "C C C C C C"
-      "A B B B B B";
+      "Panel A B B B B";
   }
   @media screen and (max-width: 700px) {
     box-shadow: 0 5px 5px $shadow-color;
     grid-template:
-      "C"
-      "A"
-      "B";
+      "C C"
+      "A A"
+      "B Panel";
   }
   .image {
     grid-area: A;
@@ -96,6 +95,7 @@ $width-post-container: calc(90vw - 600px);
       }
     }
     .userbar {
+      width: fit-content;
     }
     @media screen and (max-width: 700px) {
       width: 100%;
@@ -105,5 +105,13 @@ $width-post-container: calc(90vw - 600px);
   .buttons-for-creator-container {
     grid-area: C;
     width: 90vw;
+  }
+  .rating-panel-container {
+    grid-area: Panel;
+    width: 50px;
+    @media screen and (max-width: 700px) {
+      margin-top: auto;
+      margin-bottom: 10px;
+    }
   }
 }
