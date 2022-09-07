@@ -19,8 +19,8 @@ const FormInput: FC<FormInputProps> = ({ label, error, ...otherProps }) => {
     <div className={"input-container"}>
       <label>{label}</label>
       <div
-        className={`inputBox ${inputType === "file" && "file"} ${
-          error && "error"
+        className={`inputBox ${inputType === "file" && "file" ? "file" : ""} ${
+          error && "error" ? "error" : ""
         }`}
       >
         <input {...otherProps} type={inputType} />

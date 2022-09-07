@@ -9,7 +9,7 @@ import Comments from "../../components/comments/comments.component";
 import Spinner from "../../components/spinner/spinner.component";
 
 import { BlogItem, Comment } from "../../store/blogs/blogs.types";
-import { selectBlogs, selectBlogsMap } from "../../store/blogs/blogs.selector";
+import { selectAllPosts, selectBlogs } from "../../store/blogs/blogs.selector";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { deletePost, updatePost } from "../../store/blogs/blogs.actions";
 import {
@@ -38,7 +38,7 @@ const BlogPage = () => {
 
   const [post, setPost] = useState(defaultPost);
 
-  const blogsMap = useSelector(selectBlogsMap);
+  const allPosts = useSelector(selectAllPosts);
   const blogs = useSelector(selectBlogs);
   const currentUser = useSelector(selectCurrentUser);
 
@@ -50,16 +50,12 @@ const BlogPage = () => {
         setPost(blogs[1].items[0]);
       }
     } else {
-      // eslint-disable-next-line array-callback-return
-      Object.keys(blogsMap).map((email) => {
-        const blogs = blogsMap[email];
-        const res = blogs.find((blog) => blog.id === id);
-        if (res) {
-          setPost(res);
-        }
-      });
+      const res = allPosts.find((blog) => blog.id === id);
+      if (res) {
+        setPost(res);
+      }
     }
-  }, [blogsMap, id, blogs]);
+  }, [allPosts, id, blogs]);
 
   const onSaveChangesPost = (
     imagesUrl: string[],

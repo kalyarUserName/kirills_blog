@@ -18,6 +18,7 @@ export type BlogItem = {
   textPreview: string;
   user: UserForDisplay;
   date: string;
+  rating?: Rating;
   comments?: Comment[];
 };
 export type Blog = { email: string; items: BlogItem[] };
@@ -31,4 +32,10 @@ export type Comment = {
   user: UserForDisplay;
   text: string;
   date: string;
+};
+
+export type Rating = {
+  count: number;
+  up: string[];
+  down: string[];
 };

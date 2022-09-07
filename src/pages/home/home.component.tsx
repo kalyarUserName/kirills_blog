@@ -16,7 +16,12 @@ import {
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { deletePost, updatePost } from "../../store/blogs/blogs.actions";
 import { BlogItem } from "../../store/blogs/blogs.types";
-import { changePost, isChangesPost } from "../../utils/general";
+import {
+  changePost,
+  comparePostByDate,
+  comparePostByRating,
+  isChangesPost,
+} from "../../utils/general";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -25,20 +30,18 @@ const Home = () => {
   const [searchField, setSearchField] = useState("");
   const [blogsArray, setBlogsArray] = useState<BlogItem[]>([]);
   const [filteredBlogs, setFilteredBlogs] = useState<BlogItem[]>([]);
+  const [selectedOption, setSelectedOption] = useState("byDate");
 
   const isLoading = useSelector(selectBlogsIsLoading);
   const currentUser = useSelector(selectCurrentUser);
   const allPosts = useSelector(selectAllPosts);
 
   useEffect(() => {
-    setBlogsArray(
-      allPosts.sort((post1, post2) => {
-        if (new Date(post1.date) > new Date(post2.date)) return -1;
-        if (new Date(post1.date) === new Date(post2.date)) return 0;
-        return 1;
-      })
-    );
-  }, [allPosts]);
+    if (selectedOption === "byDate")
+      setBlogsArray(allPosts.sort(comparePostByDate));
+    if (selectedOption === "byRating")
+      setBlogsArray(allPosts.sort(comparePostByRating));
+  }, [allPosts, selectedOption]);
 
   useEffect(() => {
     const newFilteredBlogs = blogsArray.filter((blog) => {
@@ -79,13 +82,47 @@ const Home = () => {
     }
   };
 
+  const handleOptionChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    setSelectedOption(value);
+  };
+
   return (
     <div className={"posts-container"}>
-      <div className="search-bar">
-        <SearchBar
-          placeholder={"Search post"}
-          onChangeHandler={onSearchChange}
-        />
+      <div className="sort-container">
+        <div className="search-bar">
+          <SearchBar
+            placeholder={"Search post"}
+            onChangeHandler={onSearchChange}
+          />
+        </div>
+        <select
+          className={"select-container"}
+          onChange={handleOptionChange}
+          defaultValue={"byDate"}
+        >
+          <option value="byDate">Sort by date</option>
+          <option value="byRating">Sort by rating</option>
+        </select>
+        {/*<fieldset className={"select-container"}>*/}
+        {/*  <legend>Please select type of sorting</legend>*/}
+        {/*  <FormInput*/}
+        {/*    label={"sort by date"}*/}
+        {/*    value="byDate"*/}
+        {/*    type="radio"*/}
+        {/*    radioGroup="sort"*/}
+        {/*    checked={selectedOption === "byDate"}*/}
+        {/*    onChange={handleOptionChange}*/}
+        {/*  />*/}
+        {/*  <FormInput*/}
+        {/*    label={"sort by rating"}*/}
+        {/*    value="byRating"*/}
+        {/*    type="radio"*/}
+        {/*    radioGroup="sort"*/}
+        {/*    checked={selectedOption === "byRating"}*/}
+        {/*    onChange={handleOptionChange}*/}
+        {/*  />*/}
+        {/*</fieldset>*/}
       </div>
       {isLoading || filteredBlogs.length === 0 ? (
         <Spinner />
