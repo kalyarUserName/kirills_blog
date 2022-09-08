@@ -8,6 +8,7 @@ import DeleteButton, {
 import EditButton, {
   EditButtonProps,
 } from "../editButton/editButton.component";
+import SaveButtonComponent from "../saveButton/saveButton.component";
 
 export type ButtonsForCreatorProps = {
   isDelete?: boolean;
@@ -57,13 +58,7 @@ const ButtonsForCreator: FC<ButtonsForCreatorProps> = ({
   return (
     <div className={"buttons-container"}>
       {hovering ? (
-        <div
-          className={`hovering-text ${
-            hoveringText !== "Delete" ? "" : "isDelete"
-          } ${hoveringText !== "Edit" ? "" : "isDelete"}`}
-        >
-          {hoveringText}
-        </div>
+        <div className={`hovering-text right`}>{hoveringText}</div>
       ) : (
         <div />
       )}
@@ -80,7 +75,11 @@ const ButtonsForCreator: FC<ButtonsForCreatorProps> = ({
             setHoveringText("");
           }}
         >
-          <EditButton onEditClick={EditClick} />
+          {isEdit ? (
+            <SaveButtonComponent onSaveClick={EditClick} />
+          ) : (
+            <EditButton onEditClick={EditClick} />
+          )}
         </div>
       ) : (
         <div></div>

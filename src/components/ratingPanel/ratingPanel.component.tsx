@@ -1,8 +1,6 @@
 import React, { FC } from "react";
 
 import "./ratingPanel.styles.scss";
-import ArrowUp from "../arrowButtons/arrowUp.component";
-import ArrowDown from "../arrowButtons/arrowDown.component";
 
 export type ArrowClick = () => void;
 
@@ -19,9 +17,15 @@ const RatingPanel: FC<RatingPanelProps> = ({
 }) => {
   return (
     <div className={"rating-panel"}>
-      <ArrowUp onArrowClick={onArrowUpClick} />
-      <h3>{count}</h3>
-      <ArrowDown onArrowClick={onArrowDownClick} />
+      {/*<ArrowUp onArrowClick={onArrowUpClick} />*/}
+      <div className={"arrow-container"} onClick={onArrowUpClick}>
+        <div className={"arrow up"} />
+      </div>
+      <h3>{count < 1000 ? count : `${(count / 1000).toFixed(1)}k`}</h3>
+      <div className={"arrow-container"} onClick={onArrowDownClick}>
+        <div className={"arrow down"} />
+      </div>
+      {/*<ArrowDown onArrowClick={onArrowDownClick} />*/}
     </div>
   );
 };

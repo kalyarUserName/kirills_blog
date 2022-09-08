@@ -1,34 +1,26 @@
 import { ChangeEvent, FC, Fragment, useEffect, useState } from "react";
 
 import "./editPostForm.styles.scss";
-import {
-  createReferenceToImageForPost,
-  UserForDisplay,
-} from "../../utils/firebase/firebase.utils";
+import { createReferenceToImageForPost } from "../../utils/firebase/firebase.utils";
 import FormInput from "../formInput/formInput.component";
+import { BlogItem } from "../../store/blogs/blogs.types";
 
 type EditPostFormProps = {
-  text: string;
-  headline: string;
-  images: string[];
+  post: BlogItem;
   onChangeImages: (imagesSrc: string[]) => void;
   onChangeHeadline: (headline: string) => void;
   onChangeText: (text: string) => void;
-  user: UserForDisplay;
-  id: string;
 };
 
 const EditPostForm: FC<EditPostFormProps> = ({
-  text,
-  headline,
-  images,
+  post,
   onChangeImages,
   onChangeHeadline,
   onChangeText,
-  user,
-  id,
 }) => {
-  const [newImages, setNewImages] = useState(images);
+  const { id, text, headline, imagesUrl, user } = post;
+
+  const [newImages, setNewImages] = useState(imagesUrl);
   const [imageIndex, setImageIndex] = useState(-1);
 
   useEffect(() => {
@@ -74,7 +66,7 @@ const EditPostForm: FC<EditPostFormProps> = ({
         )}
         <FormInput
           className={`image`}
-          label={`Select image №${images.length + 1}`}
+          label={`Select image №${imagesUrl.length + 1}`}
           type="file"
           id="uploadImage"
           placeholder="Select image for post..."

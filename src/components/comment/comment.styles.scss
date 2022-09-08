@@ -1,7 +1,8 @@
-$second-color: #7ca47c;
+@import "src/utils/variables";
+
 .box {
   padding: 15px 20px;
-  background-color: #ecebeb;
+  background-color: $second-form-bg-color;
   border-radius: 50px;
   width: fit-content;
   height: fit-content;

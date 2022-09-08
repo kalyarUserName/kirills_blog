@@ -1,5 +1,4 @@
-$shadow-color: #dcd8d8;
-$second-color: #7ca47c;
+@import "src/utils/variables";
 
 .custom-button {
   font-size: 13pt;
@@ -7,7 +6,6 @@ $second-color: #7ca47c;
   border-radius: 2rem 15px;
   background-color: #cbe5cb;
   border-style: hidden;
-  //box-shadow: 15px 20px 15px $shadow-color;
   box-shadow: 5px 5px 10px $shadow-color;
   text-align: center;
 

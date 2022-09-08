@@ -1,16 +1,18 @@
+@import "src/utils/variables";
+
 .slider-container {
   //width: 90vw;
-}
-.big {
-  width: 500px;
-  @media screen and (max-width: 700px) {
-    width: 90vw;
+  .big {
+    width: 500px;
+    @media screen and (max-width: 700px) {
+      width: 90vw;
+    }
   }
-}
-.card {
-  width: 40vw;
-  @media screen and (max-width: 700px) {
-    width: 90vw;
-    margin: 0 !important;
+  .card {
+    width: $image-card-width;
+    @media screen and (max-width: 700px) {
+      width: 90vw;
+      margin: 0 !important;
+    }
   }
 }

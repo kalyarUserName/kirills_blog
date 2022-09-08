@@ -46,11 +46,11 @@ export function comparePostByDate(post1: BlogItem, post2: BlogItem): number {
 export function comparePostByRating(post1: BlogItem, post2: BlogItem): number {
   const newPost1 = {
     ...post1,
-    rating: post1.rating ? post1.rating : { count: 0, up: [], down: [] },
+    rating: post1.rating ? post1.rating : defaultRating,
   };
   const newPost2 = {
     ...post2,
-    rating: post2.rating ? post2.rating : { count: 0, up: [], down: [] },
+    rating: post2.rating ? post2.rating : defaultRating,
   };
 
   if (newPost1.rating.count > newPost2.rating.count) return -1;
@@ -69,4 +69,33 @@ export function addToAllPostsRating(blogsMap: BlogMap): void {
       await setBlogs(email, updatedBlogs);
     }
   });
+}
+
+export function upRatingOfPost(
+  rating: Rating | undefined,
+  userEmail: string
+): Rating {
+  let newRating: Rating;
+  if (rating) newRating = { ...rating };
+  else newRating = defaultRating;
+  if (newRating.up.findIndex((email) => email === userEmail) < 0) {
+    newRating.down = newRating.down.filter((email) => email !== userEmail);
+    newRating.up.unshift(userEmail);
+    newRating.count = newRating.up.length - newRating.down.length;
+  }
+  return newRating;
+}
+export function downRatingOfPost(
+  rating: Rating | undefined,
+  userEmail: string
+): Rating {
+  let newRating: Rating;
+  if (rating) newRating = { ...rating };
+  else newRating = defaultRating;
+  if (newRating.down.findIndex((email) => email === userEmail) < 0) {
+    newRating.up = newRating.up.filter((email) => email !== userEmail);
+    newRating.down.unshift(userEmail);
+    newRating.count = newRating.up.length - newRating.down.length;
+  }
+  return newRating;
 }

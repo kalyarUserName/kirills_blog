@@ -1,6 +1,6 @@
-$second-color: #7ca47c;
-$shadow-color: #dcd8d8;
+@import "src/utils/variables";
 $width-post-container: calc(90vw - 600px - 50px);
+
 .bigPost-container {
   box-shadow: 5px 5px 10px $shadow-color;
   margin-bottom: 40px;
@@ -109,6 +109,7 @@ $width-post-container: calc(90vw - 600px - 50px);
   .rating-panel-container {
     grid-area: Panel;
     width: 50px;
+    height: fit-content;
     @media screen and (max-width: 700px) {
       margin-top: auto;
       margin-bottom: 10px;

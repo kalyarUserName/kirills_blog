@@ -37,13 +37,32 @@ const Home = () => {
   const allPosts = useSelector(selectAllPosts);
 
   useEffect(() => {
-    if (selectedOption === "byDate")
-      setBlogsArray(allPosts.sort(comparePostByDate));
-    if (selectedOption === "byRating")
-      setBlogsArray(allPosts.sort(comparePostByRating));
-  }, [allPosts, selectedOption]);
+    if (allPosts.length === 0) return;
+    setBlogsArray([...allPosts]);
+  }, [allPosts, setBlogsArray]);
 
   useEffect(() => {
+    if (allPosts.length === 0) return;
+    if (blogsArray.length === 0) return;
+    const newBlogsArray = blogsArray;
+    if (selectedOption === "byDate") {
+      newBlogsArray.sort(comparePostByDate);
+      if (JSON.stringify(newBlogsArray) === JSON.stringify(blogsArray)) return;
+
+      setBlogsArray([...newBlogsArray]);
+    }
+    if (selectedOption === "byRating") {
+      newBlogsArray.sort(comparePostByRating);
+      if (JSON.stringify(newBlogsArray) === JSON.stringify(blogsArray)) return;
+
+      setBlogsArray([...newBlogsArray]);
+    }
+  }, [blogsArray, selectedOption]);
+
+  useEffect(() => {
+    if (blogsArray.length === 0) return;
+    if (searchField.length === 0) return setFilteredBlogs(blogsArray);
+
     const newFilteredBlogs = blogsArray.filter((blog) => {
       return (
         blog.headline.toLowerCase().includes(searchField) ||

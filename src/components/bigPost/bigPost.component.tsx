@@ -1,17 +1,18 @@
 import { FC, Fragment, useEffect, useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import "./bigPost.styles.scss";
 
+import { BlogItem } from "../../store/blogs/blogs.types";
+import { updatePost } from "../../store/blogs/blogs.actions";
+import { downRatingOfPost, upRatingOfPost } from "../../utils/general";
+import { UserForDisplay } from "../../utils/firebase/firebase.utils";
+
 import UserBar from "../userBar/userBar.component";
 import EditPostForm from "../editPostForm/editPostForm.component";
-import { UserForDisplay } from "../../utils/firebase/firebase.utils";
 import ButtonsForCreator from "../buttonsForCreator/buttonsForCreator.component";
 import Slider from "../slider/slider.component";
 import RatingPanel from "../ratingPanel/ratingPanel.component";
-import { BlogItem, Rating } from "../../store/blogs/blogs.types";
-import { defaultRating } from "../../utils/general";
-import { useDispatch } from "react-redux";
-import { updatePost } from "../../store/blogs/blogs.actions";
 
 type BigPostProps = {
   post: BlogItem;
@@ -61,40 +62,24 @@ const BigPost: FC<BigPostProps> = ({
   );
   const onArrowUpClick = () => {
     if (!currentUser) return;
-    let newRating: Rating;
-    if (rating) newRating = rating;
-    else newRating = defaultRating;
-    if (
-      newRating.up.findIndex((userEmail) => userEmail === currentUser.email) < 0
-    ) {
-      newRating.down = newRating.down.filter(
-        (userEmail) => userEmail !== currentUser.email
-      );
-      newRating.up.unshift(currentUser.email);
-      newRating.count = newRating.up.length - newRating.down.length;
+    const newRating = upRatingOfPost(rating, currentUser.email);
 
-      dispatch(updatePost({ ...post, rating: newRating }));
-    }
+    if (!rating) return;
+    if (rating.count === newRating.count) return;
+
+    dispatch(updatePost({ ...post, rating: newRating }));
   };
 
   const onArrowDownClick = () => {
     if (!currentUser) return;
-    let newRating: Rating;
-    if (rating) newRating = rating;
-    else newRating = defaultRating;
-    if (
-      newRating.down.findIndex((userEmail) => userEmail === currentUser.email) <
-      0
-    ) {
-      newRating.up = newRating.up.filter(
-        (userEmail) => userEmail !== currentUser.email
-      );
-      newRating.down.unshift(currentUser.email);
-      newRating.count = newRating.up.length - newRating.down.length;
+    const newRating = downRatingOfPost(rating, currentUser.email);
 
-      dispatch(updatePost({ ...post, rating: newRating }));
-    }
+    if (!rating) return;
+    if (rating.count === newRating.count) return;
+
+    dispatch(updatePost({ ...post, rating: newRating }));
   };
+
   return (
     <div className={`bigPost-container`}>
       <div className={"rating-panel-container"}>
@@ -138,11 +123,7 @@ const BigPost: FC<BigPostProps> = ({
         </Fragment>
       ) : (
         <EditPostForm
-          id={id}
-          user={user}
-          text={newText}
-          headline={newHeadline}
-          images={newImages}
+          post={post}
           onChangeImages={(imageT: string[]) => {
             setNewImages(imageT);
           }}
