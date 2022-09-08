@@ -38,13 +38,17 @@ const Home = () => {
 
   useEffect(() => {
     if (allPosts.length === 0) return;
-    setBlogsArray([...allPosts]);
+
+    let newBlogsArray = [...allPosts];
+    newBlogsArray.sort(comparePostByDate);
+    setBlogsArray([...newBlogsArray]);
   }, [allPosts, setBlogsArray]);
 
   useEffect(() => {
     if (allPosts.length === 0) return;
     if (blogsArray.length === 0) return;
-    const newBlogsArray = blogsArray;
+    const newBlogsArray = [...blogsArray];
+
     if (selectedOption === "byDate") {
       newBlogsArray.sort(comparePostByDate);
       if (JSON.stringify(newBlogsArray) === JSON.stringify(blogsArray)) return;
