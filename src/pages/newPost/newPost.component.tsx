@@ -15,6 +15,7 @@ import {
   gettingID,
   UserForDisplay,
 } from "../../utils/firebase/firebase.utils";
+import { defaultRating } from "../../utils/general";
 
 const defaultNewPost: BlogItem = {
   id: "",
@@ -53,6 +54,7 @@ const NewPost = () => {
       textPreview: newTextPreview,
       user: post.user,
       date: newDate,
+      rating: defaultRating,
     };
     if (newPost.text === "" && newPost.headline === "") return;
     dispatch(addNewPost(newPost));
@@ -83,11 +85,7 @@ const NewPost = () => {
         />
       </div>
       <EditPostForm
-        id={post.id}
-        user={post.user}
-        text={post.text}
-        headline={post.headline}
-        images={post.imagesUrl}
+        post={post}
         onChangeImages={onChangeImage}
         onChangeHeadline={onChangeHeadline}
         onChangeText={onChangeText}

@@ -1,3 +1,5 @@
+@import "src/utils/variables";
+
 .userBar-container {
   max-width: 500px;
   width: 90%;
@@ -20,7 +22,7 @@
       height: 10px;
       font-size: 16pt;
       margin: 5px 0;
-      color: #7ca47c ;
+      color: $second-color;
     }
     .text {
       font-size: 13pt;

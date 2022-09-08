@@ -1,0 +1,43 @@
+@import "src/utils/variables";
+
+.rating-panel {
+  width: 50px;
+  height: fit-content;
+  margin-top: 30px;
+  h3 {
+    text-align: center;
+    margin: -3px 0 2px 0;
+    font-size: 18pt;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .arrow-container {
+    width: 50px;
+    height: 30px;
+    padding: 5px 0;
+    &:hover {
+      .arrow {
+        box-shadow: 3px -3px 5px 0.1px $second-color;
+      }
+    }
+    .arrow {
+      width: 20px;
+      height: 20px;
+      border-top: 3px solid black;
+      border-right: 3px solid black;
+      margin-left: 13px;
+    }
+    .up {
+      rotate: -45deg;
+      margin-top: 3px;
+    }
+    .down {
+      rotate: 135deg;
+      margin-bottom: 10px;
+    }
+  }
+}

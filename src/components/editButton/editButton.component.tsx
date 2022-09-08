@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from "react";
+import React, { FC } from "react";
 
 import "./editButton.styles.scss";
 
@@ -10,13 +10,11 @@ export type EditButtonProps = {
 
 const EditButton: FC<EditButtonProps> = ({ onEditClick }) => {
   return (
-    <Fragment>
-      <div className="edit-button" onClick={() => onEditClick()}>
-        <div className="button">
-          <Edit />
-        </div>
+    <div className="edit-button" onClick={() => onEditClick()}>
+      <div className="button">
+        <Edit />
       </div>
-    </Fragment>
+    </div>
   );
 };
 

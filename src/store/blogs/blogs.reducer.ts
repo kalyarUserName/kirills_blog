@@ -48,8 +48,12 @@ export const blogsReducer = (
       );
 
     if (postIndex >= 0) {
-      state.blogs[blogIndex].items[postIndex] = action.payload;
+      state.blogs[blogIndex].items[postIndex] = Object.assign(
+        {},
+        action.payload
+      );
       setBlogs(action.payload.user.email, state.blogs[blogIndex].items);
+      return Object.assign({}, state);
     }
     return state;
   }
@@ -70,20 +74,20 @@ export const blogsReducer = (
       );
     }
     setBlogs(action.payload.user.email, state.blogs[blogIndex].items);
-    return state;
+    return Object.assign({}, state);
   }
 
   if (deletePost.match(action)) {
     let blogIndex = findPostIndexInBlogs(state.blogs, action.payload);
-    if (blogIndex >= 0) {
-      state.blogs[blogIndex].items = Object.assign(
-        [],
-        state.blogs[blogIndex].items.filter(
-          (post) => post.id !== action.payload.id
-        )
-      );
-      setBlogs(action.payload.user.email, state.blogs[blogIndex].items);
-    }
+    if (blogIndex < 0) return state;
+    state.blogs[blogIndex].items = Object.assign(
+      [],
+      state.blogs[blogIndex].items.filter(
+        (post) => post.id !== action.payload.id
+      )
+    );
+    setBlogs(action.payload.user.email, state.blogs[blogIndex].items);
+    return state;
   }
 
   if (signOutSuccess.match(action)) {
